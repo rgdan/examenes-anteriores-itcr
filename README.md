@@ -1,4 +1,4 @@
-# Exámenes Anteriores ITCR
+![Exámenes Anteriores ITCR](docs/tittle.jpg)
 
 Repositorio público para compartir exámenes anteriores en PDF.
 
@@ -17,13 +17,15 @@ Ejemplo:
 
 Reglas:
 - `materia`: lowercase kebab-case (ejemplo: `calculo-1`, `fisica-2`)
-- el archivo debe seguir `PX_XS_XXXX_E` o `RP_XS_XXXX_E`
+- el archivo debe seguir `PX_XS_XXXX_E`, `RP_XS_XXXX_E` o `S_XS_XXXX_E`
 - se acepta `_` o `-` como separador
 - `PX`: parcial normal (ejemplo: `P1`, `P2`)
 - `RP`: examen de reposición
+- `S`: suficiencia
 - `XS`: semestre (`IS` o `IIS`)
 - `XXXX`: año
 - última letra: `E` (enunciado) o `S` (solución)
+- bandera final opcional: `_E` (extraordinario)
 - extension: `.pdf`
 
 ## Cómo Contribuir

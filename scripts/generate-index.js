@@ -8,8 +8,10 @@ const EXAMS_DIR = path.join(REPO_ROOT, "exams");
 const OUTPUT_FILE = path.join(REPO_ROOT, "index.json");
 
 const SUBJECT_PATTERN = /^[a-z0-9][a-z0-9-]*$/;
-const FILE_CODE_PATTERN = /^(P([0-9]+)|RP)[_-](IS|IIS)[_-]([0-9]{4})[_-]([ES])$/i;
+const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)[_-](IS|IIS)[_-]([0-9]{4})[_-]([ES])(?:[_-](E))?$/i;
+const SUFICIENCIA_CODE_PATTERN = /^S[_-](IS|IIS)[_-]([0-9]{4})[_-]([ES])$/i;
 const SEMESTER_ORDER = { IS: 1, IIS: 2 };
+const VARIANT_ORDER = { regular: 0, extraordinario: 1, suficiencia: 2 };
 
 function titleFromFilename(fileName) {
   return fileName
@@ -21,7 +23,24 @@ function titleFromFilename(fileName) {
 
 function parseFileCode(fileName) {
   const baseName = fileName.replace(/\.pdf$/i, "");
-  const match = baseName.match(FILE_CODE_PATTERN);
+  const suficienciaMatch = baseName.match(SUFICIENCIA_CODE_PATTERN);
+  if (suficienciaMatch) {
+    const semester = suficienciaMatch[1].toUpperCase();
+    const year = suficienciaMatch[2];
+    const kindCode = suficienciaMatch[3].toUpperCase();
+
+    return {
+      parcial: "S",
+      semester,
+      year,
+      kindCode,
+      kind: kindCode === "E" ? "enunciado" : "solution",
+      variant: "suficiencia",
+      variantCode: null
+    };
+  }
+
+  const match = baseName.match(REGULAR_CODE_PATTERN);
 
   if (!match) {
     return null;
@@ -32,16 +51,24 @@ function parseFileCode(fileName) {
   const semester = match[3].toUpperCase();
   const year = match[4];
   const kindCode = match[5].toUpperCase();
+  const variantCode = match[6] ? match[6].toUpperCase() : null;
 
   const parcial = parcialToken === "RP" ? "RP" : `P${parcialNumber}`;
+  const variant = variantCode === "E" ? "extraordinario" : "regular";
 
   return {
     parcial,
     semester,
     year,
     kindCode,
-    kind: kindCode === "E" ? "enunciado" : "solution"
+    kind: kindCode === "E" ? "enunciado" : "solution",
+    variant,
+    variantCode
   };
+}
+
+function variantSort(a, b) {
+  return (VARIANT_ORDER[a.variant] || 99) - (VARIANT_ORDER[b.variant] || 99) || (a.variant || "").localeCompare(b.variant || "");
 }
 
 function semesterSort(a, b) {
@@ -112,7 +139,7 @@ function validateAndBuildItem(absoluteFilePath) {
   const parsedCode = parseFileCode(fileName);
   if (!parsedCode) {
     throw new Error(
-      `Invalid filename '${fileName}' in ${relativePath}. Use PX_XS_XXXX_E pattern (for example P1_IS_2024_E.pdf). '-' is also accepted.`
+      `Invalid filename '${fileName}' in ${relativePath}. Use PX_XS_XXXX_E, RP_XS_XXXX_E, or S_XS_XXXX_E. Optional final _E is only for extraordinario. '-' is also accepted.`
     );
   }
 
@@ -124,6 +151,8 @@ function validateAndBuildItem(absoluteFilePath) {
     parcial: parsedCode.parcial,
     kind: parsedCode.kind,
     kindCode: parsedCode.kindCode,
+    variant: parsedCode.variant,
+    variantCode: parsedCode.variantCode,
     fileName,
     title: titleFromFilename(fileName)
   };
@@ -145,6 +174,7 @@ function generateIndex() {
       a.year.localeCompare(b.year) ||
       semesterSort(a, b) ||
       parcialSort(a, b) ||
+      variantSort(a, b) ||
       a.kindCode.localeCompare(b.kindCode) ||
       a.fileName.localeCompare(b.fileName)
     );

@@ -1,8 +1,8 @@
 const STRINGS = {
   eyebrow: "Repositorio publico",
-  title: "Examenes Anteriores ITCR",
+  title: "Exámenes Anteriores ITCR",
   loading: "Cargando examenes...",
-  empty: "Aun no hay PDFs. Agrega archivos en exams/<materia>/ usando el formato PX_XS_XXXX_E.pdf o RP_XS_XXXX_E.pdf",
+  empty: "Aun no hay PDFs. Agrega archivos en exams/<materia>/ usando PX_XS_XXXX_E.pdf, RP_XS_XXXX_E.pdf o S_XS_XXXX_E.pdf",
   error: "No se pudo cargar el indice. Revisa index.json o el flujo de GitHub Actions.",
   year: "Año",
   semester: "Semestre"
@@ -77,6 +77,45 @@ function semesterLabel(code) {
   return code;
 }
 
+function parcialGroupFromItem(item) {
+  if (item.variant === "suficiencia") {
+    return {
+      key: "SUFICIENCIA",
+      label: "Suficiencia",
+      rank: 2,
+      baseParcial: ""
+    };
+  }
+
+  if (item.variant === "extraordinario") {
+    return {
+      key: `EXTRA_${item.parcial}`,
+      label: `[Extraordinario] ${parcialLabel(item.parcial)}`,
+      rank: 1,
+      baseParcial: item.parcial
+    };
+  }
+
+  return {
+    key: `NORMAL_${item.parcial}`,
+    label: parcialLabel(item.parcial),
+    rank: 0,
+    baseParcial: item.parcial
+  };
+}
+
+function parcialGroupSort(a, b) {
+  if (a.rank !== b.rank) {
+    return a.rank - b.rank;
+  }
+
+  if (a.rank === 2) {
+    return a.label.localeCompare(b.label);
+  }
+
+  return parcialSort(a.baseParcial, b.baseParcial);
+}
+
 function groupedIndex(items) {
   const root = new Map();
 
@@ -96,11 +135,16 @@ function groupedIndex(items) {
     }
 
     const parcialMap = semesterMap.get(item.semester);
-    if (!parcialMap.has(item.parcial)) {
-      parcialMap.set(item.parcial, { enunciado: null, solution: null });
+    const parcialGroup = parcialGroupFromItem(item);
+
+    if (!parcialMap.has(parcialGroup.key)) {
+      parcialMap.set(parcialGroup.key, {
+        ...parcialGroup,
+        docs: { enunciado: null, solution: null }
+      });
     }
 
-    parcialMap.get(item.parcial)[item.kind] = item;
+    parcialMap.get(parcialGroup.key).docs[item.kind] = item;
   }
 
   return root;
@@ -142,11 +186,11 @@ function renderItems(items) {
         semesterNode.querySelector(".parcial-title").textContent = `${STRINGS.semester} ${semesterLabel(semester)}`;
         const semesterBody = semesterNode.querySelector(".parcial-body");
 
-        const sortedParciales = [...parciales.keys()].sort(parcialSort);
+        const sortedParciales = [...parciales.values()].sort(parcialGroupSort);
         for (const parcial of sortedParciales) {
-          const docs = parciales.get(parcial);
+          const docs = parcial.docs;
           const examNode = examTemplate.content.firstElementChild.cloneNode(true);
-          examNode.querySelector(".type-title").textContent = parcialLabel(parcial);
+          examNode.querySelector(".type-title").textContent = parcial.label;
 
           const actions = examNode.querySelector(".file-list");
 

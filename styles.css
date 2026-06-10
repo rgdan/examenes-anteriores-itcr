@@ -54,7 +54,6 @@ body.scrolled .hero {
 
 h1 {
   margin: 0.2rem 0 0;
-  font-family: "Archivo Black", "Arial Black", sans-serif;
   font-size: clamp(1.35rem, 3.1vw, 2rem);
   line-height: 1.2;
 }
@@ -81,14 +80,45 @@ h1 {
   background: var(--surface);
   border-radius: 10px;
   border: 1px solid var(--line);
-  padding: 0.9rem;
   box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
 .subject-title {
-  margin: 0 0 0.6rem;
+  list-style: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0.9rem;
   font-size: 1.1rem;
   color: #143250;
+}
+
+.subject-title::-webkit-details-marker,
+.semester-title::-webkit-details-marker,
+.parcial-title::-webkit-details-marker {
+  display: none;
+}
+
+.subject-title::marker,
+.semester-title::marker,
+.parcial-title::marker {
+  content: "";
+}
+
+.subject-title::after,
+.semester-title::after,
+.parcial-title::after {
+  content: "▾";
+  float: right;
+  color: #6b86a0;
+  font-size: 0.9em;
+  transition: transform 180ms ease;
+}
+
+.subject-card[open] > .subject-title::after,
+.semester-block[open] > .semester-title::after,
+.parcial-block[open] > .parcial-title::after {
+  transform: rotate(180deg);
 }
 
 .subject-body,
@@ -96,6 +126,7 @@ h1 {
 .parcial-body {
   display: grid;
   gap: 0.75rem;
+  padding: 0 0.9rem 0.9rem;
 }
 
 .semester-block,
@@ -104,17 +135,25 @@ h1 {
   background: var(--surface-strong);
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 0.65rem;
+  overflow: hidden;
+}
+
+.semester-title,
+.parcial-title {
+  list-style: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0.65rem 0.9rem;
 }
 
 .parcial-body {
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .semester-title,
 .parcial-title,
 .type-title {
-  margin: 0 0 0.55rem;
+  margin: 0;
 }
 
 .semester-title {
@@ -212,11 +251,21 @@ h1 {
 }
 
 @media (min-width: 768px) {
+  .parcial-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .hero-inner {
     padding: 1.2rem 1.5rem;
   }
 
   .main-content {
     padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .parcial-body {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
