@@ -8,7 +8,8 @@ const EXAMS_DIR = path.join(REPO_ROOT, "exams");
 const OUTPUT_FILE = path.join(REPO_ROOT, "index.json");
 
 const SUBJECT_PATTERN = /^[a-z0-9][a-z0-9-]*$/;
-const FILE_CODE_PATTERN = /^P([0-9]+)[_-](IS|IIS)[_-]([0-9]{4})[_-]([ES])$/i;
+const FILE_CODE_PATTERN = /^(P([0-9]+)|RP)[_-](IS|IIS)[_-]([0-9]{4})[_-]([ES])$/i;
+const SEMESTER_ORDER = { IS: 1, IIS: 2 };
 
 function titleFromFilename(fileName) {
   return fileName
@@ -26,18 +27,40 @@ function parseFileCode(fileName) {
     return null;
   }
 
-  const parcialNumber = Number.parseInt(match[1], 10);
-  const semester = match[2].toUpperCase();
-  const year = match[3];
-  const kindCode = match[4].toUpperCase();
+  const parcialToken = match[1].toUpperCase();
+  const parcialNumber = match[2] ? Number.parseInt(match[2], 10) : null;
+  const semester = match[3].toUpperCase();
+  const year = match[4];
+  const kindCode = match[5].toUpperCase();
+
+  const parcial = parcialToken === "RP" ? "RP" : `P${parcialNumber}`;
 
   return {
-    parcial: `P${parcialNumber}`,
+    parcial,
     semester,
     year,
     kindCode,
     kind: kindCode === "E" ? "enunciado" : "solution"
   };
+}
+
+function semesterSort(a, b) {
+  return (SEMESTER_ORDER[a.semester] || 99) - (SEMESTER_ORDER[b.semester] || 99) || a.semester.localeCompare(b.semester);
+}
+
+function parcialSort(a, b) {
+  if (a.parcial === "RP") {
+    return 1;
+  }
+  if (b.parcial === "RP") {
+    return -1;
+  }
+  const numA = Number.parseInt(a.parcial.replace("P", ""), 10);
+  const numB = Number.parseInt(b.parcial.replace("P", ""), 10);
+  if (!Number.isNaN(numA) && !Number.isNaN(numB)) {
+    return numA - numB;
+  }
+  return a.parcial.localeCompare(b.parcial);
 }
 
 function sorted(array) {
@@ -120,8 +143,8 @@ function generateIndex() {
     return (
       a.subject.localeCompare(b.subject) ||
       a.year.localeCompare(b.year) ||
-      a.semester.localeCompare(b.semester) ||
-      a.parcial.localeCompare(b.parcial) ||
+      semesterSort(a, b) ||
+      parcialSort(a, b) ||
       a.kindCode.localeCompare(b.kindCode) ||
       a.fileName.localeCompare(b.fileName)
     );

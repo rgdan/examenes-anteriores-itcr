@@ -1,40 +1,7 @@
 {
-  "generatedAt": "2026-06-10T06:20:29.105Z",
-  "total": 7,
+  "generatedAt": "2026-06-10T07:12:26.339Z",
+  "total": 19,
   "items": [
-    {
-      "path": "exams/calculo-diferencial-e-integral/P1_IIS_2024_E.pdf",
-      "subject": "calculo-diferencial-e-integral",
-      "year": "2024",
-      "semester": "IIS",
-      "parcial": "P1",
-      "kind": "enunciado",
-      "kindCode": "E",
-      "fileName": "P1_IIS_2024_E.pdf",
-      "title": "P1 IIS 2024 E"
-    },
-    {
-      "path": "exams/calculo-diferencial-e-integral/P2_IIS_2024_E.pdf",
-      "subject": "calculo-diferencial-e-integral",
-      "year": "2024",
-      "semester": "IIS",
-      "parcial": "P2",
-      "kind": "enunciado",
-      "kindCode": "E",
-      "fileName": "P2_IIS_2024_E.pdf",
-      "title": "P2 IIS 2024 E"
-    },
-    {
-      "path": "exams/calculo-diferencial-e-integral/P3_IIS_2024_E.pdf",
-      "subject": "calculo-diferencial-e-integral",
-      "year": "2024",
-      "semester": "IIS",
-      "parcial": "P3",
-      "kind": "enunciado",
-      "kindCode": "E",
-      "fileName": "P3_IIS_2024_E.pdf",
-      "title": "P3 IIS 2024 E"
-    },
     {
       "path": "exams/calculo-diferencial-e-integral/P1_IS_2024_E.pdf",
       "subject": "calculo-diferencial-e-integral",
@@ -69,6 +36,17 @@
       "title": "P2 IS 2024 E"
     },
     {
+      "path": "exams/calculo-diferencial-e-integral/P2_IS_2024_S.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IS",
+      "parcial": "P2",
+      "kind": "solution",
+      "kindCode": "S",
+      "fileName": "P2_IS_2024_S.pdf",
+      "title": "P2 IS 2024 S"
+    },
+    {
       "path": "exams/calculo-diferencial-e-integral/P3_IS_2024_E.pdf",
       "subject": "calculo-diferencial-e-integral",
       "year": "2024",
@@ -78,6 +56,160 @@
       "kindCode": "E",
       "fileName": "P3_IS_2024_E.pdf",
       "title": "P3 IS 2024 E"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/P3_IS_2024_S.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IS",
+      "parcial": "P3",
+      "kind": "solution",
+      "kindCode": "S",
+      "fileName": "P3_IS_2024_S.pdf",
+      "title": "P3 IS 2024 S"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/RP_IS_2024_E.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IS",
+      "parcial": "RP",
+      "kind": "enunciado",
+      "kindCode": "E",
+      "fileName": "RP_IS_2024_E.pdf",
+      "title": "RP IS 2024 E"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/RP_IS_2024_S.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IS",
+      "parcial": "RP",
+      "kind": "solution",
+      "kindCode": "S",
+      "fileName": "RP_IS_2024_S.pdf",
+      "title": "RP IS 2024 S"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/P1_IIS_2024_E.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IIS",
+      "parcial": "P1",
+      "kind": "enunciado",
+      "kindCode": "E",
+      "fileName": "P1_IIS_2024_E.pdf",
+      "title": "P1 IIS 2024 E"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/P1_IIS_2024_S.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IIS",
+      "parcial": "P1",
+      "kind": "solution",
+      "kindCode": "S",
+      "fileName": "P1_IIS_2024_S.pdf",
+      "title": "P1 IIS 2024 S"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/P2_IIS_2024_E.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IIS",
+      "parcial": "P2",
+      "kind": "enunciado",
+      "kindCode": "E",
+      "fileName": "P2_IIS_2024_E.pdf",
+      "title": "P2 IIS 2024 E"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/P2_IIS_2024_S.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IIS",
+      "parcial": "P2",
+      "kind": "solution",
+      "kindCode": "S",
+      "fileName": "P2_IIS_2024_S.pdf",
+      "title": "P2 IIS 2024 S"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/P3_IIS_2024_E.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IIS",
+      "parcial": "P3",
+      "kind": "enunciado",
+      "kindCode": "E",
+      "fileName": "P3_IIS_2024_E.pdf",
+      "title": "P3 IIS 2024 E"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/P3_IIS_2024_S.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IIS",
+      "parcial": "P3",
+      "kind": "solution",
+      "kindCode": "S",
+      "fileName": "P3_IIS_2024_S.pdf",
+      "title": "P3 IIS 2024 S"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/RP_IIS_2024_E.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IIS",
+      "parcial": "RP",
+      "kind": "enunciado",
+      "kindCode": "E",
+      "fileName": "RP_IIS_2024_E.pdf",
+      "title": "RP IIS 2024 E"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/RP_IIS_2024_S.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2024",
+      "semester": "IIS",
+      "parcial": "RP",
+      "kind": "solution",
+      "kindCode": "S",
+      "fileName": "RP_IIS_2024_S.pdf",
+      "title": "RP IIS 2024 S"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/P1_IS_2025_S.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2025",
+      "semester": "IS",
+      "parcial": "P1",
+      "kind": "solution",
+      "kindCode": "S",
+      "fileName": "P1_IS_2025_S.pdf",
+      "title": "P1 IS 2025 S"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/P2_IS_2025_S.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2025",
+      "semester": "IS",
+      "parcial": "P2",
+      "kind": "solution",
+      "kindCode": "S",
+      "fileName": "P2_IS_2025_S.pdf",
+      "title": "P2 IS 2025 S"
+    },
+    {
+      "path": "exams/calculo-diferencial-e-integral/P3_IS_2025_S.pdf",
+      "subject": "calculo-diferencial-e-integral",
+      "year": "2025",
+      "semester": "IS",
+      "parcial": "P3",
+      "kind": "solution",
+      "kindCode": "S",
+      "fileName": "P3_IS_2025_S.pdf",
+      "title": "P3 IS 2025 S"
     }
   ]
 }

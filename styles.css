@@ -28,7 +28,13 @@ body {
 .hero {
   background: var(--brand);
   color: #ffffff;
+  border-top: 10px solid #ef3340;
   border-bottom: 4px solid #001936;
+  transition: border-top-width 180ms ease;
+}
+
+body.scrolled .hero {
+  border-top-width: 0;
 }
 
 .hero-inner {
@@ -101,6 +107,10 @@ h1 {
   padding: 0.65rem;
 }
 
+.parcial-body {
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
 .semester-title,
 .parcial-title,
 .type-title {
@@ -120,58 +130,46 @@ h1 {
 .type-title {
   color: #305a85;
   font-size: 0.92rem;
+  text-align: center;
+}
+
+.exam-card {
+  display: grid;
+  gap: 0.45rem;
+  justify-items: stretch;
+  padding: 0.75rem 0.65rem;
 }
 
 .file-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  width: 100%;
   display: grid;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
-.file-item {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.35rem 0.4rem;
-  border: 1px solid #d5e0ec;
-  border-radius: 6px;
-  background: #ffffff;
-}
-
-.file-icon {
-  width: 0.95rem;
-  height: 1.1rem;
-  border: 1px solid #4f6f91;
-  border-radius: 2px;
-  background: linear-gradient(to bottom, #ffffff 0%, #eef4fb 100%);
-  display: inline-block;
-  flex: 0 0 auto;
-}
-
-.file-link {
-  display: inline-block;
+.doc-btn {
+  display: block;
+  width: 100%;
   text-decoration: none;
-  color: #0f4a82;
+  text-align: center;
+  color: #ffffff;
+  background: #0f4a82;
+  border: 1px solid #0d3f6d;
+  border-radius: 6px;
+  padding: 0.32rem 0.45rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  border-bottom: 1px solid transparent;
-  flex: 1 1 auto;
 }
 
-.file-link:hover,
-.file-link:focus-visible {
-  border-color: var(--accent);
+.doc-btn:hover,
+.doc-btn:focus-visible {
+  background: #0b5ea8;
 }
 
-.file-meta {
-  font-size: 0.78rem;
-  color: #375877;
-  background: #ebf2fb;
-  border: 1px solid #cad8e8;
-  border-radius: 999px;
-  padding: 0.1rem 0.45rem;
-  flex: 0 0 auto;
+.doc-btn.disabled {
+  background: #e6edf6;
+  border-color: #cad6e6;
+  color: #5f748a;
+  cursor: not-allowed;
 }
 
 .state-message {
@@ -199,6 +197,18 @@ h1 {
   margin: 0 auto;
   padding: 0.75rem 1.2rem;
   font-size: 0.86rem;
+  text-align: center;
+}
+
+.site-footer a {
+  color: #ffffff;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: #dcecff;
 }
 
 @media (min-width: 768px) {
