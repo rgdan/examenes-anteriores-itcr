@@ -7,9 +7,9 @@ const REPO_ROOT = path.resolve(__dirname, "..");
 const EXAMS_DIR = path.join(REPO_ROOT, "exams");
 const OUTPUT_FILE = path.join(REPO_ROOT, "index.json");
 
-const SUBJECT_PATTERN = /^[a-z0-9][a-z0-9-]*$/;
-const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)[_-](IS|IIS)[_-]([0-9]{4})[_-]([ES])(?:[_-](E))?$/i;
-const SUFICIENCIA_CODE_PATTERN = /^S[_-](IS|IIS)[_-]([0-9]{4})[_-]([ES])$/i;
+const SUBJECT_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
+const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)_(IS|IIS)_([0-9]{4})_([ES])(?:_(E))?$/i;
+const SUFICIENCIA_CODE_PATTERN = /^S_(IS|IIS)_([0-9]{4})_([ES])$/i;
 const SEMESTER_ORDER = { IS: 1, IIS: 2 };
 const VARIANT_ORDER = { regular: 0, extraordinario: 1, suficiencia: 2 };
 
@@ -133,13 +133,13 @@ function validateAndBuildItem(absoluteFilePath) {
   const [, subject, fileName] = segments;
 
   if (!SUBJECT_PATTERN.test(subject)) {
-    throw new Error(`Invalid subject folder '${subject}' in ${relativePath}. Use lowercase-kebab-case.`);
+    throw new Error(`Invalid subject folder '${subject}' in ${relativePath}. Use lowercase snake_case only.`);
   }
 
   const parsedCode = parseFileCode(fileName);
   if (!parsedCode) {
     throw new Error(
-      `Invalid filename '${fileName}' in ${relativePath}. Use PX_XS_XXXX_E, RP_XS_XXXX_E, or S_XS_XXXX_E. Optional final _E is only for extraordinario. '-' is also accepted.`
+      `Invalid filename '${fileName}' in ${relativePath}. Use PX_XS_XXXX_E, RP_XS_XXXX_E, or S_XS_XXXX_E with underscores only. Optional final _E is only for extraordinario.`
     );
   }
 

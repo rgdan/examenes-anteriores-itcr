@@ -12,12 +12,12 @@ Todos los archivos deben almacenarse siguiendo esta jerarquía:
 
 ### Convención de la Carpeta (`materia`)
 
-Debe escribirse siempre en **lowercase kebab-case**.
-* *Ejemplo:* `calculo-diferencial-e-integral`, `fisica-2`.
+Debe escribirse siempre en **lowercase snake_case**.
+* *Ejemplo:* `calculo_diferencial_e_integral`, `fisica_2`.
 
 ### Formato del Nombre del Archivo
 
-El nombre debe seguir una estructura estricta compuesta por bloques separados por guiones (`-`) o guiones bajos (`_`):
+El nombre debe seguir una estructura estricta compuesta por bloques separados solo por guiones bajos (`_`):
 
 `[TIPO][NUM]_[SEMESTRE]_[AÑO]_[TIPO_DOC][EXTRA]`
 
@@ -32,8 +32,8 @@ El nombre debe seguir una estructura estricta compuesta por bloques separados po
 
 ### Ejemplos de Referencia
 
-* **Parcial 1:** `exams/fisica-1/P1_IS_2026_E.pdf`
-* **Reposición:** `exams/fisica-2/RP_IIS_2026_S.pdf`
+* **Parcial 1:** `exams/fisica_1/P1_IS_2026_E.pdf`
+* **Reposición:** `exams/fisica_2/RP_IIS_2026_S.pdf`
 * **Suficiencia:** `exams/estadistica/S_IS_2026_E.pdf`
 * **Extraordinario:** `exams/probabilidad/P1_IS_2026_E_E.pdf`
 
