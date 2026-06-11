@@ -48,5 +48,3 @@ PDF not visible:
 Validation error in CI:
 
 - Rename folder/file to match the naming rules
-- Subject folders must be lowercase `snake_case`
-- PDF naming blocks must use underscores only (for example, `P1_IS_2026_E.pdf`)
