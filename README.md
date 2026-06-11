@@ -5,28 +5,37 @@ Repositorio público para compartir exámenes anteriores en PDF.
 El sitio se actualiza automáticamente según los archivos agregados.
 Para contribuir, solo necesita agregar PDFs con el formato correcto.
 
-## Estructura De Archivos
+## Estructura de Archivos
 
-Todos los exámenes deben ir en esta ruta:
+Todos los archivos deben almacenarse siguiendo esta jerarquía:
+`exams/<materia>/<nombre_archivo>.pdf`
 
-`exams/<materia>/<archivo>.pdf`
+### Convención de la Carpeta (`materia`)
 
-Ejemplo:
+Debe escribirse siempre en **lowercase kebab-case**.
+* *Ejemplo:* `calculo-diferencial-e-integral`, `fisica-2`.
 
-`exams/calculo-diferencial-e-integral/P1_IS_2024_E.pdf`
+### Formato del Nombre del Archivo
 
-Reglas:
-- `materia`: lowercase kebab-case (ejemplo: `calculo-1`, `fisica-2`)
-- el archivo debe seguir `PX_XS_XXXX_E`, `RP_XS_XXXX_E` o `S_XS_XXXX_E`
-- se acepta `_` o `-` como separador
-- `PX`: parcial normal (ejemplo: `P1`, `P2`)
-- `RP`: examen de reposición
-- `S`: suficiencia
-- `XS`: semestre (`IS` o `IIS`)
-- `XXXX`: año
-- última letra: `E` (enunciado) o `S` (solución)
-- bandera final opcional: `_E` (extraordinario)
-- extension: `.pdf`
+El nombre debe seguir una estructura estricta compuesta por bloques separados por guiones (`-`) o guiones bajos (`_`):
+
+`[TIPO][NUM]_[SEMESTRE]_[AÑO]_[TIPO_DOC][EXTRA]`
+
+| Segmento | Descripción | Valores posibles |
+| :--- | :--- | :--- |
+| **Tipo** | Categoría del examen | `P` (Parcial), `RP` (Reposición), `S` (Suficiencia) |
+| **Num** | Número de parcial | `1`, `2`, `3`, etc. (solo si aplica) |
+| **Semestre** | Periodo académico | `IS`, `IIS` |
+| **Año** | Año en formato de 4 dígitos | `2024`, `2025`, etc. |
+| **Tipo_Doc** | Naturaleza del archivo | `E` (Enunciado), `S` (Solución) |
+| **Extra** | Bandera opcional | `_E` (Extraordinario) |
+
+### Ejemplos de Referencia
+
+* **Parcial 1:** `exams/fisica-1/P1_IS_2026_E.pdf`
+* **Reposición:** `exams/fisica-2/RP_IIS_2026_S.pdf`
+* **Suficiencia:** `exams/estadistica/S_IS_2026_E.pdf`
+* **Extraordinario:** `exams/probabilidad/P1_IS_2026_E_E.pdf`
 
 ## Cómo Contribuir
 
