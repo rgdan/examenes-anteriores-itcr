@@ -11,6 +11,24 @@
   --shadow: 0 8px 20px rgba(9, 34, 63, 0.08);
 }
 
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand: #0f1f35;
+    --bg: #0a1422;
+    --surface: #101f33;
+    --surface-strong: #14263d;
+    --ink: #e8f0fb;
+    --ink-soft: #b8c7da;
+    --accent: #73b3ff;
+    --ring: rgba(115, 179, 255, 0.25);
+    --line: #2b3f58;
+    --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    color-scheme: dark;
+  }
+}
+*/
+
 * {
   box-sizing: border-box;
 }
@@ -18,6 +36,8 @@
 body {
   margin: 0;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   background: var(--bg);
   color: var(--ink);
@@ -66,6 +86,7 @@ h1 {
 }
 
 .main-content {
+  flex: 1;
   padding: 1.1rem;
 }
 
@@ -90,7 +111,7 @@ h1 {
   margin: 0;
   padding: 0.9rem;
   font-size: 1.1rem;
-  color: #143250;
+  color: var(--ink);
 }
 
 .subject-title::-webkit-details-marker,
@@ -110,7 +131,7 @@ h1 {
 .parcial-title::after {
   content: "▾";
   float: right;
-  color: #6b86a0;
+  color: var(--ink-soft);
   font-size: 0.9em;
   transition: transform 180ms ease;
 }
@@ -157,17 +178,17 @@ h1 {
 }
 
 .semester-title {
-  color: #18406a;
+  color: var(--ink);
   font-size: 0.98rem;
 }
 
 .parcial-title {
-  color: #1f4b78;
+  color: var(--ink);
   font-size: 0.94rem;
 }
 
 .type-title {
-  color: #305a85;
+  color: var(--ink-soft);
   font-size: 0.92rem;
   text-align: center;
 }
