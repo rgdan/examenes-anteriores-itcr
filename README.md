@@ -51,6 +51,143 @@ El nombre debe seguir una estructura estricta compuesta por bloques separados so
 7. Abra un Pull Request desde su fork hacia este repositorio.
 8. En el Pull Request, describa qué materia y qué exámenes agregó.
 
+## Examenes buscados
+
+Para obtener una buena selección de exámenes en el repositorio, se buscan los siguientes documentos según la tabla.
+
+| Color | Significado |
+| :--- | :--- |
+| **Rojo**| Todavía no se tiene |
+| **Verde** | Ya se tiene el repositorio |
+| **Gris** | No se puede obtener o no existe |
+
+<table style="border-collapse: collapse; font-family: Arial, sans-serif; border: 1px solid #000;">
+    <tr>
+        <th colspan="4" style="border: 1px solid #000; padding: 6px 10px;"></th>
+        <th style="border: 1px solid #000; padding: 6px 10px; background: #f5f5f5; font-weight: bold;">MG</th>
+        <th style="border: 1px solid #000; padding: 6px 10px; background: #f5f5f5; font-weight: bold;">MD</th>
+        <th style="border: 1px solid #000; padding: 6px 10px; background: #f5f5f5; font-weight: bold;">ED</th>
+        <th style="border: 1px solid #000; padding: 6px 10px; background: #f5f5f5; font-weight: bold;">CS</th>
+        <th style="border: 1px solid #000; padding: 6px 10px; background: #f5f5f5; font-weight: bold;">CAL</th>
+        <th style="border: 1px solid #000; padding: 6px 10px; background: #f5f5f5; font-weight: bold;">CDI</th>
+        <th style="border: 1px solid #000; padding: 6px 10px; background: #f5f5f5; font-weight: bold;">PB</th>
+        <th style="border: 1px solid #000; padding: 6px 10px; background: #f5f5f5; font-weight: bold;">ES</th>
+    </tr>
+    <tr>
+        <td rowspan="16" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">2025</td>
+        <td rowspan="8" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">IS</td>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">P1</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #26ff5f;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">P2</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #26ff5f;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #26ff5f;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #26ff5f;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">P3</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #26ff5f;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #26ff5f;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">RP</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td rowspan="8" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">IIS</td>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">P1</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">P2</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">P3</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">RP</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td rowspan="8" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">2026</td>
+        <td rowspan="8" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">IS</td>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">P1</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">P2</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #ff2b2b;"></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">P3</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="border: 1px solid #000; padding: 6px 10px; background: #e6e6e6; font-weight: bold;">RP</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Enunciado</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid #000; padding: 6px 10px; text-align: left; padding-left: 15px; background: #f2f2f2;">Solucionario</td>
+        <td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td><td style="border: 1px solid #000; padding: 6px 10px; background: #4a4a4a;"></td>
+    </tr>
+</table>
+
 ## Documentación Técnica
 
 La guía de desarrollo está en [DEVELOPMENT.md](DEVELOPMENT.md).
