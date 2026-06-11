@@ -39,7 +39,7 @@ El nombre debe seguir una estructura estricta compuesta por bloques separados so
 
 ## Cómo Contribuir
 
-> [!WARNING]  
+> **Advertencia**  
 > La intención es recopilar y distribuir exámenes de cátedra, manteniendo la discreción debido a que ciertos docentes prefieren que no se difunda su material.
 
 1. Haga un fork de este repositorio en GitHub.
