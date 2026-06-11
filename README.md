@@ -5,9 +5,6 @@ Repositorio público para compartir exámenes anteriores en PDF.
 El sitio se actualiza automáticamente según los archivos agregados.
 Para contribuir, solo necesita agregar PDFs con el formato correcto.
 
-> [!WARNING]  
-> La intención es recopilar y distribuir exámenes de cátedra, manteniendo la discreción debido a que ciertos docentes prefieren que no se difunda su material.
-
 ## Estructura de Archivos
 
 Todos los archivos deben almacenarse siguiendo esta jerarquía:
@@ -41,6 +38,9 @@ El nombre debe seguir una estructura estricta compuesta por bloques separados so
 * **Extraordinario:** `exams/probabilidad/P1_IS_2026_E_E.pdf`
 
 ## Cómo Contribuir
+
+> [!WARNING]  
+> La intención es recopilar y distribuir exámenes de cátedra, manteniendo la discreción debido a que ciertos docentes prefieren que no se difunda su material.
 
 1. Haga un fork de este repositorio en GitHub.
 2. Clone su fork en su computadora.
