@@ -10,23 +10,6 @@ This file contains technical details for local development, indexing, and GitHub
 - Source content: `exams/<subject>/<file>.pdf`
 - CI/CD: `.github/workflows/pages.yml`
 
-## File Naming Convention
-
-Exam PDFs must follow:
-
-- `PX_XS_XXXX_E.pdf`, `RP_XS_XXXX_E.pdf`, or `S_XS_XXXX_E.pdf`
-- Optional final suffix: `_E` (extraordinario only)
-- Separators can be `_` or `-`
-
-Where:
-
-- `PX`: regular exam code (`P1`, `P2`, ...)
-- `RP`: reposicion exam code
-- `S`: suficiencia code
-- `XS`: semester code (`IS`, `IIS`)
-- `XXXX`: year
-- Final code: `E` (statement) or `S` (solution)
-
 ## Local Development
 
 Generate the index:
@@ -47,12 +30,6 @@ Open:
 
 ## GitHub Pages
 
-The repo uses GitHub Actions for Pages deployment.
-
-1. Go to repository Settings > Pages.
-2. Set Source to GitHub Actions.
-3. Push to the default branch.
-
 Pipeline behavior:
 
 - Regenerates `index.json`
@@ -70,4 +47,4 @@ PDF not visible:
 
 Validation error in CI:
 
-- Rename folder/file to match the naming rules above
+- Rename folder/file to match the naming rules
