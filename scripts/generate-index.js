@@ -8,6 +8,7 @@ const EXAMS_DIR = path.join(REPO_ROOT, "exams");
 const OUTPUT_FILE = path.join(REPO_ROOT, "index.json");
 
 const SUBJECT_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
+const SCHOOL_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)_(IS|IIS)_([0-9]{4})_([ES])(?:_(E))?$/i;
 const SUFICIENCIA_CODE_PATTERN = /^S_(IS|IIS)_([0-9]{4})_([ES])$/i;
 const SEMESTER_ORDER = { IS: 1, IIS: 2 };
@@ -123,14 +124,21 @@ function validateAndBuildItem(absoluteFilePath) {
 
   const relativePath = path.relative(REPO_ROOT, absoluteFilePath).split(path.sep).join("/");
   const segments = relativePath.split("/");
+  let school;
+  let subject;
+  let fileName;
 
-  if (segments.length !== 3 || segments[0] !== "exams") {
+  if (segments.length === 4 && segments[0] === "exams") {
+    [, school, subject, fileName] = segments;
+  } else {
     throw new Error(
-      `Invalid file path depth for ${relativePath}. Expected exams/<subject>/<file>.pdf`
+      `Invalid file path depth for ${relativePath}. Expected exams/<school>/<subject>/<file>.pdf`
     );
   }
 
-  const [, subject, fileName] = segments;
+  if (!SCHOOL_PATTERN.test(school)) {
+    throw new Error(`Invalid school folder '${school}' in ${relativePath}. Use lowercase snake_case only.`);
+  }
 
   if (!SUBJECT_PATTERN.test(subject)) {
     throw new Error(`Invalid subject folder '${subject}' in ${relativePath}. Use lowercase snake_case only.`);
@@ -145,6 +153,7 @@ function validateAndBuildItem(absoluteFilePath) {
 
   return {
     path: relativePath,
+    school,
     subject,
     year: parsedCode.year,
     semester: parsedCode.semester,
@@ -170,6 +179,7 @@ function generateIndex() {
 
   items.sort((a, b) => {
     return (
+      a.school.localeCompare(b.school) ||
       a.subject.localeCompare(b.subject) ||
       a.year.localeCompare(b.year) ||
       semesterSort(a, b) ||

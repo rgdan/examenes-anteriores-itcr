@@ -8,12 +8,14 @@ Para contribuir, solo necesita agregar PDFs con el formato correcto.
 ## Estructura de Archivos
 
 Todos los archivos deben almacenarse siguiendo esta jerarquía:
-`exams/<materia>/<nombre_archivo>.pdf`
+`exams/<escuela>/<materia>/<nombre_archivo>.pdf`
 
-### Convención de la Carpeta (`materia`)
+La interfaz agrupa el contenido por escuela en una barra de navegación superior: una línea separadora delgada y, debajo, una barra azul con pestañas horizontales.
 
-Debe escribirse siempre en **lowercase snake_case**.
-* *Ejemplo:* `calculo_diferencial_e_integral`, `fisica_2`.
+### Convención de la Carpeta (`escuela` y `materia`)
+
+Las carpetas deben escribirse siempre en **lowercase snake_case**.
+* *Ejemplos:* `matematica`, `fisica`, `calculo_diferencial_e_integral`, `fisica_1`.
 
 ### Formato del Nombre del Archivo
 
@@ -32,10 +34,10 @@ El nombre debe seguir una estructura estricta compuesta por bloques separados so
 
 ### Ejemplos de Referencia
 
-* **Parcial 1:** `exams/fisica_1/P1_IS_2026_E.pdf`
-* **Reposición:** `exams/fisica_2/RP_IIS_2026_S.pdf`
-* **Suficiencia:** `exams/estadistica/S_IS_2026_E.pdf`
-* **Extraordinario:** `exams/probabilidad/P1_IS_2026_E_E.pdf`
+* **Parcial 1:** `exams/matematica/calculo_diferencial_e_integral/P1_IS_2026_E.pdf`
+* **Reposición:** `exams/matematica/calculo_diferencial_e_integral/RP_IIS_2026_S.pdf`
+* **Suficiencia:** `exams/fisica/fisica_1/S_IS_2026_E.pdf`
+* **Extraordinario:** `exams/matematica/calculo_y_algebra_lineal/P1_IS_2026_E_E.pdf`
 
 ## Cómo Contribuir
 
@@ -44,7 +46,7 @@ El nombre debe seguir una estructura estricta compuesta por bloques separados so
 
 1. Haga un fork de este repositorio en GitHub.
 2. Clone su fork en su computadora.
-3. Agregue su PDF en `exams/<materia>/`.
+3. Agregue su PDF en `exams/<escuela>/<materia>/`.
 4. Verifique que el nombre del archivo cumpla el formato requerido.
 5. Confirme sus cambios con un commit.
 6. Haga push de sus cambios a su fork.

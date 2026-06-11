@@ -2,7 +2,7 @@ const STRINGS = {
   eyebrow: "Repositorio publico",
   title: "Exámenes Anteriores ITCR",
   loading: "Cargando examenes...",
-  empty: "Aun no hay PDFs. Agrega archivos en exams/<materia>/ usando PX_XS_XXXX_E.pdf, RP_XS_XXXX_E.pdf o S_XS_XXXX_E.pdf",
+  empty: "Aun no hay PDFs. Agrega archivos en exams/<escuela>/<materia>/ usando PX_XS_XXXX_E.pdf, RP_XS_XXXX_E.pdf o S_XS_XXXX_E.pdf",
   error: "No se pudo cargar el indice. Revisa index.json o el flujo de GitHub Actions.",
   year: "Año",
   semester: "Semestre"
@@ -30,6 +30,10 @@ function normalizeText(value) {
 function updateHeaderText() {
   document.getElementById("eyebrow").textContent = STRINGS.eyebrow;
   document.getElementById("title").textContent = STRINGS.title;
+}
+
+function schoolLabel(code) {
+  return normalizeText(code);
 }
 
 function setupScrollState() {
@@ -120,11 +124,16 @@ function groupedIndex(items) {
   const root = new Map();
 
   for (const item of items) {
-    if (!root.has(item.subject)) {
-      root.set(item.subject, new Map());
+    if (!root.has(item.school)) {
+      root.set(item.school, new Map());
     }
 
-    const yearMap = root.get(item.subject);
+    const schoolMap = root.get(item.school);
+    if (!schoolMap.has(item.subject)) {
+      schoolMap.set(item.subject, new Map());
+    }
+
+    const yearMap = schoolMap.get(item.subject);
     if (!yearMap.has(item.year)) {
       yearMap.set(item.year, new Map());
     }
@@ -150,11 +159,55 @@ function groupedIndex(items) {
   return root;
 }
 
-function renderItems(items) {
+const appState = {
+  structure: new Map(),
+  schools: [],
+  currentSchool: ""
+};
+
+function renderSchoolTabs() {
+  const tabsContainer = document.getElementById("school-tabs");
+  tabsContainer.innerHTML = "";
+
+  if (!appState.schools.length) {
+    tabsContainer.hidden = true;
+    return;
+  }
+
+  tabsContainer.hidden = false;
+
+  for (const school of appState.schools) {
+    const tab = document.createElement("button");
+    tab.type = "button";
+    tab.className = `school-tab${school === appState.currentSchool ? " active" : ""}`;
+    tab.textContent = schoolLabel(school);
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-selected", String(school === appState.currentSchool));
+    tab.addEventListener("click", () => {
+      if (appState.currentSchool === school) {
+        return;
+      }
+
+      appState.currentSchool = school;
+      renderSchoolTabs();
+      renderSchoolContent();
+    });
+    tabsContainer.appendChild(tab);
+  }
+}
+
+function renderSchoolContent() {
   const container = document.getElementById("content");
   container.innerHTML = "";
 
-  if (!items.length) {
+  if (!appState.currentSchool) {
+    container.innerHTML = `<p class="state-message">${STRINGS.empty}</p>`;
+    return;
+  }
+
+  const subjects = appState.structure.get(appState.currentSchool);
+
+  if (!subjects || !subjects.size) {
     container.innerHTML = `<p class="state-message">${STRINGS.empty}</p>`;
     return;
   }
@@ -164,9 +217,7 @@ function renderItems(items) {
   const parcialTemplate = document.getElementById("parcial-template");
   const examTemplate = document.getElementById("type-template");
 
-  const structure = groupedIndex(items);
-
-  for (const [subject, years] of structure) {
+  for (const [subject, years] of subjects) {
     const subjectNode = subjectTemplate.content.firstElementChild.cloneNode(true);
     subjectNode.querySelector(".subject-title").textContent = normalizeText(subject);
     const subjectBody = subjectNode.querySelector(".subject-body");
@@ -227,6 +278,17 @@ function renderItems(items) {
   }
 }
 
+function renderApp(items) {
+  appState.structure = groupedIndex(items);
+  appState.schools = [...appState.structure.keys()].sort((a, b) => schoolLabel(a).localeCompare(schoolLabel(b)));
+  if (!appState.schools.includes(appState.currentSchool)) {
+    appState.currentSchool = appState.schools[0] || "";
+  }
+
+  renderSchoolTabs();
+  renderSchoolContent();
+}
+
 async function loadIndex() {
   const container = document.getElementById("content");
   container.innerHTML = `<p class="state-message">${STRINGS.loading}</p>`;
@@ -239,7 +301,7 @@ async function loadIndex() {
 
     const payload = await response.json();
     const items = Array.isArray(payload.items) ? payload.items : [];
-    renderItems(items);
+    renderApp(items);
   } catch (error) {
     console.error(error);
     container.innerHTML = `<p class="state-message error">${STRINGS.error}</p>`;

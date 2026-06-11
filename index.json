@@ -1,9 +1,24 @@
 {
-  "generatedAt": "2026-06-11T07:28:25.431Z",
-  "total": 42,
+  "generatedAt": "2026-06-11T09:24:58.444Z",
+  "total": 43,
   "items": [
     {
-      "path": "exams/calculo_diferencial_e_integral/P1_IS_2024_E.pdf",
+      "path": "exams/fisica/fisica_1/P1_IIS_2018_E.pdf",
+      "school": "fisica",
+      "subject": "fisica_1",
+      "year": "2018",
+      "semester": "IIS",
+      "parcial": "P1",
+      "kind": "enunciado",
+      "kindCode": "E",
+      "variant": "regular",
+      "variantCode": null,
+      "fileName": "P1_IIS_2018_E.pdf",
+      "title": "P1 IIS 2018 E"
+    },
+    {
+      "path": "exams/matematica/calculo_diferencial_e_integral/P1_IS_2024_E.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IS",
@@ -16,7 +31,8 @@
       "title": "P1 IS 2024 E"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P1_IS_2024_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P1_IS_2024_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IS",
@@ -29,7 +45,8 @@
       "title": "P1 IS 2024 S"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P2_IS_2024_E.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P2_IS_2024_E.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IS",
@@ -42,7 +59,8 @@
       "title": "P2 IS 2024 E"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P2_IS_2024_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P2_IS_2024_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IS",
@@ -55,7 +73,8 @@
       "title": "P2 IS 2024 S"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P3_IS_2024_E.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P3_IS_2024_E.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IS",
@@ -68,7 +87,8 @@
       "title": "P3 IS 2024 E"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P3_IS_2024_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P3_IS_2024_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IS",
@@ -81,7 +101,8 @@
       "title": "P3 IS 2024 S"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/RP_IS_2024_E.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/RP_IS_2024_E.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IS",
@@ -94,7 +115,8 @@
       "title": "RP IS 2024 E"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/RP_IS_2024_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/RP_IS_2024_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IS",
@@ -107,7 +129,8 @@
       "title": "RP IS 2024 S"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P1_IIS_2024_E.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P1_IIS_2024_E.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IIS",
@@ -120,7 +143,8 @@
       "title": "P1 IIS 2024 E"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P1_IIS_2024_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P1_IIS_2024_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IIS",
@@ -133,7 +157,8 @@
       "title": "P1 IIS 2024 S"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P2_IIS_2024_E.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P2_IIS_2024_E.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IIS",
@@ -146,7 +171,8 @@
       "title": "P2 IIS 2024 E"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P2_IIS_2024_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P2_IIS_2024_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IIS",
@@ -159,7 +185,8 @@
       "title": "P2 IIS 2024 S"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P3_IIS_2024_E.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P3_IIS_2024_E.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IIS",
@@ -172,7 +199,8 @@
       "title": "P3 IIS 2024 E"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P3_IIS_2024_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P3_IIS_2024_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IIS",
@@ -185,7 +213,8 @@
       "title": "P3 IIS 2024 S"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/RP_IIS_2024_E.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/RP_IIS_2024_E.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IIS",
@@ -198,7 +227,8 @@
       "title": "RP IIS 2024 E"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/RP_IIS_2024_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/RP_IIS_2024_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2024",
       "semester": "IIS",
@@ -211,7 +241,8 @@
       "title": "RP IIS 2024 S"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P1_IS_2025_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P1_IS_2025_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2025",
       "semester": "IS",
@@ -224,7 +255,8 @@
       "title": "P1 IS 2025 S"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P2_IS_2025_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P2_IS_2025_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2025",
       "semester": "IS",
@@ -237,7 +269,8 @@
       "title": "P2 IS 2025 S"
     },
     {
-      "path": "exams/calculo_diferencial_e_integral/P3_IS_2025_S.pdf",
+      "path": "exams/matematica/calculo_diferencial_e_integral/P3_IS_2025_S.pdf",
+      "school": "matematica",
       "subject": "calculo_diferencial_e_integral",
       "year": "2025",
       "semester": "IS",
@@ -250,7 +283,8 @@
       "title": "P3 IS 2025 S"
     },
     {
-      "path": "exams/calculo_y_algebra_lineal/P1_IS_2025_E_E.pdf",
+      "path": "exams/matematica/calculo_y_algebra_lineal/P1_IS_2025_E_E.pdf",
+      "school": "matematica",
       "subject": "calculo_y_algebra_lineal",
       "year": "2025",
       "semester": "IS",
@@ -263,7 +297,8 @@
       "title": "P1 IS 2025 E E"
     },
     {
-      "path": "exams/calculo_y_algebra_lineal/P1_IS_2025_E.pdf",
+      "path": "exams/matematica/calculo_y_algebra_lineal/P1_IS_2025_E.pdf",
+      "school": "matematica",
       "subject": "calculo_y_algebra_lineal",
       "year": "2025",
       "semester": "IS",
@@ -276,7 +311,8 @@
       "title": "P1 IS 2025 E"
     },
     {
-      "path": "exams/calculo_y_algebra_lineal/P2_IS_2025_E_E.pdf",
+      "path": "exams/matematica/calculo_y_algebra_lineal/P2_IS_2025_E_E.pdf",
+      "school": "matematica",
       "subject": "calculo_y_algebra_lineal",
       "year": "2025",
       "semester": "IS",
@@ -289,7 +325,8 @@
       "title": "P2 IS 2025 E E"
     },
     {
-      "path": "exams/calculo_y_algebra_lineal/P2_IS_2025_E.pdf",
+      "path": "exams/matematica/calculo_y_algebra_lineal/P2_IS_2025_E.pdf",
+      "school": "matematica",
       "subject": "calculo_y_algebra_lineal",
       "year": "2025",
       "semester": "IS",
@@ -302,7 +339,8 @@
       "title": "P2 IS 2025 E"
     },
     {
-      "path": "exams/matematica_general/P1_IS_2024_E.pdf",
+      "path": "exams/matematica/matematica_general/P1_IS_2024_E.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IS",
@@ -315,7 +353,8 @@
       "title": "P1 IS 2024 E"
     },
     {
-      "path": "exams/matematica_general/P1_IS_2024_S.pdf",
+      "path": "exams/matematica/matematica_general/P1_IS_2024_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IS",
@@ -328,7 +367,8 @@
       "title": "P1 IS 2024 S"
     },
     {
-      "path": "exams/matematica_general/P2_IS_2024_E.pdf",
+      "path": "exams/matematica/matematica_general/P2_IS_2024_E.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IS",
@@ -341,7 +381,8 @@
       "title": "P2 IS 2024 E"
     },
     {
-      "path": "exams/matematica_general/P2_IS_2024_S.pdf",
+      "path": "exams/matematica/matematica_general/P2_IS_2024_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IS",
@@ -354,7 +395,8 @@
       "title": "P2 IS 2024 S"
     },
     {
-      "path": "exams/matematica_general/P3_IS_2024_E.pdf",
+      "path": "exams/matematica/matematica_general/P3_IS_2024_E.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IS",
@@ -367,7 +409,8 @@
       "title": "P3 IS 2024 E"
     },
     {
-      "path": "exams/matematica_general/P3_IS_2024_S.pdf",
+      "path": "exams/matematica/matematica_general/P3_IS_2024_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IS",
@@ -380,7 +423,8 @@
       "title": "P3 IS 2024 S"
     },
     {
-      "path": "exams/matematica_general/RP_IS_2024_E.pdf",
+      "path": "exams/matematica/matematica_general/RP_IS_2024_E.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IS",
@@ -393,7 +437,8 @@
       "title": "RP IS 2024 E"
     },
     {
-      "path": "exams/matematica_general/RP_IS_2024_S.pdf",
+      "path": "exams/matematica/matematica_general/RP_IS_2024_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IS",
@@ -406,7 +451,8 @@
       "title": "RP IS 2024 S"
     },
     {
-      "path": "exams/matematica_general/P1_IIS_2024_E.pdf",
+      "path": "exams/matematica/matematica_general/P1_IIS_2024_E.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IIS",
@@ -419,7 +465,8 @@
       "title": "P1 IIS 2024 E"
     },
     {
-      "path": "exams/matematica_general/P1_IIS_2024_S.pdf",
+      "path": "exams/matematica/matematica_general/P1_IIS_2024_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IIS",
@@ -432,7 +479,8 @@
       "title": "P1 IIS 2024 S"
     },
     {
-      "path": "exams/matematica_general/P2_IIS_2024_E.pdf",
+      "path": "exams/matematica/matematica_general/P2_IIS_2024_E.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IIS",
@@ -445,7 +493,8 @@
       "title": "P2 IIS 2024 E"
     },
     {
-      "path": "exams/matematica_general/P2_IIS_2024_S.pdf",
+      "path": "exams/matematica/matematica_general/P2_IIS_2024_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IIS",
@@ -458,7 +507,8 @@
       "title": "P2 IIS 2024 S"
     },
     {
-      "path": "exams/matematica_general/P3_IIS_2024_E.pdf",
+      "path": "exams/matematica/matematica_general/P3_IIS_2024_E.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IIS",
@@ -471,7 +521,8 @@
       "title": "P3 IIS 2024 E"
     },
     {
-      "path": "exams/matematica_general/P3_IIS_2024_S.pdf",
+      "path": "exams/matematica/matematica_general/P3_IIS_2024_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IIS",
@@ -484,7 +535,8 @@
       "title": "P3 IIS 2024 S"
     },
     {
-      "path": "exams/matematica_general/RP_IIS_2024_E.pdf",
+      "path": "exams/matematica/matematica_general/RP_IIS_2024_E.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IIS",
@@ -497,7 +549,8 @@
       "title": "RP IIS 2024 E"
     },
     {
-      "path": "exams/matematica_general/RP_IIS_2024_S.pdf",
+      "path": "exams/matematica/matematica_general/RP_IIS_2024_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2024",
       "semester": "IIS",
@@ -510,7 +563,8 @@
       "title": "RP IIS 2024 S"
     },
     {
-      "path": "exams/matematica_general/P1_IS_2025_S.pdf",
+      "path": "exams/matematica/matematica_general/P1_IS_2025_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2025",
       "semester": "IS",
@@ -523,7 +577,8 @@
       "title": "P1 IS 2025 S"
     },
     {
-      "path": "exams/matematica_general/P2_IS_2025_S.pdf",
+      "path": "exams/matematica/matematica_general/P2_IS_2025_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2025",
       "semester": "IS",
@@ -536,7 +591,8 @@
       "title": "P2 IS 2025 S"
     },
     {
-      "path": "exams/matematica_general/P3_IS_2025_S.pdf",
+      "path": "exams/matematica/matematica_general/P3_IS_2025_S.pdf",
+      "school": "matematica",
       "subject": "matematica_general",
       "year": "2025",
       "semester": "IS",

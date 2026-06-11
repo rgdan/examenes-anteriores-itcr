@@ -7,7 +7,7 @@ This file contains technical details for local development, indexing, and GitHub
 - Frontend: static files at project root (`index.html`, `app.js`, `styles.css`)
 - Index generator: `scripts/generate-index.js`
 - Data file: `index.json` (auto-generated)
-- Source content: `exams/<subject>/<file>.pdf`
+- Source content: `exams/<escuela>/<materia>/<file>.pdf`
 - CI/CD: `.github/workflows/pages.yml`
 
 ## Local Development
@@ -40,7 +40,7 @@ Pipeline behavior:
 
 PDF not visible:
 
-- Confirm path is `exams/<subject>/<file>.pdf`
+- Confirm path is `exams/<escuela>/<materia>/<file>.pdf`
 - Confirm filename matches required format
 - Confirm extension is `.pdf`
 - Check workflow run logs

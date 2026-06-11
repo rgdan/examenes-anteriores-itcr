@@ -11,24 +11,6 @@
   --shadow: 0 8px 20px rgba(9, 34, 63, 0.08);
 }
 
-/*
-@media (prefers-color-scheme: dark) {
-  :root {
-    --brand: #0f1f35;
-    --bg: #0a1422;
-    --surface: #101f33;
-    --surface-strong: #14263d;
-    --ink: #e8f0fb;
-    --ink-soft: #b8c7da;
-    --accent: #73b3ff;
-    --ring: rgba(115, 179, 255, 0.25);
-    --line: #2b3f58;
-    --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-    color-scheme: dark;
-  }
-}
-*/
-
 * {
   box-sizing: border-box;
 }
@@ -49,7 +31,7 @@ body {
   background: var(--brand);
   color: #ffffff;
   border-top: 10px solid #ef3340;
-  border-bottom: 4px solid #001936;
+  border-bottom: 0;
   transition: border-top-width 180ms ease;
 }
 
@@ -85,6 +67,67 @@ h1 {
   font-size: 0.92rem;
 }
 
+.tabs-shell {
+  width: 100%;
+}
+
+.tabs-utility {
+  height: 4px;
+  width: 100%;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.tabs-bar {
+  width: 100%;
+  background: var(--brand);
+  border-bottom: 4px solid #001936;
+}
+
+.school-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0.7rem 1.1rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.school-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.school-tab {
+  appearance: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: #ffffff;
+  border-radius: 0;
+  padding: 0.45rem 0;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  box-shadow: none;
+  flex: 0 0 auto;
+}
+
+.school-tab:hover,
+.school-tab:focus-visible {
+  border-bottom-color: rgba(255, 255, 255, 0.55);
+  transform: none;
+}
+
+.school-tab.active {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
 .main-content {
   flex: 1;
   padding: 1.1rem;
@@ -95,6 +138,24 @@ h1 {
   margin: 0 auto;
   display: grid;
   gap: 0.8rem;
+}
+
+@media (min-width: 768px) {
+  .tabs-utility {
+    height: 4px;
+  }
+
+  .school-tabs {
+    padding: 0.85rem 1.5rem;
+  }
+
+  .main-content {
+    padding: 1.5rem;
+  }
+
+  .hero-inner {
+    padding: 1.2rem 1.5rem;
+  }
 }
 
 .subject-card {
@@ -274,14 +335,6 @@ h1 {
 @media (min-width: 768px) {
   .parcial-body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .hero-inner {
-    padding: 1.2rem 1.5rem;
-  }
-
-  .main-content {
-    padding: 1.5rem;
   }
 }
 
