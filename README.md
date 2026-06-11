@@ -10,8 +10,6 @@ Para contribuir, solo necesita agregar PDFs con el formato correcto.
 Todos los archivos deben almacenarse siguiendo esta jerarquía:
 `exams/<escuela>/<materia>/<nombre_archivo>.pdf`
 
-La interfaz agrupa el contenido por escuela en una barra de navegación superior: una línea separadora delgada y, debajo, una barra azul con pestañas horizontales.
-
 ### Convención de la Carpeta (`escuela` y `materia`)
 
 Las carpetas deben escribirse siempre en **lowercase snake_case**.
