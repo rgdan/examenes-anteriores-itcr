@@ -205,7 +205,7 @@ function renderItems(items) {
 
           const solucionBtn = document.createElement(docs.solution ? "a" : "span");
           solucionBtn.className = `doc-btn${docs.solution ? "" : " disabled"}`;
-          solucionBtn.textContent = "Solucion";
+          solucionBtn.textContent = "Solución";
           if (docs.solution) {
             solucionBtn.href = encodeURI(docs.solution.path);
             solucionBtn.target = "_blank";

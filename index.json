@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-10T08:11:00.083Z",
-  "total": 38,
+  "generatedAt": "2026-06-11T07:20:02.238Z",
+  "total": 42,
   "items": [
     {
       "path": "exams/calculo-diferencial-e-integral/P1_IS_2024_E.pdf",
@@ -380,6 +380,32 @@
       "title": "P3 IS 2024 S"
     },
     {
+      "path": "exams/matematica-general/RP_IS_2024_E.pdf",
+      "subject": "matematica-general",
+      "year": "2024",
+      "semester": "IS",
+      "parcial": "RP",
+      "kind": "enunciado",
+      "kindCode": "E",
+      "variant": "regular",
+      "variantCode": null,
+      "fileName": "RP_IS_2024_E.pdf",
+      "title": "RP IS 2024 E"
+    },
+    {
+      "path": "exams/matematica-general/RP_IS_2024_S.pdf",
+      "subject": "matematica-general",
+      "year": "2024",
+      "semester": "IS",
+      "parcial": "RP",
+      "kind": "solution",
+      "kindCode": "S",
+      "variant": "regular",
+      "variantCode": null,
+      "fileName": "RP_IS_2024_S.pdf",
+      "title": "RP IS 2024 S"
+    },
+    {
       "path": "exams/matematica-general/P1_IIS_2024_E.pdf",
       "subject": "matematica-general",
       "year": "2024",
@@ -456,6 +482,32 @@
       "variantCode": null,
       "fileName": "P3_IIS_2024_S.pdf",
       "title": "P3 IIS 2024 S"
+    },
+    {
+      "path": "exams/matematica-general/RP_IIS_2024_E.pdf",
+      "subject": "matematica-general",
+      "year": "2024",
+      "semester": "IIS",
+      "parcial": "RP",
+      "kind": "enunciado",
+      "kindCode": "E",
+      "variant": "regular",
+      "variantCode": null,
+      "fileName": "RP_IIS_2024_E.pdf",
+      "title": "RP IIS 2024 E"
+    },
+    {
+      "path": "exams/matematica-general/RP_IIS_2024_S.pdf",
+      "subject": "matematica-general",
+      "year": "2024",
+      "semester": "IIS",
+      "parcial": "RP",
+      "kind": "solution",
+      "kindCode": "S",
+      "variant": "regular",
+      "variantCode": null,
+      "fileName": "RP_IIS_2024_S.pdf",
+      "title": "RP IIS 2024 S"
     },
     {
       "path": "exams/matematica-general/P1_IS_2025_S.pdf",
