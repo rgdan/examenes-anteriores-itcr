@@ -4,9 +4,10 @@ Este documento define las convenciones para carpetas, PDFs y archivos metadata.j
 
 ## Estructura de Archivos
 
-Todos los PDFs deben almacenarse con esta jerarquía:
+Todos los PDFs deben almacenarse con una de estas jerarquías:
 
-`exams/<escuela>/<materia>/<nombre_archivo>.pdf`
+- `exams/<escuela>/<materia>/<nombre_archivo>.pdf`
+- `exams/<escuela>/<materia>/<profesor>/<nombre_archivo>.pdf`
 
 ## Convención de Carpetas
 
@@ -19,6 +20,7 @@ Reglas:
 Ejemplos:
 - escuela: matematica, fisica
 - materia: calculo_diferencial_e_integral, fisica_1
+- profesor: raquel_mora
 
 ## Formato del Nombre del PDF
 
@@ -83,9 +85,10 @@ Campos:
 - properSpelling: string con el nombre mostrado en la interfaz en lugar del nombre de carpeta.
 - courseCode: string del codigo del curso (por ejemplo, FI1101).
 - creditAmount: entero con la cantidad de creditos.
-- EsCatedrado: boolean.
+- EsCatedrado: boolean. Si es `true`, los PDFs van directamente dentro de la carpeta de la materia. Si es `false`, los PDFs deben organizarse dentro de subcarpetas por profesor.
 
 ## Notas
 
 - Si un metadata.json es invalido, la generacion de index.json puede fallar.
 - Si no existe metadata.json, la app puede usar el nombre de carpeta como respaldo.
+- Si `EsCatedrado` es `false`, cada carpeta de profesor debe usar lowercase snake_case.

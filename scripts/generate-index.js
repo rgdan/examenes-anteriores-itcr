@@ -9,11 +9,14 @@ const OUTPUT_FILE = path.join(REPO_ROOT, "index.json");
 
 const SUBJECT_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const SCHOOL_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
+const PROFESSOR_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)_(IS|IIS)_([0-9]{4})_([ES])(?:_(E))?$/i;
 const SUFICIENCIA_CODE_PATTERN = /^S_(IS|IIS)_([0-9]{4})_([ES])$/i;
 const METADATA_FILE_NAME = "metadata.json";
 const SEMESTER_ORDER = { IS: 1, IIS: 2 };
 const VARIANT_ORDER = { regular: 0, extraordinario: 1, suficiencia: 2 };
+
+const subjectMetadataCache = new Map();
 
 function titleFromFilename(fileName) {
   return fileName
@@ -213,13 +216,23 @@ function loadSchoolMetadata(school) {
 }
 
 function loadSubjectMetadata(school, subject) {
-  const absolutePath = path.join(EXAMS_DIR, school, subject, METADATA_FILE_NAME);
-  if (!fs.existsSync(absolutePath)) {
-    return defaultSubjectMetadata(subject);
+  const cacheKey = `${school}/${subject}`;
+  if (subjectMetadataCache.has(cacheKey)) {
+    return subjectMetadataCache.get(cacheKey);
   }
 
-  const { data, relativePath } = readJsonFile(absolutePath);
-  return validateSubjectMetadataFile(data, relativePath);
+  const absolutePath = path.join(EXAMS_DIR, school, subject, METADATA_FILE_NAME);
+  let metadata;
+
+  if (!fs.existsSync(absolutePath)) {
+    metadata = defaultSubjectMetadata(subject);
+  } else {
+    const { data, relativePath } = readJsonFile(absolutePath);
+    metadata = validateSubjectMetadataFile(data, relativePath);
+  }
+
+  subjectMetadataCache.set(cacheKey, metadata);
+  return metadata;
 }
 
 function collectMetadata(items) {
@@ -280,13 +293,16 @@ function validateAndBuildItem(absoluteFilePath) {
   const segments = relativePath.split("/");
   let school;
   let subject;
+  let professor = null;
   let fileName;
 
   if (segments.length === 4 && segments[0] === "exams") {
     [, school, subject, fileName] = segments;
+  } else if (segments.length === 5 && segments[0] === "exams") {
+    [, school, subject, professor, fileName] = segments;
   } else {
     throw new Error(
-      `Invalid file path depth for ${relativePath}. Expected exams/<school>/<subject>/<file>.pdf`
+      `Invalid file path depth for ${relativePath}. Expected exams/<school>/<subject>/<file>.pdf or exams/<school>/<subject>/<professor>/<file>.pdf`
     );
   }
 
@@ -296,6 +312,24 @@ function validateAndBuildItem(absoluteFilePath) {
 
   if (!SUBJECT_PATTERN.test(subject)) {
     throw new Error(`Invalid subject folder '${subject}' in ${relativePath}. Use lowercase snake_case only.`);
+  }
+
+  const subjectMetadata = loadSubjectMetadata(school, subject);
+
+  if (professor) {
+    if (!PROFESSOR_PATTERN.test(professor)) {
+      throw new Error(`Invalid professor folder '${professor}' in ${relativePath}. Use lowercase snake_case only.`);
+    }
+
+    if (subjectMetadata.EsCatedrado) {
+      throw new Error(
+        `Invalid professor subfolder in ${relativePath}. Subject '${school}/${subject}' is marked as EsCatedrado=true.`
+      );
+    }
+  } else if (!subjectMetadata.EsCatedrado) {
+    throw new Error(
+      `Invalid file path for ${relativePath}. Subject '${school}/${subject}' is marked as EsCatedrado=false and must store PDFs under exams/<school>/<subject>/<professor>/.`
+    );
   }
 
   const parsedCode = parseFileCode(fileName);
@@ -309,6 +343,7 @@ function validateAndBuildItem(absoluteFilePath) {
     path: relativePath,
     school,
     subject,
+    professor,
     year: parsedCode.year,
     semester: parsedCode.semester,
     parcial: parsedCode.parcial,
@@ -335,6 +370,7 @@ function generateIndex() {
     return (
       a.school.localeCompare(b.school) ||
       a.subject.localeCompare(b.subject) ||
+      (a.professor || "").localeCompare(b.professor || "") ||
       a.year.localeCompare(b.year) ||
       semesterSort(a, b) ||
       parcialSort(a, b) ||

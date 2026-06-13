@@ -5,6 +5,7 @@ const STRINGS = {
   loading: "Cargando examenes...",
   empty: "Aun no hay PDFs. Agrega archivos en exams/<escuela>/<materia>/ usando PX_XS_XXXX_E.pdf, RP_XS_XXXX_E.pdf o S_XS_XXXX_E.pdf",
   error: "No se pudo cargar el indice. Revisa index.json o el flujo de GitHub Actions.",
+  professor: "Profesor",
   year: "Año",
   semester: "Semestre",
   homeTitle: "Bienvenido",
@@ -78,6 +79,15 @@ function subjectCourseCode(school, subject) {
   }
 
   return metadata.courseCode ? metadata.courseCode : "";
+}
+
+function subjectIsCatedrado(school, subject) {
+  const metadata = appState.subjectMetadata.get(subjectKey(school, subject));
+  return metadata ? metadata.EsCatedrado !== false : true;
+}
+
+function professorLabel(code) {
+  return normalizeText(code);
 }
 
 function setupScrollState() {
@@ -164,7 +174,7 @@ function parcialGroupSort(a, b) {
   return parcialSort(a.baseParcial, b.baseParcial);
 }
 
-function groupedIndex(items) {
+function groupedIndex(items, subjectMetadata) {
   const root = new Map();
 
   for (const item of items) {
@@ -174,10 +184,21 @@ function groupedIndex(items) {
 
     const schoolMap = root.get(item.school);
     if (!schoolMap.has(item.subject)) {
-      schoolMap.set(item.subject, new Map());
+      const metadata = subjectMetadata.get(subjectKey(item.school, item.subject));
+      schoolMap.set(item.subject, {
+        isCatedrado: metadata ? metadata.EsCatedrado !== false : true,
+        professors: new Map()
+      });
     }
 
-    const yearMap = schoolMap.get(item.subject);
+    const subjectEntry = schoolMap.get(item.subject);
+    const professorKey = subjectEntry.isCatedrado ? "__catedra__" : item.professor;
+
+    if (!subjectEntry.professors.has(professorKey)) {
+      subjectEntry.professors.set(professorKey, new Map());
+    }
+
+    const yearMap = subjectEntry.professors.get(professorKey);
     if (!yearMap.has(item.year)) {
       yearMap.set(item.year, new Map());
     }
@@ -203,6 +224,60 @@ function groupedIndex(items) {
   return root;
 }
 
+function renderYearBlocks(years, parentNode, semesterTemplate, parcialTemplate, examTemplate) {
+  const sortedYears = [...years.keys()].sort((a, b) => b.localeCompare(a));
+
+  for (const year of sortedYears) {
+    const semesters = years.get(year);
+    const yearNode = semesterTemplate.content.firstElementChild.cloneNode(true);
+    yearNode.querySelector(".semester-title").textContent = `${STRINGS.year} ${year}`;
+    const yearBody = yearNode.querySelector(".semester-body");
+
+    const sortedSemesters = [...semesters.keys()].sort(semesterSort);
+    for (const semester of sortedSemesters) {
+      const parciales = semesters.get(semester);
+      const semesterNode = parcialTemplate.content.firstElementChild.cloneNode(true);
+      semesterNode.querySelector(".parcial-title").textContent = `${STRINGS.semester} ${semesterLabel(semester)}`;
+      const semesterBody = semesterNode.querySelector(".parcial-body");
+
+      const sortedParciales = [...parciales.values()].sort(parcialGroupSort);
+      for (const parcial of sortedParciales) {
+        const docs = parcial.docs;
+        const examNode = examTemplate.content.firstElementChild.cloneNode(true);
+        examNode.querySelector(".type-title").textContent = parcial.label;
+
+        const actions = examNode.querySelector(".file-list");
+
+        const enunciadoBtn = document.createElement(docs.enunciado ? "a" : "span");
+        enunciadoBtn.className = `doc-btn${docs.enunciado ? "" : " disabled"}`;
+        enunciadoBtn.textContent = "Enunciado";
+        if (docs.enunciado) {
+          enunciadoBtn.href = encodeURI(docs.enunciado.path);
+          enunciadoBtn.target = "_blank";
+          enunciadoBtn.rel = "noopener noreferrer";
+        }
+
+        const solucionBtn = document.createElement(docs.solution ? "a" : "span");
+        solucionBtn.className = `doc-btn${docs.solution ? "" : " disabled"}`;
+        solucionBtn.textContent = "Solución";
+        if (docs.solution) {
+          solucionBtn.href = encodeURI(docs.solution.path);
+          solucionBtn.target = "_blank";
+          solucionBtn.rel = "noopener noreferrer";
+        }
+
+        actions.appendChild(enunciadoBtn);
+        actions.appendChild(solucionBtn);
+        semesterBody.appendChild(examNode);
+      }
+
+      yearBody.appendChild(semesterNode);
+    }
+
+    parentNode.appendChild(yearNode);
+  }
+}
+
 const appState = {
   structure: new Map(),
   schoolMetadata: new Map(),
@@ -220,15 +295,17 @@ function homeStats() {
   for (const subjects of appState.structure.values()) {
     subjectCount += subjects.size;
 
-    for (const years of subjects.values()) {
-      for (const semesters of years.values()) {
-        for (const parciales of semesters.values()) {
-          for (const parcial of parciales.values()) {
-            if (parcial.docs.enunciado) {
-              examCount += 1;
-            }
-            if (parcial.docs.solution) {
-              examCount += 1;
+    for (const subjectEntry of subjects.values()) {
+      for (const years of subjectEntry.professors.values()) {
+        for (const semesters of years.values()) {
+          for (const parciales of semesters.values()) {
+            for (const parcial of parciales.values()) {
+              if (parcial.docs.enunciado) {
+                examCount += 1;
+              }
+              if (parcial.docs.solution) {
+                examCount += 1;
+              }
             }
           }
         }
@@ -468,6 +545,7 @@ function renderSchoolContent() {
   }
 
   const subjectTemplate = document.getElementById("subject-template");
+  const professorTemplate = document.getElementById("professor-template");
   const semesterTemplate = document.getElementById("semester-template");
   const parcialTemplate = document.getElementById("parcial-template");
   const examTemplate = document.getElementById("type-template");
@@ -481,7 +559,7 @@ function renderSchoolContent() {
   const subjectToOpen = appState.pendingOpenSubject;
   let openedFromSearch = false;
 
-  for (const [subject, years] of sortedSubjects) {
+  for (const [subject, subjectEntry] of sortedSubjects) {
     const subjectNode = subjectTemplate.content.firstElementChild.cloneNode(true);
     if (!openedFromSearch && subjectToOpen && subject === subjectToOpen) {
       subjectNode.open = true;
@@ -506,56 +584,25 @@ function renderSchoolContent() {
 
     const subjectBody = subjectNode.querySelector(".subject-body");
 
-    const sortedYears = [...years.keys()].sort((a, b) => a.localeCompare(b));
+    if (subjectEntry.isCatedrado) {
+      const catedraYears = subjectEntry.professors.get("__catedra__") || new Map();
+      renderYearBlocks(catedraYears, subjectBody, semesterTemplate, parcialTemplate, examTemplate);
+    } else {
+      const sortedProfessors = [...subjectEntry.professors.entries()].sort((a, b) => {
+        return professorLabel(a[0]).localeCompare(professorLabel(b[0]), "es", { sensitivity: "base" });
+      });
 
-    for (const year of sortedYears) {
-      const semesters = years.get(year);
-      const yearNode = semesterTemplate.content.firstElementChild.cloneNode(true);
-      yearNode.querySelector(".semester-title").textContent = `${STRINGS.year} ${year}`;
-      const yearBody = yearNode.querySelector(".semester-body");
-
-      const sortedSemesters = [...semesters.keys()].sort(semesterSort);
-      for (const semester of sortedSemesters) {
-        const parciales = semesters.get(semester);
-        const semesterNode = parcialTemplate.content.firstElementChild.cloneNode(true);
-        semesterNode.querySelector(".parcial-title").textContent = `${STRINGS.semester} ${semesterLabel(semester)}`;
-        const semesterBody = semesterNode.querySelector(".parcial-body");
-
-        const sortedParciales = [...parciales.values()].sort(parcialGroupSort);
-        for (const parcial of sortedParciales) {
-          const docs = parcial.docs;
-          const examNode = examTemplate.content.firstElementChild.cloneNode(true);
-          examNode.querySelector(".type-title").textContent = parcial.label;
-
-          const actions = examNode.querySelector(".file-list");
-
-          const enunciadoBtn = document.createElement(docs.enunciado ? "a" : "span");
-          enunciadoBtn.className = `doc-btn${docs.enunciado ? "" : " disabled"}`;
-          enunciadoBtn.textContent = "Enunciado";
-          if (docs.enunciado) {
-            enunciadoBtn.href = encodeURI(docs.enunciado.path);
-            enunciadoBtn.target = "_blank";
-            enunciadoBtn.rel = "noopener noreferrer";
-          }
-
-          const solucionBtn = document.createElement(docs.solution ? "a" : "span");
-          solucionBtn.className = `doc-btn${docs.solution ? "" : " disabled"}`;
-          solucionBtn.textContent = "Solución";
-          if (docs.solution) {
-            solucionBtn.href = encodeURI(docs.solution.path);
-            solucionBtn.target = "_blank";
-            solucionBtn.rel = "noopener noreferrer";
-          }
-
-          actions.appendChild(enunciadoBtn);
-          actions.appendChild(solucionBtn);
-          semesterBody.appendChild(examNode);
+      for (const [professor, years] of sortedProfessors) {
+        const professorNode = professorTemplate.content.firstElementChild.cloneNode(true);
+        if (subjectToOpen && subject === subjectToOpen) {
+          professorNode.open = true;
         }
 
-        yearBody.appendChild(semesterNode);
+        professorNode.querySelector(".professor-title").textContent = professorLabel(professor);
+        const professorBody = professorNode.querySelector(".professor-body");
+        renderYearBlocks(years, professorBody, semesterTemplate, parcialTemplate, examTemplate);
+        subjectBody.appendChild(professorNode);
       }
-
-      subjectBody.appendChild(yearNode);
     }
 
     container.appendChild(subjectNode);
@@ -567,9 +614,9 @@ function renderSchoolContent() {
 }
 
 function renderApp(items, schoolMetadata, subjectMetadata) {
-  appState.structure = groupedIndex(items);
   appState.schoolMetadata = new Map(Object.entries(schoolMetadata));
   appState.subjectMetadata = new Map(Object.entries(subjectMetadata));
+  appState.structure = groupedIndex(items, appState.subjectMetadata);
   appState.schools = [...appState.structure.keys()].sort((a, b) => schoolLabel(a).localeCompare(schoolLabel(b)));
   if (appState.currentSchool !== HOME_TAB_KEY && !appState.schools.includes(appState.currentSchool)) {
     appState.currentSchool = HOME_TAB_KEY;

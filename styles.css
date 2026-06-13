@@ -336,18 +336,21 @@ h1 {
 }
 
 .subject-title::-webkit-details-marker,
+.professor-title::-webkit-details-marker,
 .semester-title::-webkit-details-marker,
 .parcial-title::-webkit-details-marker {
   display: none;
 }
 
 .subject-title::marker,
+.professor-title::marker,
 .semester-title::marker,
 .parcial-title::marker {
   content: "";
 }
 
 .subject-title::after,
+.professor-title::after,
 .semester-title::after,
 .parcial-title::after {
   content: "▾";
@@ -359,12 +362,14 @@ h1 {
 }
 
 .subject-card[open] > .subject-title::after,
+.professor-block[open] > .professor-title::after,
 .semester-block[open] > .semester-title::after,
 .parcial-block[open] > .parcial-title::after {
   transform: rotate(180deg);
 }
 
 .subject-body,
+.professor-body,
 .semester-body,
 .parcial-body {
   display: grid;
@@ -372,6 +377,7 @@ h1 {
   padding: 0 0.9rem 0.9rem;
 }
 
+.professor-block,
 .semester-block,
 .parcial-block,
 .type-block {
@@ -381,6 +387,7 @@ h1 {
   overflow: hidden;
 }
 
+.professor-title,
 .semester-title,
 .parcial-title {
   list-style: none;
@@ -393,10 +400,16 @@ h1 {
   grid-template-columns: 1fr;
 }
 
+.professor-title,
 .semester-title,
 .parcial-title,
 .type-title {
   margin: 0;
+}
+
+.professor-title {
+  color: var(--ink);
+  font-size: 0.96rem;
 }
 
 .semester-title {
