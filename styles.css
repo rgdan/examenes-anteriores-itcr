@@ -179,6 +179,12 @@ h1 {
   color: var(--ink-soft);
 }
 
+.home-disclaimer {
+  margin-top: 0.65rem;
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
 .home-search-input {
   width: 100%;
   margin-top: 0.55rem;

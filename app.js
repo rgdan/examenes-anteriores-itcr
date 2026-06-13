@@ -9,6 +9,7 @@ const STRINGS = {
   semester: "Semestre",
   homeTitle: "Bienvenido",
   homeText: "Este repositorio reune examenes anteriores compartidos por estudiantes. Selecciona una escuela en las pestañas para ver las materias y sus examenes.",
+  homeDisclaimer: "Es importante señalar que el contenido de exámenes previos no necesariamente refleja la distribución de temas del examen actual.",
   homeSearchTitle: "Buscar",
   homeSearchPlaceholder: "Buscar por escuela, materia o codigo de curso",
   homeSearchHint: "Escribe para encontrar materias y escuelas.",
@@ -357,8 +358,13 @@ function renderHomeContent(container) {
   text.className = "home-text";
   text.textContent = STRINGS.homeText;
 
+  const disclaimer = document.createElement("p");
+  disclaimer.className = "home-text home-disclaimer";
+  disclaimer.textContent = STRINGS.homeDisclaimer;
+
   hero.appendChild(title);
   hero.appendChild(text);
+  hero.appendChild(disclaimer);
   wrapper.appendChild(hero);
 
   const searchCard = document.createElement("article");
