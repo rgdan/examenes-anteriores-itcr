@@ -8,7 +8,14 @@ const STRINGS = {
   year: "Año",
   semester: "Semestre",
   homeTitle: "Bienvenido",
-  homeText: "Este repositorio reune examenes anteriores compartidos por estudiantes. Selecciona una escuela en las pestañas para ver las materias y sus examenes."
+  homeText: "Este repositorio reune examenes anteriores compartidos por estudiantes. Selecciona una escuela en las pestañas para ver las materias y sus examenes.",
+  homeSearchTitle: "Buscar",
+  homeSearchPlaceholder: "Buscar por escuela, materia o codigo de curso",
+  homeSearchHint: "Escribe para encontrar materias y escuelas.",
+  homeSearchEmpty: "No hay resultados para esa busqueda.",
+  homeResultSchool: "Escuela",
+  homeResultSubject: "Materia",
+  homeOpen: "Abrir"
 };
 
 const HOME_TAB_KEY = "__home__";
@@ -30,6 +37,13 @@ function normalizeText(value) {
     .replace(/\s+/g, " ")
     .trim()
     .replace(/\b\w/g, (match) => match.toUpperCase());
+}
+
+function foldText(value) {
+  return String(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
 }
 
 function subjectKey(school, subject) {
@@ -224,6 +238,108 @@ function homeStats() {
   return { schoolCount, subjectCount, examCount };
 }
 
+function buildHomeSearchIndex() {
+  const rows = [];
+
+  for (const school of appState.schools) {
+    const schoolName = schoolLabel(school);
+    rows.push({
+      kind: "school",
+      school,
+      title: schoolName,
+      subtitle: school,
+      searchText: `${schoolName} ${school}`
+    });
+
+    const subjects = appState.structure.get(school);
+    if (!subjects) {
+      continue;
+    }
+
+    for (const subject of subjects.keys()) {
+      const subjectName = subjectLabel(school, subject);
+      const code = subjectCourseCode(school, subject);
+      rows.push({
+        kind: "subject",
+        school,
+        subject,
+        title: subjectName,
+        subtitle: code ? `${schoolName} | ${code}` : schoolName,
+        searchText: `${subjectName} ${subject} ${schoolName} ${school} ${code}`
+      });
+    }
+  }
+
+  return rows;
+}
+
+function renderHomeSearchResults(resultList, query) {
+  resultList.innerHTML = "";
+  const trimmed = query.trim();
+
+  if (!trimmed) {
+    const hint = document.createElement("p");
+    hint.className = "home-search-state";
+    hint.textContent = STRINGS.homeSearchHint;
+    resultList.appendChild(hint);
+    return;
+  }
+
+  const index = buildHomeSearchIndex();
+  const folded = foldText(trimmed);
+  const matches = index
+    .filter((row) => foldText(row.searchText).includes(folded))
+    .sort((a, b) => a.title.localeCompare(b.title, "es", { sensitivity: "base" }))
+    .slice(0, 25);
+
+  if (!matches.length) {
+    const empty = document.createElement("p");
+    empty.className = "home-search-state";
+    empty.textContent = STRINGS.homeSearchEmpty;
+    resultList.appendChild(empty);
+    return;
+  }
+
+  for (const item of matches) {
+    const row = document.createElement("article");
+    row.className = "home-search-item";
+
+    const body = document.createElement("div");
+    body.className = "home-search-item-body";
+
+    const tag = document.createElement("span");
+    tag.className = "home-search-tag";
+    tag.textContent = item.kind === "school" ? STRINGS.homeResultSchool : STRINGS.homeResultSubject;
+
+    const title = document.createElement("p");
+    title.className = "home-search-item-title";
+    title.textContent = item.title;
+
+    const subtitle = document.createElement("p");
+    subtitle.className = "home-search-item-subtitle";
+    subtitle.textContent = item.subtitle;
+
+    body.appendChild(tag);
+    body.appendChild(title);
+    body.appendChild(subtitle);
+
+    const action = document.createElement("button");
+    action.type = "button";
+    action.className = "home-open-btn";
+    action.textContent = STRINGS.homeOpen;
+    action.addEventListener("click", () => {
+      appState.currentSchool = item.school;
+      renderSchoolTabs();
+      renderSchoolContent();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    row.appendChild(body);
+    row.appendChild(action);
+    resultList.appendChild(row);
+  }
+}
+
 function renderHomeContent(container) {
   container.innerHTML = "";
 
@@ -244,6 +360,33 @@ function renderHomeContent(container) {
   hero.appendChild(title);
   hero.appendChild(text);
   wrapper.appendChild(hero);
+
+  const searchCard = document.createElement("article");
+  searchCard.className = "home-card";
+
+  const searchTitle = document.createElement("h3");
+  searchTitle.className = "home-subtitle";
+  searchTitle.textContent = STRINGS.homeSearchTitle;
+
+  const searchInput = document.createElement("input");
+  searchInput.className = "home-search-input";
+  searchInput.type = "search";
+  searchInput.placeholder = STRINGS.homeSearchPlaceholder;
+  searchInput.autocomplete = "off";
+
+  const resultList = document.createElement("div");
+  resultList.className = "home-search-results";
+
+  searchInput.addEventListener("input", (event) => {
+    renderHomeSearchResults(resultList, event.target.value);
+  });
+
+  searchCard.appendChild(searchTitle);
+  searchCard.appendChild(searchInput);
+  searchCard.appendChild(resultList);
+  wrapper.appendChild(searchCard);
+
+  renderHomeSearchResults(resultList, "");
 
   const stats = homeStats();
   const statsCard = document.createElement("article");
