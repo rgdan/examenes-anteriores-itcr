@@ -6,11 +6,11 @@ Este documento define las convenciones para carpetas, PDFs y archivos metadata.j
 
 Todos los PDFs deben almacenarse con esta jerarquía:
 
-exams/<escuela>/<materia>/<nombre_archivo>.pdf
+`exams/<escuela>/<materia>/<nombre_archivo>.pdf`
 
 ## Convención de Carpetas
 
-Las carpetas de escuela y materia deben estar en lowercase snake_case.
+Las carpetas de escuela y materia deben estar en **lowercase snake_case**.
 
 Reglas:
 - Solo letras minúsculas y números.
@@ -24,7 +24,7 @@ Ejemplos:
 
 El nombre del archivo debe seguir este patrón:
 
-[TIPO][NUM]_[SEMESTRE]_[ANO]_[TIPO_DOC][EXTRA].pdf
+`[TIPO][NUM]_[SEMESTRE]_[ANO]_[TIPO_DOC][EXTRA].pdf`
 
 | Segmento | Descripción | Valores posibles |
 | :--- | :--- | :--- |
@@ -48,16 +48,17 @@ Todos los archivos de metadatos deben llamarse exactamente metadata.json.
 ### Metadata de Escuela
 
 Ubicación:
-- exams/<escuela>/metadata.json
+`- exams/<escuela>/metadata.json`
 
 Estructura:
 
+```json
 {
   "properSpelling": "Física",
   "EsCatedrado": true,
   "informationBlurb": ""
 }
-
+```
 
 Campos:
 - properSpelling: string con el nombre mostrado en la interfaz en lugar del nombre de carpeta.
@@ -67,19 +68,21 @@ Campos:
 ### Metadata de Materia
 
 Ubicación:
-- exams/<escuela>/<materia>/metadata.json
+`- exams/<escuela>/<materia>/metadata.json`
 
 Estructura:
 
+```json
 {
   "properSpelling": "Física 1",
   "courseCode": "FI1101",
   "creditAmount": 3
 }
+```
 
 Campos:
 - properSpelling: string con el nombre mostrado en la interfaz en lugar del nombre de carpeta.
-- courseCode: string del codigo del curso (por ejemplo, MA-101).
+- courseCode: string del codigo del curso (por ejemplo, FI1101).
 - creditAmount: entero con la cantidad de creditos.
 
 ## Notas
