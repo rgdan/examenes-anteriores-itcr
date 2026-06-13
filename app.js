@@ -11,10 +11,9 @@ const STRINGS = {
   homeText: "Este repositorio reune examenes anteriores compartidos por estudiantes. Selecciona una escuela en las pestañas para ver las materias y sus examenes.",
   homeDisclaimer: "Es importante señalar que el contenido de exámenes previos no necesariamente refleja la distribución de temas del examen actual.",
   homeSearchTitle: "Buscar",
-  homeSearchPlaceholder: "Buscar por escuela, materia o codigo de curso",
-  homeSearchHint: "Escribe para encontrar materias y escuelas.",
+  homeSearchPlaceholder: "Buscar por materia o codigo de curso",
+  homeSearchHint: "Escribe para encontrar materias.",
   homeSearchEmpty: "No hay resultados para esa busqueda.",
-  homeResultSchool: "Escuela",
   homeResultSubject: "Materia",
   homeOpen: "Abrir"
 };
@@ -209,7 +208,8 @@ const appState = {
   schoolMetadata: new Map(),
   subjectMetadata: new Map(),
   schools: [],
-  currentSchool: HOME_TAB_KEY
+  currentSchool: HOME_TAB_KEY,
+  pendingOpenSubject: ""
 };
 
 function homeStats() {
@@ -244,13 +244,6 @@ function buildHomeSearchIndex() {
 
   for (const school of appState.schools) {
     const schoolName = schoolLabel(school);
-    rows.push({
-      kind: "school",
-      school,
-      title: schoolName,
-      subtitle: school,
-      searchText: `${schoolName} ${school}`
-    });
 
     const subjects = appState.structure.get(school);
     if (!subjects) {
@@ -308,10 +301,6 @@ function renderHomeSearchResults(resultList, query) {
     const body = document.createElement("div");
     body.className = "home-search-item-body";
 
-    const tag = document.createElement("span");
-    tag.className = "home-search-tag";
-    tag.textContent = item.kind === "school" ? STRINGS.homeResultSchool : STRINGS.homeResultSubject;
-
     const title = document.createElement("p");
     title.className = "home-search-item-title";
     title.textContent = item.title;
@@ -320,7 +309,6 @@ function renderHomeSearchResults(resultList, query) {
     subtitle.className = "home-search-item-subtitle";
     subtitle.textContent = item.subtitle;
 
-    body.appendChild(tag);
     body.appendChild(title);
     body.appendChild(subtitle);
 
@@ -330,6 +318,7 @@ function renderHomeSearchResults(resultList, query) {
     action.textContent = STRINGS.homeOpen;
     action.addEventListener("click", () => {
       appState.currentSchool = item.school;
+      appState.pendingOpenSubject = item.subject || "";
       renderSchoolTabs();
       renderSchoolContent();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -489,8 +478,16 @@ function renderSchoolContent() {
     });
   });
 
+  const subjectToOpen = appState.pendingOpenSubject;
+  let openedFromSearch = false;
+
   for (const [subject, years] of sortedSubjects) {
     const subjectNode = subjectTemplate.content.firstElementChild.cloneNode(true);
+    if (!openedFromSearch && subjectToOpen && subject === subjectToOpen) {
+      subjectNode.open = true;
+      openedFromSearch = true;
+    }
+
     const subjectTitle = subjectNode.querySelector(".subject-title");
     const name = document.createElement("span");
     name.className = "subject-name";
@@ -562,6 +559,10 @@ function renderSchoolContent() {
     }
 
     container.appendChild(subjectNode);
+  }
+
+  if (openedFromSearch) {
+    appState.pendingOpenSubject = "";
   }
 }
 
