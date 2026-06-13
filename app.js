@@ -1,12 +1,17 @@
 const STRINGS = {
   eyebrow: "Repositorio publico",
   title: "Exámenes Anteriores ITCR",
+  homeTab: "Inicio",
   loading: "Cargando examenes...",
   empty: "Aun no hay PDFs. Agrega archivos en exams/<escuela>/<materia>/ usando PX_XS_XXXX_E.pdf, RP_XS_XXXX_E.pdf o S_XS_XXXX_E.pdf",
   error: "No se pudo cargar el indice. Revisa index.json o el flujo de GitHub Actions.",
   year: "Año",
-  semester: "Semestre"
+  semester: "Semestre",
+  homeTitle: "Bienvenido",
+  homeText: "Este repositorio reune examenes anteriores compartidos por estudiantes. Selecciona una escuela en las pestañas para ver las materias y sus examenes."
 };
+
+const HOME_TAB_KEY = "__home__";
 
 const SEMESTER_ORDER = { IS: 1, IIS: 2 };
 const SEMESTER_LABELS = { IS: "I", IIS: "II" };
@@ -189,19 +194,91 @@ const appState = {
   schoolMetadata: new Map(),
   subjectMetadata: new Map(),
   schools: [],
-  currentSchool: ""
+  currentSchool: HOME_TAB_KEY
 };
+
+function homeStats() {
+  const schoolCount = appState.schools.length;
+  let subjectCount = 0;
+  let examCount = 0;
+
+  for (const subjects of appState.structure.values()) {
+    subjectCount += subjects.size;
+
+    for (const years of subjects.values()) {
+      for (const semesters of years.values()) {
+        for (const parciales of semesters.values()) {
+          for (const parcial of parciales.values()) {
+            if (parcial.docs.enunciado) {
+              examCount += 1;
+            }
+            if (parcial.docs.solution) {
+              examCount += 1;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return { schoolCount, subjectCount, examCount };
+}
+
+function renderHomeContent(container) {
+  container.innerHTML = "";
+
+  const wrapper = document.createElement("section");
+  wrapper.className = "home-view";
+
+  const hero = document.createElement("article");
+  hero.className = "home-card";
+
+  const title = document.createElement("h2");
+  title.className = "home-title";
+  title.textContent = STRINGS.homeTitle;
+
+  const text = document.createElement("p");
+  text.className = "home-text";
+  text.textContent = STRINGS.homeText;
+
+  hero.appendChild(title);
+  hero.appendChild(text);
+  wrapper.appendChild(hero);
+
+  const stats = homeStats();
+  const statsCard = document.createElement("article");
+  statsCard.className = "home-card home-stats";
+  statsCard.innerHTML = `
+    <p class="home-stat"><strong>${stats.schoolCount}</strong> escuelas</p>
+    <p class="home-stat"><strong>${stats.subjectCount}</strong> materias</p>
+    <p class="home-stat"><strong>${stats.examCount}</strong> PDFs</p>
+  `;
+  wrapper.appendChild(statsCard);
+
+  container.appendChild(wrapper);
+}
 
 function renderSchoolTabs() {
   const tabsContainer = document.getElementById("school-tabs");
   tabsContainer.innerHTML = "";
-
-  if (!appState.schools.length) {
-    tabsContainer.hidden = true;
-    return;
-  }
-
   tabsContainer.hidden = false;
+
+  const homeTab = document.createElement("button");
+  homeTab.type = "button";
+  homeTab.className = `school-tab${appState.currentSchool === HOME_TAB_KEY ? " active" : ""}`;
+  homeTab.textContent = STRINGS.homeTab;
+  homeTab.setAttribute("role", "tab");
+  homeTab.setAttribute("aria-selected", String(appState.currentSchool === HOME_TAB_KEY));
+  homeTab.addEventListener("click", () => {
+    if (appState.currentSchool === HOME_TAB_KEY) {
+      return;
+    }
+
+    appState.currentSchool = HOME_TAB_KEY;
+    renderSchoolTabs();
+    renderSchoolContent();
+  });
+  tabsContainer.appendChild(homeTab);
 
   for (const school of appState.schools) {
     const tab = document.createElement("button");
@@ -226,6 +303,11 @@ function renderSchoolTabs() {
 function renderSchoolContent() {
   const container = document.getElementById("content");
   container.innerHTML = "";
+
+  if (appState.currentSchool === HOME_TAB_KEY) {
+    renderHomeContent(container);
+    return;
+  }
 
   if (!appState.currentSchool) {
     container.innerHTML = `<p class="state-message">${STRINGS.empty}</p>`;
@@ -339,8 +421,8 @@ function renderApp(items, schoolMetadata, subjectMetadata) {
   appState.schoolMetadata = new Map(Object.entries(schoolMetadata));
   appState.subjectMetadata = new Map(Object.entries(subjectMetadata));
   appState.schools = [...appState.structure.keys()].sort((a, b) => schoolLabel(a).localeCompare(schoolLabel(b)));
-  if (!appState.schools.includes(appState.currentSchool)) {
-    appState.currentSchool = appState.schools[0] || "";
+  if (appState.currentSchool !== HOME_TAB_KEY && !appState.schools.includes(appState.currentSchool)) {
+    appState.currentSchool = HOME_TAB_KEY;
   }
 
   renderSchoolTabs();

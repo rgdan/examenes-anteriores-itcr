@@ -48,7 +48,7 @@ Todos los archivos de metadatos deben llamarse exactamente metadata.json.
 ### Metadata de Escuela
 
 Ubicación:
-`- exams/<escuela>/metadata.json`
+- `exams/<escuela>/metadata.json`
 
 Estructura:
 
@@ -68,7 +68,7 @@ Campos:
 ### Metadata de Materia
 
 Ubicación:
-`- exams/<escuela>/<materia>/metadata.json`
+- `exams/<escuela>/<materia>/metadata.json`
 
 Estructura:
 
