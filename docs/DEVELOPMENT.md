@@ -9,6 +9,7 @@
 - Metadata files:
 	- `exams/<escuela>/metadata.json`
 	- `exams/<escuela>/<materia>/metadata.json`
+	- `EsCatedrado` now belongs to materia metadata only.
 - CI/CD: `.github/workflows/pages.yml`
 
 ## Local Development

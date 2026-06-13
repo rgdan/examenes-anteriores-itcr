@@ -160,7 +160,6 @@ function readJsonFile(absolutePath) {
 function defaultSchoolMetadata(school) {
   return {
     properSpelling: titleFromSlug(school),
-    EsCatedrado: false,
     informationBlurb: ""
   };
 }
@@ -169,7 +168,8 @@ function defaultSubjectMetadata(subject) {
   return {
     properSpelling: titleFromSlug(subject),
     courseCode: "",
-    creditAmount: null
+    creditAmount: 0,
+    EsCatedrado: true
   };
 }
 
@@ -180,7 +180,6 @@ function validateSchoolMetadataFile(data, relativePath) {
 
   return {
     properSpelling: assertNonEmptyString(data.properSpelling, "properSpelling", relativePath),
-    EsCatedrado: assertBoolean(data.EsCatedrado, "EsCatedrado", relativePath),
     informationBlurb: assertString(data.informationBlurb, "informationBlurb", relativePath)
   };
 }
@@ -198,7 +197,8 @@ function validateSubjectMetadataFile(data, relativePath) {
   return {
     properSpelling: assertNonEmptyString(data.properSpelling, "properSpelling", relativePath),
     courseCode: assertString(data.courseCode, "courseCode", relativePath).trim(),
-    creditAmount
+    creditAmount,
+    EsCatedrado: assertBoolean(data.EsCatedrado, "EsCatedrado", relativePath)
   };
 }
 

@@ -55,14 +55,12 @@ Estructura:
 ```json
 {
   "properSpelling": "Física",
-  "EsCatedrado": true,
   "informationBlurb": ""
 }
 ```
 
 Campos:
 - properSpelling: string con el nombre mostrado en la interfaz en lugar del nombre de carpeta.
-- EsCatedrado: boolean.
 - informationBlurb: string corto mostrado arriba de todas las materias de la escuela. Puede ser vacio.
 
 ### Metadata de Materia
@@ -76,7 +74,8 @@ Estructura:
 {
   "properSpelling": "Física 1",
   "courseCode": "FI1101",
-  "creditAmount": 3
+  "creditAmount": 3,
+  "EsCatedrado": true
 }
 ```
 
@@ -84,6 +83,7 @@ Campos:
 - properSpelling: string con el nombre mostrado en la interfaz en lugar del nombre de carpeta.
 - courseCode: string del codigo del curso (por ejemplo, FI1101).
 - creditAmount: entero con la cantidad de creditos.
+- EsCatedrado: boolean.
 
 ## Notas
 
