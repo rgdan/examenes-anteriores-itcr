@@ -8,6 +8,9 @@ This file contains technical details for local development, indexing, and GitHub
 - Index generator: `scripts/generate-index.js`
 - Data file: `index.json` (auto-generated)
 - Source content: `exams/<escuela>/<materia>/<file>.pdf`
+- Optional metadata files:
+	- `exams/<escuela>/metadata.json`
+	- `exams/<escuela>/<materia>/metadata.json`
 - CI/CD: `.github/workflows/pages.yml`
 
 ## Local Development

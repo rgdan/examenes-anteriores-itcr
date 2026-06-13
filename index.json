@@ -1,6 +1,40 @@
 {
-  "generatedAt": "2026-06-11T09:24:58.444Z",
+  "generatedAt": "2026-06-13T05:17:26.519Z",
   "total": 43,
+  "schoolMetadata": {
+    "fisica": {
+      "properSpelling": "Física",
+      "EsCatedrado": true,
+      "informationBlurb": ""
+    },
+    "matematica": {
+      "properSpelling": "Matemática",
+      "EsCatedrado": true,
+      "informationBlurb": "La dificultad de los exámenes varía según el año. Hasta el 2019 eran difíciles, durante el 2020 y 2021 fueron fáciles, y a partir del 2022 pasaron a ser moderados."
+    }
+  },
+  "subjectMetadata": {
+    "fisica/fisica_1": {
+      "properSpelling": "Física 1",
+      "courseCode": "FI1101",
+      "creditAmount": 3
+    },
+    "matematica/calculo_diferencial_e_integral": {
+      "properSpelling": "Cálculo diferencial e integral",
+      "courseCode": "MA1102",
+      "creditAmount": 4
+    },
+    "matematica/calculo_y_algebra_lineal": {
+      "properSpelling": "Cálculo y álgebra lineal",
+      "courseCode": "MA1103",
+      "creditAmount": 4
+    },
+    "matematica/matematica_general": {
+      "properSpelling": "Matemática general",
+      "courseCode": "MA0101",
+      "creditAmount": 2
+    }
+  },
   "items": [
     {
       "path": "exams/fisica/fisica_1/P1_IIS_2018_E.pdf",

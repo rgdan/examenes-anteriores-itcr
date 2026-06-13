@@ -11,6 +11,7 @@ const SUBJECT_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const SCHOOL_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)_(IS|IIS)_([0-9]{4})_([ES])(?:_(E))?$/i;
 const SUFICIENCIA_CODE_PATTERN = /^S_(IS|IIS)_([0-9]{4})_([ES])$/i;
+const METADATA_FILE_NAME = "metadata.json";
 const SEMESTER_ORDER = { IS: 1, IIS: 2 };
 const VARIANT_ORDER = { regular: 0, extraordinario: 1, suficiencia: 2 };
 
@@ -93,6 +94,159 @@ function parcialSort(a, b) {
 
 function sorted(array) {
   return array.slice().sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+}
+
+function titleFromSlug(value) {
+  return value
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (match) => match.toUpperCase());
+}
+
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function assertString(value, fieldName, relativePath) {
+  if (typeof value !== "string") {
+    throw new Error(`Invalid '${fieldName}' in ${relativePath}. Expected a string.`);
+  }
+  return value;
+}
+
+function assertNonEmptyString(value, fieldName, relativePath) {
+  const stringValue = assertString(value, fieldName, relativePath).trim();
+  if (!stringValue) {
+    throw new Error(`Invalid '${fieldName}' in ${relativePath}. Value cannot be empty.`);
+  }
+  return stringValue;
+}
+
+function assertBoolean(value, fieldName, relativePath) {
+  if (typeof value !== "boolean") {
+    throw new Error(`Invalid '${fieldName}' in ${relativePath}. Expected a boolean.`);
+  }
+  return value;
+}
+
+function assertNumber(value, fieldName, relativePath) {
+  if (typeof value !== "number" || Number.isNaN(value)) {
+    throw new Error(`Invalid '${fieldName}' in ${relativePath}. Expected a number.`);
+  }
+  return value;
+}
+
+function readJsonFile(absolutePath) {
+  const relativePath = path.relative(REPO_ROOT, absolutePath).split(path.sep).join("/");
+  let raw;
+
+  try {
+    raw = fs.readFileSync(absolutePath, "utf8");
+  } catch (error) {
+    throw new Error(`Could not read ${relativePath}: ${error.message}`);
+  }
+
+  try {
+    return {
+      data: JSON.parse(raw),
+      relativePath
+    };
+  } catch (error) {
+    throw new Error(`Invalid JSON in ${relativePath}: ${error.message}`);
+  }
+}
+
+function defaultSchoolMetadata(school) {
+  return {
+    properSpelling: titleFromSlug(school),
+    EsCatedrado: false,
+    informationBlurb: ""
+  };
+}
+
+function defaultSubjectMetadata(subject) {
+  return {
+    properSpelling: titleFromSlug(subject),
+    courseCode: "",
+    creditAmount: null
+  };
+}
+
+function validateSchoolMetadataFile(data, relativePath) {
+  if (!isPlainObject(data)) {
+    throw new Error(`Invalid metadata format in ${relativePath}. Expected a JSON object.`);
+  }
+
+  return {
+    properSpelling: assertNonEmptyString(data.properSpelling, "properSpelling", relativePath),
+    EsCatedrado: assertBoolean(data.EsCatedrado, "EsCatedrado", relativePath),
+    informationBlurb: assertString(data.informationBlurb, "informationBlurb", relativePath)
+  };
+}
+
+function validateSubjectMetadataFile(data, relativePath) {
+  if (!isPlainObject(data)) {
+    throw new Error(`Invalid metadata format in ${relativePath}. Expected a JSON object.`);
+  }
+
+  const creditAmount = assertNumber(data.creditAmount, "creditAmount", relativePath);
+  if (creditAmount < 0 || !Number.isInteger(creditAmount)) {
+    throw new Error(`Invalid 'creditAmount' in ${relativePath}. Expected an integer >= 0.`);
+  }
+
+  return {
+    properSpelling: assertNonEmptyString(data.properSpelling, "properSpelling", relativePath),
+    courseCode: assertString(data.courseCode, "courseCode", relativePath).trim(),
+    creditAmount
+  };
+}
+
+function loadSchoolMetadata(school) {
+  const absolutePath = path.join(EXAMS_DIR, school, METADATA_FILE_NAME);
+  if (!fs.existsSync(absolutePath)) {
+    return defaultSchoolMetadata(school);
+  }
+
+  const { data, relativePath } = readJsonFile(absolutePath);
+  return validateSchoolMetadataFile(data, relativePath);
+}
+
+function loadSubjectMetadata(school, subject) {
+  const absolutePath = path.join(EXAMS_DIR, school, subject, METADATA_FILE_NAME);
+  if (!fs.existsSync(absolutePath)) {
+    return defaultSubjectMetadata(subject);
+  }
+
+  const { data, relativePath } = readJsonFile(absolutePath);
+  return validateSubjectMetadataFile(data, relativePath);
+}
+
+function collectMetadata(items) {
+  const schools = new Set();
+  const subjectsBySchool = new Map();
+
+  for (const item of items) {
+    schools.add(item.school);
+    if (!subjectsBySchool.has(item.school)) {
+      subjectsBySchool.set(item.school, new Set());
+    }
+    subjectsBySchool.get(item.school).add(item.subject);
+  }
+
+  const schoolMetadata = {};
+  const subjectMetadata = {};
+
+  for (const school of schools) {
+    schoolMetadata[school] = loadSchoolMetadata(school);
+
+    const subjects = subjectsBySchool.get(school) || new Set();
+    for (const subject of subjects) {
+      subjectMetadata[`${school}/${subject}`] = loadSubjectMetadata(school, subject);
+    }
+  }
+
+  return { schoolMetadata, subjectMetadata };
 }
 
 function walkDirectory(currentDir, onFile) {
@@ -190,9 +344,13 @@ function generateIndex() {
     );
   });
 
+  const { schoolMetadata, subjectMetadata } = collectMetadata(items);
+
   const payload = {
     generatedAt: new Date().toISOString(),
     total: items.length,
+    schoolMetadata,
+    subjectMetadata,
     items
   };
 

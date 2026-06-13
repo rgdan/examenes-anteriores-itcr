@@ -27,13 +27,38 @@ function normalizeText(value) {
     .replace(/\b\w/g, (match) => match.toUpperCase());
 }
 
+function subjectKey(school, subject) {
+  return `${school}/${subject}`;
+}
+
 function updateHeaderText() {
   document.getElementById("eyebrow").textContent = STRINGS.eyebrow;
   document.getElementById("title").textContent = STRINGS.title;
 }
 
 function schoolLabel(code) {
+  const metadata = appState.schoolMetadata.get(code);
+  if (metadata && metadata.properSpelling) {
+    return metadata.properSpelling;
+  }
   return normalizeText(code);
+}
+
+function subjectLabel(school, subject) {
+  const metadata = appState.subjectMetadata.get(subjectKey(school, subject));
+  if (metadata && metadata.properSpelling) {
+    return metadata.properSpelling;
+  }
+  return normalizeText(subject);
+}
+
+function subjectCourseCode(school, subject) {
+  const metadata = appState.subjectMetadata.get(subjectKey(school, subject));
+  if (!metadata) {
+    return "";
+  }
+
+  return metadata.courseCode ? metadata.courseCode : "";
 }
 
 function setupScrollState() {
@@ -161,6 +186,8 @@ function groupedIndex(items) {
 
 const appState = {
   structure: new Map(),
+  schoolMetadata: new Map(),
+  subjectMetadata: new Map(),
   schools: [],
   currentSchool: ""
 };
@@ -206,10 +233,18 @@ function renderSchoolContent() {
   }
 
   const subjects = appState.structure.get(appState.currentSchool);
+  const currentSchoolMetadata = appState.schoolMetadata.get(appState.currentSchool);
 
   if (!subjects || !subjects.size) {
     container.innerHTML = `<p class="state-message">${STRINGS.empty}</p>`;
     return;
+  }
+
+  if (currentSchoolMetadata && currentSchoolMetadata.informationBlurb.trim()) {
+    const blurb = document.createElement("section");
+    blurb.className = "school-blurb";
+    blurb.textContent = currentSchoolMetadata.informationBlurb.trim();
+    container.appendChild(blurb);
   }
 
   const subjectTemplate = document.getElementById("subject-template");
@@ -217,9 +252,30 @@ function renderSchoolContent() {
   const parcialTemplate = document.getElementById("parcial-template");
   const examTemplate = document.getElementById("type-template");
 
-  for (const [subject, years] of subjects) {
+  const sortedSubjects = [...subjects.entries()].sort((a, b) => {
+    return subjectLabel(appState.currentSchool, a[0]).localeCompare(subjectLabel(appState.currentSchool, b[0]), "es", {
+      sensitivity: "base"
+    });
+  });
+
+  for (const [subject, years] of sortedSubjects) {
     const subjectNode = subjectTemplate.content.firstElementChild.cloneNode(true);
-    subjectNode.querySelector(".subject-title").textContent = normalizeText(subject);
+    const subjectTitle = subjectNode.querySelector(".subject-title");
+    const name = document.createElement("span");
+    name.className = "subject-name";
+    name.textContent = subjectLabel(appState.currentSchool, subject);
+
+    subjectTitle.textContent = "";
+    subjectTitle.appendChild(name);
+
+    const courseCode = subjectCourseCode(appState.currentSchool, subject);
+    if (courseCode) {
+      const code = document.createElement("span");
+      code.className = "subject-course-code";
+      code.textContent = courseCode;
+      subjectTitle.appendChild(code);
+    }
+
     const subjectBody = subjectNode.querySelector(".subject-body");
 
     const sortedYears = [...years.keys()].sort((a, b) => a.localeCompare(b));
@@ -278,8 +334,10 @@ function renderSchoolContent() {
   }
 }
 
-function renderApp(items) {
+function renderApp(items, schoolMetadata, subjectMetadata) {
   appState.structure = groupedIndex(items);
+  appState.schoolMetadata = new Map(Object.entries(schoolMetadata));
+  appState.subjectMetadata = new Map(Object.entries(subjectMetadata));
   appState.schools = [...appState.structure.keys()].sort((a, b) => schoolLabel(a).localeCompare(schoolLabel(b)));
   if (!appState.schools.includes(appState.currentSchool)) {
     appState.currentSchool = appState.schools[0] || "";
@@ -301,7 +359,9 @@ async function loadIndex() {
 
     const payload = await response.json();
     const items = Array.isArray(payload.items) ? payload.items : [];
-    renderApp(items);
+    const schoolMetadata = payload.schoolMetadata && typeof payload.schoolMetadata === "object" ? payload.schoolMetadata : {};
+    const subjectMetadata = payload.subjectMetadata && typeof payload.subjectMetadata === "object" ? payload.subjectMetadata : {};
+    renderApp(items, schoolMetadata, subjectMetadata);
   } catch (error) {
     console.error(error);
     container.innerHTML = `<p class="state-message error">${STRINGS.error}</p>`;

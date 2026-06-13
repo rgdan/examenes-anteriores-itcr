@@ -140,6 +140,17 @@ h1 {
   gap: 0.8rem;
 }
 
+.school-blurb {
+  margin: 0;
+  background: #eef4fb;
+  border: 1px solid #c9d8ea;
+  border-left: 4px solid #0b5ea8;
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  color: #1f3d5a;
+  font-size: 0.92rem;
+}
+
 @media (min-width: 768px) {
   .tabs-utility {
     height: 4px;
@@ -173,6 +184,21 @@ h1 {
   padding: 0.9rem;
   font-size: 1.1rem;
   color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.subject-name {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.subject-course-code {
+  flex: 0 0 auto;
+  color: #758395;
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
 .subject-title::-webkit-details-marker,
@@ -191,9 +217,10 @@ h1 {
 .semester-title::after,
 .parcial-title::after {
   content: "▾";
-  float: right;
   color: var(--ink-soft);
   font-size: 0.9em;
+  margin-left: 0.25rem;
+  flex: 0 0 auto;
   transition: transform 180ms ease;
 }
 
