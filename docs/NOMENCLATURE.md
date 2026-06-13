@@ -2,6 +2,9 @@
 
 Este documento define las convenciones para carpetas, PDFs y archivos metadata.json.
 
+Estas convenciones aplican al repositorio de archivos:
+- https://github.com/rgdan/examenes-anteriores-itcr-archivos
+
 ## Estructura de Archivos
 
 Todos los PDFs deben almacenarse con una de estas jerarquías:

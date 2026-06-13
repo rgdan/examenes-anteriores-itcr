@@ -3,7 +3,7 @@ const STRINGS = {
   title: "Exámenes Anteriores ITCR",
   homeTab: "Inicio",
   loading: "Cargando examenes...",
-  empty: "Aun no hay PDFs. Agrega archivos en exams/<escuela>/<materia>/ usando PX_XS_XXXX_E.pdf, RP_XS_XXXX_E.pdf o S_XS_XXXX_E.pdf",
+  empty: "Aun no hay PDFs. Agrega archivos en el repo de archivos (examenes-anteriores-itcr-archivos) usando la estructura <escuela>/<materia>/ y nombres PX_XS_XXXX_E.pdf, RP_XS_XXXX_E.pdf o S_XS_XXXX_E.pdf",
   error: "No se pudo cargar el indice. Revisa index.json o el flujo de GitHub Actions.",
   professor: "Profesor",
   year: "Año",

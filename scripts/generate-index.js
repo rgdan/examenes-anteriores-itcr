@@ -5,6 +5,7 @@ const path = require("node:path");
 
 const REPO_ROOT = path.resolve(__dirname, "..");
 const EXAMS_DIR = path.join(REPO_ROOT, "exams");
+const EXAMS_BASE_URL = "https://raw.githubusercontent.com/rgdan/examenes-anteriores-itcr-archivos/main";
 const OUTPUT_FILE = path.join(REPO_ROOT, "index.json");
 
 const SUBJECT_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
@@ -289,58 +290,61 @@ function validateAndBuildItem(absoluteFilePath) {
     return null;
   }
 
-  const relativePath = path.relative(REPO_ROOT, absoluteFilePath).split(path.sep).join("/");
-  const segments = relativePath.split("/");
+  const sourceRelativePath = path.relative(EXAMS_DIR, absoluteFilePath).split(path.sep).join("/");
+  const segments = sourceRelativePath.split("/");
   let school;
   let subject;
   let professor = null;
   let fileName;
 
-  if (segments.length === 4 && segments[0] === "exams") {
-    [, school, subject, fileName] = segments;
-  } else if (segments.length === 5 && segments[0] === "exams") {
-    [, school, subject, professor, fileName] = segments;
+  if (segments.length === 3) {
+    [school, subject, fileName] = segments;
+  } else if (segments.length === 4) {
+    [school, subject, professor, fileName] = segments;
   } else {
     throw new Error(
-      `Invalid file path depth for ${relativePath}. Expected exams/<school>/<subject>/<file>.pdf or exams/<school>/<subject>/<professor>/<file>.pdf`
+      `Invalid file path depth for ${sourceRelativePath}. Expected <school>/<subject>/<file>.pdf or <school>/<subject>/<professor>/<file>.pdf under exams/.`
     );
   }
 
+  const examRelativePath = [school, subject, ...(professor ? [professor] : []), fileName].join("/");
+  const examPublicPath = EXAMS_BASE_URL ? `${EXAMS_BASE_URL}/${examRelativePath}` : examRelativePath;
+
   if (!SCHOOL_PATTERN.test(school)) {
-    throw new Error(`Invalid school folder '${school}' in ${relativePath}. Use lowercase snake_case only.`);
+    throw new Error(`Invalid school folder '${school}' in ${sourceRelativePath}. Use lowercase snake_case only.`);
   }
 
   if (!SUBJECT_PATTERN.test(subject)) {
-    throw new Error(`Invalid subject folder '${subject}' in ${relativePath}. Use lowercase snake_case only.`);
+    throw new Error(`Invalid subject folder '${subject}' in ${sourceRelativePath}. Use lowercase snake_case only.`);
   }
 
   const subjectMetadata = loadSubjectMetadata(school, subject);
 
   if (professor) {
     if (!PROFESSOR_PATTERN.test(professor)) {
-      throw new Error(`Invalid professor folder '${professor}' in ${relativePath}. Use lowercase snake_case only.`);
+      throw new Error(`Invalid professor folder '${professor}' in ${sourceRelativePath}. Use lowercase snake_case only.`);
     }
 
     if (subjectMetadata.EsCatedrado) {
       throw new Error(
-        `Invalid professor subfolder in ${relativePath}. Subject '${school}/${subject}' is marked as EsCatedrado=true.`
+        `Invalid professor subfolder in ${sourceRelativePath}. Subject '${school}/${subject}' is marked as EsCatedrado=true.`
       );
     }
   } else if (!subjectMetadata.EsCatedrado) {
     throw new Error(
-      `Invalid file path for ${relativePath}. Subject '${school}/${subject}' is marked as EsCatedrado=false and must store PDFs under exams/<school>/<subject>/<professor>/.`
+      `Invalid file path for ${sourceRelativePath}. Subject '${school}/${subject}' is marked as EsCatedrado=false and must store PDFs under <school>/<subject>/<professor>/ in exams/.`
     );
   }
 
   const parsedCode = parseFileCode(fileName);
   if (!parsedCode) {
     throw new Error(
-      `Invalid filename '${fileName}' in ${relativePath}. Use PX_XS_XXXX_E, RP_XS_XXXX_E, or S_XS_XXXX_E with underscores only. Optional final _E is only for extraordinario.`
+      `Invalid filename '${fileName}' in ${sourceRelativePath}. Use PX_XS_XXXX_E, RP_XS_XXXX_E, or S_XS_XXXX_E with underscores only. Optional final _E is only for extraordinario.`
     );
   }
 
   return {
-    path: relativePath,
+    path: examPublicPath,
     school,
     subject,
     professor,

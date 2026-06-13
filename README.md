@@ -8,6 +8,12 @@ Repositorio público para compartir exámenes anteriores en PDF.
 El sitio se actualiza automáticamente según los archivos agregados.
 Para contribuir, solo necesita agregar PDFs con el formato correcto.
 
+## Fuente de Archivos
+
+- Los PDFs y metadatos ahora se mantienen en: https://github.com/rgdan/examenes-anteriores-itcr-archivos
+- Este repositorio genera y publica el sitio consumiendo esos archivos durante GitHub Actions.
+- Para agregar o corregir exámenes, realice los cambios en el repositorio de archivos.
+
 ## Examenes buscados
 
 Para obtener una buena selección de exámenes en el repositorio, se buscan los siguientes documentos según la tabla.
