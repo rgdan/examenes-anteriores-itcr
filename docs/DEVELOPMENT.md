@@ -14,7 +14,7 @@
 
 ## Local Development
 
-First time setup (copy the archive repo `exams/` into this repo `exams/`):
+First time setup (copy the archive repo root content into this repo `exams/`):
 
 ```bash
 git clone https://github.com/rgdan/examenes-anteriores-itcr-archivos /tmp/examenes-anteriores-itcr-archivos

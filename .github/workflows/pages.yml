@@ -3,6 +3,9 @@ name: Build and Deploy Pages
 on:
   push:
   pull_request:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [exams_archive_updated]
 
 permissions:
   contents: read
@@ -20,6 +23,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout exams archive
+        uses: actions/checkout@v4
+        with:
+          repository: rgdan/examenes-anteriores-itcr-archivos
+          path: archive-source
+
+      - name: Sync exams folder
+        run: |
+          rm -rf exams
+          mkdir -p exams
+          cp -a archive-source/. exams/
+          rm -rf exams/.git
+
+      - name: Verify synced exams content
+        run: |
+          PDF_COUNT=$(find exams -type f -iname '*.pdf' | wc -l | tr -d ' ')
+          echo "Synced PDFs: ${PDF_COUNT}"
+          if [[ "${PDF_COUNT}" -eq 0 ]]; then
+            echo "No PDFs found under exams/ after sync."
+            echo "Top-level entries in exams/:"
+            ls -la exams
+            exit 1
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
@@ -33,13 +60,17 @@ jobs:
       - name: Generate index
         run: node scripts/generate-index.js
 
+      - name: Verify generated index
+        run: |
+          node -e "const data = require('./index.json'); if (!data.total) { console.error('index.json total is 0'); process.exit(1); } console.log('index.json total:', data.total);"
+
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
 
   deploy:
-    if: github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    if: github.event_name == 'repository_dispatch' || (github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && (github.event_name == 'push' || github.event_name == 'workflow_dispatch'))
     needs: build
     runs-on: ubuntu-latest
     steps:
