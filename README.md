@@ -1,27 +1,12 @@
 ![Exámenes Anteriores ITCR](docs/tittle.jpg)
 
+> **Advertencia**  
+> La intención es recopilar y distribuir exámenes de cátedra, manteniendo la discreción debido a que ciertos profesores prefieren que no se difunda su material.
+
 Repositorio público para compartir exámenes anteriores en PDF.
 
 El sitio se actualiza automáticamente según los archivos agregados.
 Para contribuir, solo necesita agregar PDFs con el formato correcto.
-
-## Nomenclatura
-
-La convención completa para carpetas, PDFs y archivos metadata.json está en [docs/NOMENCLATURE.md](docs/NOMENCLATURE.md)
-
-## Cómo Contribuir
-
-> **Advertencia**  
-> La intención es recopilar y distribuir exámenes de cátedra, manteniendo la discreción debido a que ciertos docentes prefieren que no se difunda su material.
-
-1. Haga un fork de este repositorio en GitHub.
-2. Clone su fork en su computadora.
-3. Agregue su PDF en `exams/<escuela>/<materia>/`.
-4. Verifique que el nombre del archivo cumpla el formato requerido.
-5. Confirme sus cambios con un commit.
-6. Haga push de sus cambios a su fork.
-7. Abra un Pull Request desde su fork hacia este repositorio.
-8. En el Pull Request, describa qué materia y qué exámenes agregó.
 
 ## Examenes buscados
 
@@ -156,4 +141,4 @@ Para obtener una buena selección de exámenes en el repositorio, se buscan los 
 ## Documentación Técnica
 
 - Nomenclatura de carpetas, PDFs y metadatos: [docs/NOMENCLATURE.md](docs/NOMENCLATURE.md)
-- Guía de desarrollo: [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)
+- Documentación de desarrollo: [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)
