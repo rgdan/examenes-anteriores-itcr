@@ -1,81 +1,94 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Examenes Anteriores | ITCR</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="hero">
-      <div class="hero-inner">
-        <p id="eyebrow" class="eyebrow"></p>
-        <h1 id="title"></h1>
-      </div>
-    </header>
+<html lang="es">
 
-    <div class="tabs-shell">
-      <div class="tabs-utility" aria-hidden="true"></div>
-      <div class="tabs-bar">
-        <nav id="school-tabs" class="school-tabs" aria-label="Navegacion principal" role="tablist"></nav>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examenes Anteriores | ITCR</title>
+  <meta name="description"
+    content="Repositorio público para acceder y navegar exámenes anteriores del ITCR en formato PDF." />
+  <meta name="theme-color" content="#002855" />
+
+  <!-- Open Graph tags for WhatsApp, Instagram, and Discord -->
+  <meta property="og:title" content="Exámenes Anteriores | ITCR" />
+  <meta property="og:description"
+    content="Repositorio público para acceder y navegar exámenes anteriores del ITCR en formato PDF." />
+  <meta property="og:url" content="https://rgdan.github.io/examenes-anteriores-itcr/" />
+  <meta property="og:image" content="https://rgdan.github.io/examenes-anteriores-itcr/docs/tittle.jpg" />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p id="eyebrow" class="eyebrow"></p>
+      <h1 id="title"></h1>
     </div>
+  </header>
 
-    <main class="main-content">
-      <section id="content" class="content" aria-live="polite"></section>
-    </main>
+  <div class="tabs-shell">
+    <div class="tabs-utility" aria-hidden="true"></div>
+    <div class="tabs-bar">
+      <nav id="school-tabs" class="school-tabs" aria-label="Navegacion principal" role="tablist"></nav>
+    </div>
+  </div>
 
-    <footer class="site-footer">
-      <p>
-        Este sitio no utiliza ningun tipo de rastreo.<br />
-        Este proyecto no tiene asociacion con el ITCR.<br />
-        Si desea contribuir, visite
-        <a href="https://github.com/rgdan/itcr-open-exams" target="_blank" rel="noopener noreferrer">el repositorio</a>.
-      </p>
-    </footer>
+  <main class="main-content">
+    <section id="content" class="content" aria-live="polite"></section>
+  </main>
 
-    <template id="subject-template">
-      <details class="subject-card">
-        <summary class="subject-title"></summary>
-        <div class="subject-body"></div>
-      </details>
-    </template>
+  <footer class="site-footer">
+    <p>
+      Este sitio no utiliza ningun tipo de rastreo.<br />
+      Este proyecto no tiene asociacion con el ITCR.<br />
+      Si desea contribuir, visite
+      <a href="https://github.com/rgdan/itcr-open-exams" target="_blank" rel="noopener noreferrer">el repositorio</a>.
+    </p>
+  </footer>
 
-    <template id="professor-template">
-      <details class="professor-block">
-        <summary class="professor-title"></summary>
-        <div class="professor-body"></div>
-      </details>
-    </template>
+  <template id="subject-template">
+    <details class="subject-card">
+      <summary class="subject-title"></summary>
+      <div class="subject-body"></div>
+    </details>
+  </template>
 
-    <template id="semester-template">
-      <details class="semester-block">
-        <summary class="semester-title"></summary>
-        <div class="semester-body"></div>
-      </details>
-    </template>
+  <template id="professor-template">
+    <details class="professor-block">
+      <summary class="professor-title"></summary>
+      <div class="professor-body"></div>
+    </details>
+  </template>
 
-    <template id="parcial-template">
-      <details class="parcial-block">
-        <summary class="parcial-title"></summary>
-        <div class="parcial-body"></div>
-      </details>
-    </template>
+  <template id="semester-template">
+    <details class="semester-block">
+      <summary class="semester-title"></summary>
+      <div class="semester-body"></div>
+    </details>
+  </template>
 
-    <template id="type-template">
-      <section class="type-block exam-card">
-        <h5 class="type-title"></h5>
-        <div class="file-list"></div>
-      </section>
-    </template>
+  <template id="parcial-template">
+    <details class="parcial-block">
+      <summary class="parcial-title"></summary>
+      <div class="parcial-body"></div>
+    </details>
+  </template>
 
-    <script src="app.js" defer></script>
-  </body>
+  <template id="type-template">
+    <section class="type-block exam-card">
+      <h5 class="type-title"></h5>
+      <div class="file-list"></div>
+    </section>
+  </template>
+
+  <script src="app.js" defer></script>
+</body>
+
 </html>
