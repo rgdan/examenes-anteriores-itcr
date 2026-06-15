@@ -1,24 +1,111 @@
 #!/usr/bin/env node
 
+/**
+ * @file Node CLI that scans exams/, validates paths and filenames, and writes index.json.
+ */
+
+/**
+ * @typedef {"enunciado" | "solution"} ExamKind
+ */
+
+/**
+ * @typedef {"regular" | "extraordinario" | "suficiencia"} ExamVariant
+ */
+
+/**
+ * @typedef {"IS" | "IIS"} SemesterCode
+ */
+
+/**
+ * @typedef {Object} ExamItem
+ * @property {string} path - Public URL to the PDF
+ * @property {string} school - School folder slug
+ * @property {string} subject - Subject folder slug
+ * @property {string|null} professor - Professor folder slug, or null for catedrado subjects
+ * @property {string} year - Four-digit year
+ * @property {SemesterCode} semester
+ * @property {string} parcial - Parcial code (e.g. P1, RP, S)
+ * @property {ExamKind} kind
+ * @property {string} kindCode - E for enunciado, S for solution
+ * @property {ExamVariant} variant
+ * @property {string|null} variantCode - E when extraordinario, otherwise null
+ * @property {string} fileName
+ * @property {string} title - Human-readable title derived from the filename
+ */
+
+/**
+ * @typedef {Object} SchoolMetadata
+ * @property {string} properSpelling - Display name for the school
+ * @property {string} informationBlurb - Optional info shown on the school tab
+ */
+
+/**
+ * @typedef {Object} SubjectMetadata
+ * @property {string} properSpelling - Display name for the subject
+ * @property {string} courseCode - Official course code (e.g. MA1102)
+ * @property {number} creditAmount
+ * @property {boolean} EsCatedrado - When true, exams live directly under the subject folder
+ */
+
+/**
+ * @typedef {Object} IndexPayload
+ * @property {string} generatedAt - ISO timestamp
+ * @property {number} total - Number of indexed PDFs
+ * @property {Object.<string, SchoolMetadata>} schoolMetadata
+ * @property {Object.<string, SubjectMetadata>} subjectMetadata - Keys are "school/subject"
+ * @property {ExamItem[]} items
+ */
+
+/**
+ * @typedef {Object} ParsedFileCode
+ * @property {string} parcial
+ * @property {SemesterCode} semester
+ * @property {string} year
+ * @property {string} kindCode
+ * @property {ExamKind} kind
+ * @property {ExamVariant} variant
+ * @property {string|null} variantCode
+ */
+
+/**
+ * @typedef {Object} ReadJsonResult
+ * @property {*} data - Parsed JSON value
+ * @property {string} relativePath - Path relative to the repo root
+ */
+
 const fs = require("node:fs");
 const path = require("node:path");
 
+/** Repository root (parent of scripts/). */
 const REPO_ROOT = path.resolve(__dirname, "..");
+/** Local mirror of the exams archive synced by CI. */
 const EXAMS_DIR = path.join(REPO_ROOT, "exams");
+/** Base URL for public PDF links in the generated index. */
 const EXAMS_BASE_URL = "https://raw.githubusercontent.com/rgdan/examenes-anteriores-itcr-archivos/main";
+/** Output path for the generated index. */
 const OUTPUT_FILE = path.join(REPO_ROOT, "index.json");
 
+/** Lowercase snake_case pattern for subject folder names. */
 const SUBJECT_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
+/** Lowercase snake_case pattern for school folder names. */
 const SCHOOL_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
+/** Lowercase snake_case pattern for professor folder names. */
 const PROFESSOR_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
+/** Matches PX_IS_YYYY_E, RP_IS_YYYY_E, etc.; optional trailing _E marks extraordinario. */
 const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)_(IS|IIS)_([0-9]{4})_([ES])(?:_(E))?$/i;
+/** Matches S_IS_YYYY_E suficiencia exam filenames. */
 const SUFICIENCIA_CODE_PATTERN = /^S_(IS|IIS)_([0-9]{4})_([ES])$/i;
+/** Metadata filename expected in school and subject folders. */
 const METADATA_FILE_NAME = "metadata.json";
+/** Numeric sort order for semester codes. */
 const SEMESTER_ORDER = { IS: 1, IIS: 2 };
+/** Numeric sort order for exam variants. */
 const VARIANT_ORDER = { regular: 0, extraordinario: 1, suficiencia: 2 };
 
+/** In-memory cache for subject metadata loaded during indexing. */
 const subjectMetadataCache = new Map();
 
+/** Derives a display title from a PDF filename. */
 function titleFromFilename(fileName) {
   return fileName
     .replace(/\.pdf$/i, "")
@@ -27,6 +114,12 @@ function titleFromFilename(fileName) {
     .trim();
 }
 
+/**
+ * Parses an exam PDF filename into structured fields.
+ *
+ * @param {string} fileName
+ * @returns {ParsedFileCode|null} Null when the filename does not match any pattern
+ */
 function parseFileCode(fileName) {
   const baseName = fileName.replace(/\.pdf$/i, "");
   const suficienciaMatch = baseName.match(SUFICIENCIA_CODE_PATTERN);
@@ -73,14 +166,17 @@ function parseFileCode(fileName) {
   };
 }
 
+/** Compares exam items by variant (regular, extraordinario, suficiencia). */
 function variantSort(a, b) {
   return (VARIANT_ORDER[a.variant] || 99) - (VARIANT_ORDER[b.variant] || 99) || (a.variant || "").localeCompare(b.variant || "");
 }
 
+/** Compares exam items by semester code (IS before IIS). */
 function semesterSort(a, b) {
   return (SEMESTER_ORDER[a.semester] || 99) - (SEMESTER_ORDER[b.semester] || 99) || a.semester.localeCompare(b.semester);
 }
 
+/** Compares exam items by parcial code numerically; RP sorts last. */
 function parcialSort(a, b) {
   if (a.parcial === "RP") {
     return 1;
@@ -96,10 +192,12 @@ function parcialSort(a, b) {
   return a.parcial.localeCompare(b.parcial);
 }
 
+/** Returns a case-insensitive sorted copy of a string array. */
 function sorted(array) {
   return array.slice().sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
 }
 
+/** Converts a slug to title case with spaces. */
 function titleFromSlug(value) {
   return value
     .replace(/[-_]+/g, " ")
@@ -108,10 +206,12 @@ function titleFromSlug(value) {
     .replace(/\b\w/g, (match) => match.toUpperCase());
 }
 
+/** Returns true for non-null, non-array objects. */
 function isPlainObject(value) {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
+/** Asserts a metadata field is a string. @throws {Error} */
 function assertString(value, fieldName, relativePath) {
   if (typeof value !== "string") {
     throw new Error(`Invalid '${fieldName}' in ${relativePath}. Expected a string.`);
@@ -119,6 +219,7 @@ function assertString(value, fieldName, relativePath) {
   return value;
 }
 
+/** Asserts a metadata field is a non-empty trimmed string. @throws {Error} */
 function assertNonEmptyString(value, fieldName, relativePath) {
   const stringValue = assertString(value, fieldName, relativePath).trim();
   if (!stringValue) {
@@ -127,6 +228,7 @@ function assertNonEmptyString(value, fieldName, relativePath) {
   return stringValue;
 }
 
+/** Asserts a metadata field is a boolean. @throws {Error} */
 function assertBoolean(value, fieldName, relativePath) {
   if (typeof value !== "boolean") {
     throw new Error(`Invalid '${fieldName}' in ${relativePath}. Expected a boolean.`);
@@ -134,6 +236,7 @@ function assertBoolean(value, fieldName, relativePath) {
   return value;
 }
 
+/** Asserts a metadata field is a finite number. @throws {Error} */
 function assertNumber(value, fieldName, relativePath) {
   if (typeof value !== "number" || Number.isNaN(value)) {
     throw new Error(`Invalid '${fieldName}' in ${relativePath}. Expected a number.`);
@@ -141,6 +244,13 @@ function assertNumber(value, fieldName, relativePath) {
   return value;
 }
 
+/**
+ * Reads and parses a JSON file synchronously.
+ *
+ * @param {string} absolutePath
+ * @returns {ReadJsonResult}
+ * @throws {Error} When the file cannot be read or contains invalid JSON
+ */
 function readJsonFile(absolutePath) {
   const relativePath = path.relative(REPO_ROOT, absolutePath).split(path.sep).join("/");
   let raw;
@@ -161,6 +271,7 @@ function readJsonFile(absolutePath) {
   }
 }
 
+/** Returns default school metadata derived from the folder slug. */
 function defaultSchoolMetadata(school) {
   return {
     properSpelling: titleFromSlug(school),
@@ -168,6 +279,7 @@ function defaultSchoolMetadata(school) {
   };
 }
 
+/** Returns default subject metadata derived from the folder slug. */
 function defaultSubjectMetadata(subject) {
   return {
     properSpelling: titleFromSlug(subject),
@@ -177,6 +289,14 @@ function defaultSubjectMetadata(subject) {
   };
 }
 
+/**
+ * Validates and normalizes school metadata.json contents.
+ *
+ * @param {*} data
+ * @param {string} relativePath
+ * @returns {SchoolMetadata}
+ * @throws {Error}
+ */
 function validateSchoolMetadataFile(data, relativePath) {
   if (!isPlainObject(data)) {
     throw new Error(`Invalid metadata format in ${relativePath}. Expected a JSON object.`);
@@ -188,6 +308,15 @@ function validateSchoolMetadataFile(data, relativePath) {
   };
 }
 
+/**
+ * Validates and normalizes subject metadata.json contents.
+ * creditAmount must be a non-negative integer.
+ *
+ * @param {*} data
+ * @param {string} relativePath
+ * @returns {SubjectMetadata}
+ * @throws {Error}
+ */
 function validateSubjectMetadataFile(data, relativePath) {
   if (!isPlainObject(data)) {
     throw new Error(`Invalid metadata format in ${relativePath}. Expected a JSON object.`);
@@ -206,6 +335,12 @@ function validateSubjectMetadataFile(data, relativePath) {
   };
 }
 
+/**
+ * Loads school metadata from exams/<school>/metadata.json, or returns defaults.
+ *
+ * @param {string} school
+ * @returns {SchoolMetadata}
+ */
 function loadSchoolMetadata(school) {
   const absolutePath = path.join(EXAMS_DIR, school, METADATA_FILE_NAME);
   if (!fs.existsSync(absolutePath)) {
@@ -216,6 +351,14 @@ function loadSchoolMetadata(school) {
   return validateSchoolMetadataFile(data, relativePath);
 }
 
+/**
+ * Loads subject metadata from exams/<school>/<subject>/metadata.json, with caching.
+ * Returns defaults when the file is missing.
+ *
+ * @param {string} school
+ * @param {string} subject
+ * @returns {SubjectMetadata}
+ */
 function loadSubjectMetadata(school, subject) {
   const cacheKey = `${school}/${subject}`;
   if (subjectMetadataCache.has(cacheKey)) {
@@ -236,6 +379,12 @@ function loadSubjectMetadata(school, subject) {
   return metadata;
 }
 
+/**
+ * Builds schoolMetadata and subjectMetadata maps from discovered exam items.
+ *
+ * @param {ExamItem[]} items
+ * @returns {{ schoolMetadata: Object.<string, SchoolMetadata>, subjectMetadata: Object.<string, SubjectMetadata> }}
+ */
 function collectMetadata(items) {
   const schools = new Set();
   const subjectsBySchool = new Map();
@@ -263,6 +412,12 @@ function collectMetadata(items) {
   return { schoolMetadata, subjectMetadata };
 }
 
+/**
+ * Recursively walks a directory in sorted order, invoking onFile for each file.
+ *
+ * @param {string} currentDir
+ * @param {(absolutePath: string) => void} onFile
+ */
 function walkDirectory(currentDir, onFile) {
   if (!fs.existsSync(currentDir)) {
     return;
@@ -285,6 +440,19 @@ function walkDirectory(currentDir, onFile) {
   }
 }
 
+/**
+ * Validates a PDF under exams/ and builds an ExamItem, or returns null for non-PDFs.
+ *
+ * Path rules:
+ * - 3 segments: <school>/<subject>/<file>.pdf (catedrado subjects)
+ * - 4 segments: <school>/<subject>/<professor>/<file>.pdf (non-catedrado)
+ *
+ * Enforces slug patterns and EsCatedrado consistency with folder depth.
+ *
+ * @param {string} absoluteFilePath
+ * @returns {ExamItem|null}
+ * @throws {Error} On invalid path depth, slugs, metadata mismatch, or filename
+ */
 function validateAndBuildItem(absoluteFilePath) {
   if (!absoluteFilePath.toLowerCase().endsWith(".pdf")) {
     return null;
@@ -360,6 +528,11 @@ function validateAndBuildItem(absoluteFilePath) {
   };
 }
 
+/**
+ * Scans exams/, validates all PDFs, sorts items, collects metadata, and writes index.json.
+ *
+ * @returns {number} Total number of indexed PDFs
+ */
 function generateIndex() {
   const items = [];
 
