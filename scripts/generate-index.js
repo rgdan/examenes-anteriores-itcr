@@ -80,8 +80,8 @@ const path = require("node:path");
 const REPO_ROOT = path.resolve(__dirname, "..");
 /** Local mirror of the exams archive synced by CI. */
 const EXAMS_DIR = path.join(REPO_ROOT, "exams");
-/** Base URL for public PDF links in the generated index. */
-const EXAMS_BASE_URL = "https://raw.githubusercontent.com/rgdan/examenes-anteriores-itcr-archivos/main";
+/** Relative URL prefix for PDF links in the generated index (served from the repo root at deploy time). */
+const EXAMS_BASE_URL = "exams";
 /** Output path for the generated index. */
 const OUTPUT_FILE = path.join(REPO_ROOT, "index.json");
 
@@ -476,7 +476,7 @@ function validateAndBuildItem(absoluteFilePath) {
   }
 
   const examRelativePath = [school, subject, ...(professor ? [professor] : []), fileName].join("/");
-  const examPublicPath = EXAMS_BASE_URL ? `${EXAMS_BASE_URL}/${examRelativePath}` : examRelativePath;
+  const examPublicPath = `${EXAMS_BASE_URL}/${examRelativePath}`;
 
   if (!SCHOOL_PATTERN.test(school)) {
     throw new Error(`Invalid school folder '${school}' in ${sourceRelativePath}. Use lowercase snake_case only.`);

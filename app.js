@@ -839,22 +839,6 @@ async function loadIndex() {
 }
 
 /**
- * Converts raw githubusercontent URLs to jsDelivr CDN URLs to allow inline rendering in iframes.
- *
- * @param {string} path - The original PDF file URL.
- * @returns {string} The embeddable URL.
- */
-function getEmbeddableUrl(path) {
-  if (path.startsWith("https://raw.githubusercontent.com/")) {
-    return path.replace(
-      /^https:\/\/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)\/([^\/]+)\/(.+)$/,
-      "https://cdn.jsdelivr.net/gh/$1/$2@$3/$4"
-    );
-  }
-  return path;
-}
-
-/**
  * Opens the PDF viewer modal and loads the given PDF item.
  *
  * @param {ExamItem} item
@@ -874,7 +858,7 @@ function openPdfViewer(item) {
   titleEl.title = displayTitle;
 
   loader.style.display = "flex";
-  iframe.src = encodeURI(getEmbeddableUrl(item.path));
+  iframe.src = encodeURI(item.path);
 
   iframe.onload = () => {
     loader.style.display = "none";
