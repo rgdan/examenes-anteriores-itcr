@@ -399,6 +399,10 @@ function renderYearBlocks(years, parentNode, semesterTemplate, parcialTemplate, 
           enunciadoBtn.href = encodeURI(docs.enunciado.path);
           enunciadoBtn.target = "_blank";
           enunciadoBtn.rel = "noopener noreferrer";
+          enunciadoBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            openPdfViewer(docs.enunciado);
+          });
         }
 
         const solucionBtn = document.createElement(docs.solution ? "a" : "span");
@@ -408,6 +412,10 @@ function renderYearBlocks(years, parentNode, semesterTemplate, parcialTemplate, 
           solucionBtn.href = encodeURI(docs.solution.path);
           solucionBtn.target = "_blank";
           solucionBtn.rel = "noopener noreferrer";
+          solucionBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            openPdfViewer(docs.solution);
+          });
         }
 
         actions.appendChild(enunciadoBtn);
@@ -830,10 +838,95 @@ async function loadIndex() {
   }
 }
 
-/** Initializes header, scroll behavior, and loads the exam index. */
+/**
+ * Converts raw githubusercontent URLs to jsDelivr CDN URLs to allow inline rendering in iframes.
+ *
+ * @param {string} path - The original PDF file URL.
+ * @returns {string} The embeddable URL.
+ */
+function getEmbeddableUrl(path) {
+  if (path.startsWith("https://raw.githubusercontent.com/")) {
+    return path.replace(
+      /^https:\/\/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)\/([^\/]+)\/(.+)$/,
+      "https://cdn.jsdelivr.net/gh/$1/$2@$3/$4"
+    );
+  }
+  return path;
+}
+
+/**
+ * Opens the PDF viewer modal and loads the given PDF item.
+ *
+ * @param {ExamItem} item
+ */
+function openPdfViewer(item) {
+  const modal = document.getElementById("pdf-viewer-modal");
+  const titleEl = document.getElementById("pdf-modal-title");
+  const iframe = document.getElementById("pdf-modal-iframe");
+  const loader = document.getElementById("pdf-modal-loader");
+
+  const subjectName = subjectLabel(item.school, item.subject);
+  const profName = item.professor ? professorLabel(item.professor) : "Cátedra";
+  const kindLabel = item.kind === "enunciado" ? "Enunciado" : "Solución";
+  const displayTitle = `${subjectName} (${profName}) - ${parcialLabel(item.parcial)} ${item.year} - ${kindLabel}`;
+
+  titleEl.textContent = displayTitle;
+  titleEl.title = displayTitle;
+
+  loader.style.display = "flex";
+  iframe.src = encodeURI(getEmbeddableUrl(item.path));
+
+  iframe.onload = () => {
+    loader.style.display = "none";
+  };
+
+  modal.classList.add("active");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+}
+
+/**
+ * Closes the PDF viewer modal and clears the iframe source.
+ */
+function closePdfViewer() {
+  const modal = document.getElementById("pdf-viewer-modal");
+  const iframe = document.getElementById("pdf-modal-iframe");
+
+  modal.classList.remove("active");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+  iframe.src = "";
+}
+
+/** Sets up the event listeners for the PDF viewer modal. */
+function setupPdfViewerModal() {
+  const closeBtn = document.getElementById("pdf-modal-close");
+  const modal = document.getElementById("pdf-viewer-modal");
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closePdfViewer);
+  }
+
+  if (modal) {
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closePdfViewer();
+      }
+    });
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal && modal.classList.contains("active")) {
+      closePdfViewer();
+    }
+  });
+}
+
+/** Initializes header, scroll behavior, loads the exam index, and sets up modal listeners. */
 async function init() {
   updateHeaderText();
   setupScrollState();
+  setupPdfViewerModal();
   await loadIndex();
 }
 
