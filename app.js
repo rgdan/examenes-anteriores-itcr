@@ -195,15 +195,7 @@ function professorLabel(code) {
   return normalizeText(code);
 }
 
-/** Toggles a body class when the page is scrolled past the header. */
-function setupScrollState() {
-  const onScroll = () => {
-    document.body.classList.toggle("scrolled", window.scrollY > 8);
-  };
 
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
-}
 
 /** Compares semester codes (IS before IIS). */
 function semesterSort(a, b) {
@@ -1029,7 +1021,6 @@ function setupHashRouting() {
 /** Initializes header, scroll behavior, loads the exam index, and sets up modal listeners. */
 async function init() {
   updateHeaderText();
-  setupScrollState();
   setupPdfViewerModal();
   setupHashRouting();
   await loadIndex();
