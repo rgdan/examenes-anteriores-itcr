@@ -400,6 +400,9 @@ function renderYearBlocks(years, parentNode, semesterTemplate, parcialTemplate, 
           enunciadoBtn.target = "_blank";
           enunciadoBtn.rel = "noopener noreferrer";
           enunciadoBtn.addEventListener("click", (e) => {
+            if (isMobileDevice()) {
+              return;
+            }
             e.preventDefault();
             openPdfViewer(docs.enunciado);
           });
@@ -413,6 +416,9 @@ function renderYearBlocks(years, parentNode, semesterTemplate, parcialTemplate, 
           solucionBtn.target = "_blank";
           solucionBtn.rel = "noopener noreferrer";
           solucionBtn.addEventListener("click", (e) => {
+            if (isMobileDevice()) {
+              return;
+            }
             e.preventDefault();
             openPdfViewer(docs.solution);
           });
@@ -846,6 +852,18 @@ async function loadIndex() {
 }
 
 /**
+ * Detects if the user is browsing from a mobile or tablet device.
+ *
+ * @returns {boolean}
+ */
+function isMobileDevice() {
+  return (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent))
+  );
+}
+
+/**
  * Opens the PDF viewer modal and loads the given PDF item.
  *
  * @param {ExamItem} item
@@ -855,6 +873,7 @@ function openPdfViewer(item) {
   const titleEl = document.getElementById("pdf-modal-title");
   const iframe = document.getElementById("pdf-modal-iframe");
   const loader = document.getElementById("pdf-modal-loader");
+  const downloadBtn = document.getElementById("pdf-modal-download");
 
   const subjectName = subjectLabel(item.school, item.subject);
   const profName = item.professor ? professorLabel(item.professor) : "Cátedra";
@@ -865,7 +884,12 @@ function openPdfViewer(item) {
   titleEl.title = displayTitle;
 
   loader.style.display = "flex";
-  iframe.src = encodeURI(item.path);
+  const encodedPath = encodeURI(item.path);
+  iframe.src = encodedPath;
+
+  if (downloadBtn) {
+    downloadBtn.href = encodedPath;
+  }
 
   iframe.onload = () => {
     loader.style.display = "none";
@@ -882,11 +906,15 @@ function openPdfViewer(item) {
 function closePdfViewer() {
   const modal = document.getElementById("pdf-viewer-modal");
   const iframe = document.getElementById("pdf-modal-iframe");
+  const downloadBtn = document.getElementById("pdf-modal-download");
 
   modal.classList.remove("active");
   modal.setAttribute("aria-hidden", "true");
   document.body.classList.remove("modal-open");
   iframe.src = "";
+  if (downloadBtn) {
+    downloadBtn.href = "";
+  }
 }
 
 /** Sets up the event listeners for the PDF viewer modal. */
