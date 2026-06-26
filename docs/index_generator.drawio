@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <mxfile host="codeviz.app" modified="2026-06-26T19:47:08.315Z" agent="CodeViz Exporter" version="14.6.5" type="device">
+          <diagram id="codeviz-diagram" name="System Diagram">
+            <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+              <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="generate_index_flow.cv::forkg6" value="" style="html=1;whiteSpace=wrap;container=1;fillColor=#dae8fc;strokeColor=#6c8ebf;dashed=1;fillOpacity=20;strokeWidth=2;containerType=none;recursiveResize=0;movable=1;resizable=1;autosize=0;dropTarget=0" vertex="1" parent="__uml__generate_index_flow.cv">
+                  <mxGeometry x="32" y="318" width="777" height="1054" as="geometry"/>
+                </mxCell>
+                <mxCell id="generate_index_flow.cv::forkg6_label" value="**fork**" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;labelBackgroundColor=white;spacing=5" vertex="1" parent="__uml__generate_index_flow.cv">
+                  <mxGeometry x="40" y="326" width="701" height="24" as="geometry"/>
+                </mxCell>
+<mxCell id="__uml__generate_index_flow.cv" value="" style="html=1;whiteSpace=wrap;container=1;fillColor=#dae8fc;strokeColor=#6c8ebf;dashed=1;fillOpacity=20;strokeWidth=2;containerType=none;recursiveResize=0;movable=1;resizable=1;autosize=0;dropTarget=0" vertex="1" parent="1">
+                  <mxGeometry x="12" y="12" width="817" height="1404" as="geometry"/>
+                </mxCell>
+                <mxCell id="__uml__generate_index_flow.cv_label" value="generate_index_flow.cv" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;labelBackgroundColor=white;spacing=5" vertex="1" parent="1">
+                  <mxGeometry x="20" y="20" width="741" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="generate_index_flow.cv::start1" value="**start**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="__uml__generate_index_flow.cv">
+                      <mxGeometry x="275.5" y="60" width="52" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a2" value="**Initialize constants and regular expressions**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="__uml__generate_index_flow.cv">
+                      <mxGeometry x="131" y="121" width="341" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a3" value="**Load existing metadata (school, subject) or use defaults**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="__uml__generate_index_flow.cv">
+                      <mxGeometry x="85" y="182" width="433" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a4" value="**Initialize empty list for exam items**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="__uml__generate_index_flow.cv">
+                      <mxGeometry x="164" y="243" width="275" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a5" value="**Recursively walk &apos;exams/&apos; directory**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="__uml__generate_index_flow.cv">
+                      <mxGeometry x="162.5" y="304" width="278" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::fork7" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="273" y="110" width="17" height="17" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::join8" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="273" y="997" width="17" height="17" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a9" value="**For each file**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="227.5" y="147" width="108" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::dec10" value="**Is PDF?**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="246.5" y="208" width="70" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a12" value="**Validate path segments (school, subject, professor)**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="225" y="289" width="397" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a13" value="**Validate folder names against patterns**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="269.5" y="350" width="308" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a14" value="**Load subject metadata to check &apos;EsCatedrado&apos; consistency**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="197.5" y="411" width="452" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a15" value="**Parse filename into structured exam data (parcial, semester, year, kind)**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="150.5" y="472" width="546" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a16" value="**Create ExamItem object**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="325" y="533" width="197" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a17" value="**Add ExamItem to list**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="337" y="594" width="173" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a18" value="**Skip file**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="102" y="289" width="75" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::merge19" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="273" y="655" width="17" height="17" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a20" value="**Sort all collected ExamItems**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="167.5" y="692" width="228" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a21" value="**Collect metadata (school &amp; subject) from discovered items**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="56" y="753" width="451" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a22" value="**Construct final payload object (generatedAt, total, metadata, items)**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="20" y="814" width="523" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::a23" value="**Write payload to index.json**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="171" y="875" width="221" height="41" as="geometry"/>
+                    </mxCell>
+<mxCell id="generate_index_flow.cv::end24" value="**end**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+                      <mxGeometry x="259" y="936" width="45" height="41" as="geometry"/>
+                    </mxCell>
+                <mxCell id="edge-generate_index_flow.cv::e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::start1" target="generate_index_flow.cv::a2">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a2" target="generate_index_flow.cv::a3">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a3" target="generate_index_flow.cv::a4">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a4" target="generate_index_flow.cv::a5">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a12" target="generate_index_flow.cv::a13">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a13" target="generate_index_flow.cv::a14">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a14" target="generate_index_flow.cv::a15">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a15" target="generate_index_flow.cv::a16">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a16" target="generate_index_flow.cv::a17">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::dec10" target="generate_index_flow.cv::a12">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+                  <mxCell id="edge-generate_index_flow.cv::e10_label" value="yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge-generate_index_flow.cv::e10">
+                    <mxGeometry x="-0.2" y="10" relative="1" as="geometry">
+                      <mxPoint as="offset"/>
+                    </mxGeometry>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a17" target="generate_index_flow.cv::merge19">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e12" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::dec10" target="generate_index_flow.cv::a18">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+                  <mxCell id="edge-generate_index_flow.cv::e12_label" value="no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="edge-generate_index_flow.cv::e12">
+                    <mxGeometry x="-0.2" y="10" relative="1" as="geometry">
+                      <mxPoint as="offset"/>
+                    </mxGeometry>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e13" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a18" target="generate_index_flow.cv::merge19">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a9" target="generate_index_flow.cv::dec10">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e15" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::merge19" target="generate_index_flow.cv::a20">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e16" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a20" target="generate_index_flow.cv::a21">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e17" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a21" target="generate_index_flow.cv::a22">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e18" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a22" target="generate_index_flow.cv::a23">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e19" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a23" target="generate_index_flow.cv::end24">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e20" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::fork7" target="generate_index_flow.cv::a9">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e21" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::end24" target="generate_index_flow.cv::join8">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+<mxCell id="edge-generate_index_flow.cv::e22" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=2;jumpStyle=arc;jumpSize=10;spacing=15;labelBackgroundColor=white;labelBorderColor=none" edge="1" parent="1" source="generate_index_flow.cv::a5" target="generate_index_flow.cv::fork7">
+                    <mxGeometry relative="1" as="geometry"/>
+                  </mxCell>
+              </root>
+            </mxGraphModel>
+          </diagram>
+        </mxfile>
