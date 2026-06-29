@@ -562,6 +562,11 @@ function generateIndex() {
   const payload = {
     generatedAt: new Date().toISOString(),
     total: items.length,
+    stats: {
+      schools: Object.keys(schoolMetadata).length,
+      subjects: Object.keys(subjectMetadata).length,
+      exams: items.length
+    },
     schoolMetadata,
     subjectMetadata,
     items

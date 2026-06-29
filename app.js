@@ -50,6 +50,10 @@
  * @typedef {Object} IndexPayload
  * @property {string} generatedAt - ISO timestamp
  * @property {number} total - Number of indexed PDFs
+ * @property {Object} stats - Precomputed statistics
+ * @property {string} stats.schools - Number of schools
+ * @property {string} stats.subjects - Number of subjects
+ * @property {string} stats.exams - Number of exams
  * @property {Object.<string, SchoolMetadata>} schoolMetadata
  * @property {Object.<string, SubjectMetadata>} subjectMetadata - Keys are "school/subject"
  * @property {ExamItem[]} items
@@ -438,39 +442,10 @@ const appState = {
   schoolMetadata: new Map(),
   subjectMetadata: new Map(),
   schools: [],
+  stats: { schools: 0, subjects: 0, exams: 0 },
   currentSchool: HOME_TAB_KEY,
   pendingOpenSubject: ""
 };
-
-/** Counts schools, subjects, and PDFs from the current grouped structure. */
-function homeStats() {
-  const schoolCount = appState.schools.length;
-  let subjectCount = 0;
-  let examCount = 0;
-
-  for (const subjects of appState.structure.values()) {
-    subjectCount += subjects.size;
-
-    for (const subjectEntry of subjects.values()) {
-      for (const years of subjectEntry.professors.values()) {
-        for (const semesters of years.values()) {
-          for (const parciales of semesters.values()) {
-            for (const parcial of parciales.values()) {
-              if (parcial.docs.enunciado) {
-                examCount += 1;
-              }
-              if (parcial.docs.solution) {
-                examCount += 1;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  return { schoolCount, subjectCount, examCount };
-}
 
 /**
  * Flattens all subjects into searchable rows with accent-folded searchText.
@@ -632,13 +607,13 @@ function renderHomeContent(container) {
 
   renderHomeSearchResults(resultList, "");
 
-  const stats = homeStats();
+  const stats = appState.stats || { schools: 0, subjects: 0, exams: 0 };
   const statsCard = document.createElement("article");
   statsCard.className = "home-card home-stats";
   statsCard.innerHTML = `
-    <p class="home-stat"><strong>${stats.schoolCount}</strong> escuelas</p>
-    <p class="home-stat"><strong>${stats.subjectCount}</strong> materias</p>
-    <p class="home-stat"><strong>${stats.examCount}</strong> PDFs</p>
+    <p class="home-stat"><strong>${stats.schools}</strong> escuelas</p>
+    <p class="home-stat"><strong>${stats.subjects}</strong> materias</p>
+    <p class="home-stat"><strong>${stats.exams}</strong> PDFs</p>
   `;
   wrapper.appendChild(statsCard);
 
@@ -797,11 +772,16 @@ function renderSchoolContent() {
  * @param {Object.<string, SchoolMetadata>} schoolMetadata
  * @param {Object.<string, SubjectMetadata>} subjectMetadata
  */
-function renderApp(items, schoolMetadata, subjectMetadata) {
+function renderApp(items, schoolMetadata, subjectMetadata, stats = {}) {
   appState.schoolMetadata = new Map(Object.entries(schoolMetadata));
   appState.subjectMetadata = new Map(Object.entries(subjectMetadata));
   appState.structure = groupedIndex(items, appState.subjectMetadata);
   appState.schools = [...appState.structure.keys()].sort((a, b) => schoolLabel(a).localeCompare(schoolLabel(b)));
+  appState.stats = {
+    schools: stats.schools ?? appState.schools.length,
+    subjects: stats.subjects ?? 0,
+    exams: stats.exams ?? items.length
+  };
 
   // Apply the URL hash to set the initial school/subject on first load.
   const { school: hashSchool, subject: hashSubject } = parseHash();
@@ -836,7 +816,8 @@ async function loadIndex() {
     const items = Array.isArray(payload.items) ? payload.items : [];
     const schoolMetadata = payload.schoolMetadata && typeof payload.schoolMetadata === "object" ? payload.schoolMetadata : {};
     const subjectMetadata = payload.subjectMetadata && typeof payload.subjectMetadata === "object" ? payload.subjectMetadata : {};
-    renderApp(items, schoolMetadata, subjectMetadata);
+    const stats = payload.stats && typeof payload.stats === "object" ? payload.stats : {};
+    renderApp(items, schoolMetadata, subjectMetadata, stats);
   } catch (error) {
     console.error(error);
     container.innerHTML = `<p class="state-message error">${STRINGS.error}</p>`;
