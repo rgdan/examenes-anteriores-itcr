@@ -91,10 +91,10 @@ const SUBJECT_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const SCHOOL_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 /** Lowercase snake_case pattern for professor folder names. */
 const PROFESSOR_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
-/** Matches PX_IS_YYYY_E, RP_IS_YYYY_E, etc.; optional trailing _E marks extraordinario. */
-const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)_(IS|IIS)_([0-9]{4})_([ES])(?:_(E))?$/i;
-/** Matches S_IS_YYYY_E suficiencia exam filenames. */
-const SUFICIENCIA_CODE_PATTERN = /^S_(IS|IIS)_([0-9]{4})_([ES])$/i;
+/** Matches PX_IS_YYYY_E, RP_IS_YYYY_E, etc.; optional trailing _E marks extraordinario, and optional _V<num> marks variation. */
+const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)_(IS|IIS)_([0-9]{4})_([ES])(?:_(E))?(?:_(V[0-9]+))?$/i;
+/** Matches S_IS_YYYY_E suficiencia exam filenames; optional _V<num> variation. */
+const SUFICIENCIA_CODE_PATTERN = /^S_(IS|IIS)_([0-9]{4})_([ES])(?:_(V[0-9]+))?$/i;
 /** Metadata filename expected in school and subject folders. */
 const METADATA_FILE_NAME = "metadata.json";
 /** Numeric sort order for semester codes. */
@@ -127,6 +127,7 @@ function parseFileCode(fileName) {
     const semester = suficienciaMatch[1].toUpperCase();
     const year = suficienciaMatch[2];
     const kindCode = suficienciaMatch[3].toUpperCase();
+    const variation = suficienciaMatch[4] ? suficienciaMatch[4].toUpperCase() : null;
 
     return {
       parcial: "S",
@@ -135,7 +136,8 @@ function parseFileCode(fileName) {
       kindCode,
       kind: kindCode === "E" ? "enunciado" : "solution",
       variant: "suficiencia",
-      variantCode: null
+      variantCode: null,
+      variation
     };
   }
 
@@ -151,6 +153,7 @@ function parseFileCode(fileName) {
   const year = match[4];
   const kindCode = match[5].toUpperCase();
   const variantCode = match[6] ? match[6].toUpperCase() : null;
+  const variation = match[7] ? match[7].toUpperCase() : null;
 
   const parcial = parcialToken === "RP" ? "RP" : `P${parcialNumber}`;
   const variant = variantCode === "E" ? "extraordinario" : "regular";
@@ -162,7 +165,8 @@ function parseFileCode(fileName) {
     kindCode,
     kind: kindCode === "E" ? "enunciado" : "solution",
     variant,
-    variantCode
+    variantCode,
+    variation
   };
 }
 
@@ -523,6 +527,7 @@ function validateAndBuildItem(absoluteFilePath) {
     kindCode: parsedCode.kindCode,
     variant: parsedCode.variant,
     variantCode: parsedCode.variantCode,
+    variation: parsedCode.variation,
     fileName,
     title: titleFromFilename(fileName)
   };

@@ -8,34 +8,41 @@ import { parcialLabel, parcialSort, subjectKey } from "./utils.js";
  * @returns {ParcialGroup}
  */
 export function parcialGroupFromItem(item) {
+  const varSuffix = item.variation ? `_${item.variation}` : "";
+  const varLabel = item.variation ? ` [${item.variation}]` : "";
+
   if (item.variant === "suficiencia") {
     return {
-      key: "SUFICIENCIA",
-      label: "Suficiencia",
+      key: `SUFICIENCIA${varSuffix}`,
+      label: `Suficiencia${varLabel}`,
       rank: 2,
-      baseParcial: ""
+      baseParcial: "",
+      variation: item.variation || ""
     };
   }
 
   if (item.variant === "extraordinario") {
     return {
-      key: `EXTRA_${item.parcial}`,
-      label: `[Extraordinario] ${parcialLabel(item.parcial)}`,
+      key: `EXTRA_${item.parcial}${varSuffix}`,
+      label: `[Extraordinario]${varLabel} ${parcialLabel(item.parcial)}`,
       rank: 1,
-      baseParcial: item.parcial
+      baseParcial: item.parcial,
+      variation: item.variation || ""
     };
   }
 
   return {
-    key: `NORMAL_${item.parcial}`,
-    label: parcialLabel(item.parcial),
+    key: `NORMAL_${item.parcial}${varSuffix}`,
+    label: `${parcialLabel(item.parcial)}${varLabel}`,
     rank: 0,
-    baseParcial: item.parcial
+    baseParcial: item.parcial,
+    variation: item.variation || ""
   };
 }
 
 /**
  * Sorts parcial groups: regular first, then extraordinario, then suficiencia; within rank by parcial number.
+ * If rank and baseParcial are equal, sorts by variation (empty variation first, then alphabetically by variation code).
  *
  * @param {ParcialGroup} a
  * @param {ParcialGroup} b
@@ -47,10 +54,22 @@ export function parcialGroupSort(a, b) {
   }
 
   if (a.rank === 2) {
-    return a.label.localeCompare(b.label);
+    // Suficiencia
+    if (a.variation && !b.variation) return 1;
+    if (!a.variation && b.variation) return -1;
+    return a.variation.localeCompare(b.variation) || a.label.localeCompare(b.label);
   }
 
-  return parcialSort(a.baseParcial, b.baseParcial);
+  const parcialComparison = parcialSort(a.baseParcial, b.baseParcial);
+  if (parcialComparison !== 0) {
+    return parcialComparison;
+  }
+
+  // Same rank (e.g. Regular or Extraordinario) and same parcial (e.g. P1)
+  // Sort non-variants first, then alphabetically by variation (e.g. V2, V3)
+  if (a.variation && !b.variation) return 1;
+  if (!a.variation && b.variation) return -1;
+  return a.variation.localeCompare(b.variation);
 }
 
 /**

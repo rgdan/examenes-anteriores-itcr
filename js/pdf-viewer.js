@@ -24,10 +24,8 @@ export function openPdfViewer(item) {
   const loader = document.getElementById("pdf-modal-loader");
   const downloadBtn = document.getElementById("pdf-modal-download");
 
-  const subjectName = subjectLabel(item.school, item.subject);
-  const profName = item.professor ? professorLabel(item.professor) : "Cátedra";
-  const kindLabel = item.kind === "enunciado" ? "Enunciado" : "Solución";
-  const displayTitle = `${subjectName} (${profName}) - ${parcialLabel(item.parcial)} ${item.year} - ${kindLabel}`;
+  const varLabel = item.variation ? ` [${item.variation}]` : "";
+  const displayTitle = `${subjectName} (${profName}) - ${parcialLabel(item.parcial)}${varLabel} ${item.year} - ${kindLabel}`;
 
   titleEl.textContent = displayTitle;
   titleEl.title = displayTitle;

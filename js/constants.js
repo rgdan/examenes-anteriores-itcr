@@ -27,6 +27,7 @@
  * @property {string} kindCode - E for enunciado, S for solution
  * @property {ExamVariant} variant
  * @property {string|null} variantCode - E when extraordinario, otherwise null
+ * @property {string|null} variation - Optional variation code (e.g. V2)
  * @property {string} fileName
  * @property {string} title - Human-readable title derived from the filename
  */
