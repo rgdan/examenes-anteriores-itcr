@@ -24,8 +24,15 @@ export function openPdfViewer(item) {
   const loader = document.getElementById("pdf-modal-loader");
   const downloadBtn = document.getElementById("pdf-modal-download");
 
-  const varLabel = item.variation ? ` [${item.variation}]` : "";
-  const displayTitle = `${subjectName} (${profName}) - ${parcialLabel(item.parcial)}${varLabel} ${item.year} - ${kindLabel}`;
+  if (!modal || !titleEl || !iframe || !loader) {
+    return;
+  }
+
+  const subjectName = subjectLabel(item.school, item.subject);
+  const professorName = item.professor ? professorLabel(item.professor) : "Cátedra";
+  const kindLabel = item.kind === "solution" ? "Solución" : "Enunciado";
+  const variationLabel = item.variation ? ` [${item.variation}]` : "";
+  const displayTitle = `${subjectName}${item.professor ? ` (${professorName})` : ""} - ${parcialLabel(item.parcial)}${variationLabel} ${item.year} - ${kindLabel}`;
 
   titleEl.textContent = displayTitle;
   titleEl.title = displayTitle;
