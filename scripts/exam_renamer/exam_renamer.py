@@ -106,6 +106,9 @@ class ExamManagerApp:
 
         if target_module == "rename":
             module_win.title("Renombrado Masivo de Exámenes")
+            module_win.protocol(
+                "WM_DELETE_WINDOW", lambda: self.return_to_dashboard(module_win)
+            )
             self.run_rename_pre_wizards(module_win)
 
         elif target_module == "viewer":
@@ -234,29 +237,42 @@ class ExamManagerApp:
             control_frame, text="Tipo de Examen:", font=("Arial", 10, "bold")
         ).pack(anchor=tk.W, pady=2)
         self.var_tipo = tk.StringVar(value="P1")
-        self.cb_tipo = ttk.Combobox(
-            control_frame,
-            textvariable=self.var_tipo,
-            values=["P1", "P2", "P3", "RP", "S"],
-            state="readonly",
-        )
-        self.cb_tipo.pack(fill=tk.X, pady=(0, 12))
+        tipo_frame = ttk.Frame(control_frame)
+        tipo_frame.pack(fill=tk.X, pady=(0, 12))
+        
+        tipos = ["P1", "P2", "P3", "RP", "S"]
+        for t in tipos:
+            rb_t = ttk.Radiobutton(
+                tipo_frame, text=t, variable=self.var_tipo, value=t, style="Toolbutton"
+            )
+            rb_t.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=1)
 
         ttk.Label(
             control_frame, text="Semestre:", font=("Arial", 10, "bold")
         ).pack(anchor=tk.W, pady=2)
         self.var_semestre = tk.StringVar(value="IS")
-        self.cb_semestre = ttk.Combobox(
-            control_frame, textvariable=self.var_semestre, values=["IS", "IIS"]
+        semestre_frame = ttk.Frame(control_frame)
+        semestre_frame.pack(fill=tk.X, pady=(0, 12))
+        rb_is = ttk.Radiobutton(
+            semestre_frame, text="IS", variable=self.var_semestre, value="IS", style="Toolbutton"
         )
-        self.cb_semestre.pack(fill=tk.X, pady=(0, 12))
+        rb_is.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 5))
+        rb_iis = ttk.Radiobutton(
+            semestre_frame, text="IIS", variable=self.var_semestre, value="IIS", style="Toolbutton"
+        )
+        rb_iis.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(5, 0))
 
         ttk.Label(control_frame, text="Año:", font=("Arial", 10, "bold")).pack(
             anchor=tk.W, pady=2
         )
         self.var_ano = tk.StringVar(value="2026")
-        self.ent_ano = ttk.Entry(control_frame, textvariable=self.var_ano)
-        self.ent_ano.pack(fill=tk.X, pady=(0, 12))
+        import datetime
+        current_year = datetime.datetime.now().year
+        year_values = [str(y) for y in range(current_year + 1, 2014, -1)]
+        self.cb_ano = ttk.Combobox(
+            control_frame, textvariable=self.var_ano, values=year_values
+        )
+        self.cb_ano.pack(fill=tk.X, pady=(0, 12))
 
         ttk.Label(
             control_frame, text="Naturaleza del Archivo:", font=("Arial", 10, "bold")
@@ -264,18 +280,44 @@ class ExamManagerApp:
         self.var_doc = tk.StringVar(value="E")
         rb_frame = ttk.Frame(control_frame)
         rb_frame.pack(fill=tk.X, pady=(0, 12))
-        ttk.Radiobutton(
-            rb_frame, text="Enunciado (E)", variable=self.var_doc, value="E"
-        ).pack(side=tk.LEFT, padx=(0, 15))
-        ttk.Radiobutton(
-            rb_frame, text="Solución (S)", variable=self.var_doc, value="S"
-        ).pack(side=tk.LEFT)
+        rb_e = ttk.Radiobutton(
+            rb_frame, text="Enunciado (E)", variable=self.var_doc, value="E", style="Toolbutton"
+        )
+        rb_e.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 5))
+        rb_s = ttk.Radiobutton(
+            rb_frame, text="Solución (S)", variable=self.var_doc, value="S", style="Toolbutton"
+        )
+        rb_s.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(5, 0))
 
         self.var_extra = tk.BooleanVar(value=False)
         self.chk_extra = ttk.Checkbutton(
             control_frame, text="¿Es Extraordinario? (_E)", variable=self.var_extra
         )
-        self.chk_extra.pack(anchor=tk.W, pady=(0, 20))
+        self.chk_extra.pack(anchor=tk.W, pady=(0, 10))
+
+        # Variation Checkbox and Dropdown
+        self.var_is_variation = tk.BooleanVar(value=False)
+        self.var_variation_val = tk.StringVar(value="V2")
+        
+        var_frame = ttk.Frame(control_frame)
+        var_frame.pack(fill=tk.X, pady=(0, 20))
+        
+        self.chk_variation = ttk.Checkbutton(
+            var_frame,
+            text="¿Tiene Variación?",
+            variable=self.var_is_variation,
+            command=self.toggle_variation_state
+        )
+        self.chk_variation.pack(side=tk.LEFT)
+        
+        self.cb_variation = ttk.Combobox(
+            var_frame,
+            textvariable=self.var_variation_val,
+            values=["V2", "V3", "V4", "V5", "V6"],
+            state="disabled",
+            width=5
+        )
+        self.cb_variation.pack(side=tk.LEFT, padx=10)
 
         btn_rename = ttk.Button(
             control_frame, text="Renombrar y Siguiente", command=self.rename_current
@@ -294,13 +336,6 @@ class ExamManagerApp:
 
         bottom_tools = ttk.Frame(control_frame)
         bottom_tools.pack(side=tk.BOTTOM, fill=tk.X)
-
-        btn_scan_dup = ttk.Button(
-            bottom_tools,
-            text="🔍 Escanear Duplicados",
-            command=lambda: self.scan_for_duplicates(win),
-        )
-        btn_scan_dup.pack(fill=tk.X, ipady=6, pady=(10, 0))
 
         btn_back = ttk.Button(
             bottom_tools,
@@ -417,18 +452,19 @@ class ExamManagerApp:
             self.marked_files.discard(abs_path)
 
     def close_viewer(self, window):
-        try:
-            with open("marked_pdfs.txt", "w", encoding="utf-8") as f:
-                for path in sorted(list(self.marked_files)):
-                    f.write(f"{path}\n")
-            messagebox.showinfo(
-                "Marcas Guardadas",
-                f"Se guardó la lista de marcas absolutas en:\n{os.path.abspath('marked_pdfs.txt')}",
-            )
-        except Exception as e:
-            messagebox.showerror(
-                "Error al Guardar", f"No se pudo escribir el archivo .txt:\n{str(e)}"
-            )
+        if self.marked_files:
+            try:
+                with open("marked_pdfs.txt", "w", encoding="utf-8") as f:
+                    for path in sorted(list(self.marked_files)):
+                        f.write(f"{path}\n")
+                messagebox.showinfo(
+                    "Marcas Guardadas",
+                    f"Se guardó la lista de marcas absolutas en:\n{os.path.abspath('marked_pdfs.txt')}",
+                )
+            except Exception as e:
+                messagebox.showerror(
+                    "Error al Guardar", f"No se pudo escribir el archivo .txt:\n{str(e)}"
+                )
         self.return_to_dashboard(window)
 
     # ==========================================
@@ -834,6 +870,12 @@ class ExamManagerApp:
             self.current_index -= 1
             self.load_pdf_file_ui()
 
+    def toggle_variation_state(self):
+        if self.var_is_variation.get():
+            self.cb_variation.config(state="readonly")
+        else:
+            self.cb_variation.config(state="disabled")
+
     def rename_current(self):
         current_name = self.pdf_files[self.current_index]
 
@@ -843,6 +885,10 @@ class ExamManagerApp:
         tipo_doc = self.var_doc.get()
         extra_flag = "_E" if self.var_extra.get() else ""
 
+        var_suffix = ""
+        if self.var_is_variation.get():
+            var_suffix = f"_{self.var_variation_val.get()}"
+
         if not ano or not ano.isdigit():
             messagebox.showerror("Error", "Por favor ingrese un año válido de 4 dígitos.")
             return
@@ -851,7 +897,7 @@ class ExamManagerApp:
         num = tipo_num[1:] if tipo_num.startswith("P") else ""
 
         dir_name = os.path.dirname(current_name)
-        new_base_name = f"{tipo}{num}_{semestre}_{ano}_{tipo_doc}{extra_flag}.pdf"
+        new_base_name = f"{tipo}{num}_{semestre}_{ano}_{tipo_doc}{extra_flag}{var_suffix}.pdf"
         new_name = (
             os.path.join(dir_name, new_base_name) if dir_name else new_base_name
         )
