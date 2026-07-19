@@ -23,3 +23,9 @@ En la Wiki encontrará:
 * **[Guía de Contribución](https://github.com/rgdan/examenes-anteriores-itcr/wiki/Cómo-contribuir):** Pasos para hacer Fork, clonar localmente, subir cambios y abrir un Pull Request en el repositorio de archivos.
 
 * **[Nomenclatura y Convenciones](https://github.com/rgdan/examenes-anteriores-itcr/wiki/Nomenclatura-y-Convenciones):** Reglas para nombrar los archivos PDF y estructurar los metadatos.
+
+---
+
+## Licencia
+
+Este proyecto se encuentra bajo la licencia (MIT LICENSE) - mira el archivo [LICENSE](https://github.com/rgdan/examenes-anteriores-itcr/blob/main/LICENSE) para más información.
