@@ -19,7 +19,7 @@
  * @property {string} path - Public URL to the PDF
  * @property {string} school - School folder slug
  * @property {string} subject - Subject folder slug
- * @property {string|null} professor - Professor folder slug, or null for catedrado subjects
+ * @property {string|null} professor - Professor folder slug, or null for coordinated subjects
  * @property {string} year - Four-digit year
  * @property {SemesterCode} semester
  * @property {string} parcial - Parcial code (e.g. P1, RP, S)
@@ -43,7 +43,7 @@
  * @property {string} properSpelling - Display name for the subject
  * @property {string} courseCode - Official course code (e.g. MA1102)
  * @property {number} creditAmount
- * @property {boolean} EsCatedrado - When true, exams are not grouped by professor
+ * @property {boolean} isCoordinated - When true, exams are not grouped by professor
  */
 
 /**
@@ -85,7 +85,7 @@
 
 /**
  * @typedef {Object} AppState
- * @property {Map<string, Map<string, { isCatedrado: boolean, professors: Map }>>} structure - Grouped exam tree
+ * @property {Map<string, Map<string, { isCoordinated: boolean, professors: Map }>>} structure - Grouped exam tree
  * @property {Map<string, SchoolMetadata>} schoolMetadata
  * @property {Map<string, SubjectMetadata>} subjectMetadata - Keys are "school/subject"
  * @property {string[]} schools - Sorted school slugs

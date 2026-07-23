@@ -50,7 +50,7 @@
 <mxCell id="generate_index_flow.cv::a13" value="**Validate folder names against patterns**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
                       <mxGeometry x="269.5" y="350" width="308" height="41" as="geometry"/>
                     </mxCell>
-<mxCell id="generate_index_flow.cv::a14" value="**Load subject metadata to check &apos;EsCatedrado&apos; consistency**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
+<mxCell id="generate_index_flow.cv::a14" value="**Load subject metadata to check &apos;isCoordinated&apos; consistency**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">
                       <mxGeometry x="197.5" y="411" width="452" height="41" as="geometry"/>
                     </mxCell>
 <mxCell id="generate_index_flow.cv::a15" value="**Parse filename into structured exam data (parcial, semester, year, kind)**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5" vertex="1" parent="generate_index_flow.cv::forkg6">

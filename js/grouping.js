@@ -76,11 +76,11 @@ export function parcialGroupSort(a, b) {
  * Builds a nested Map hierarchy from flat exam items.
  *
  * Structure: school → subject → professor → year → semester → parcialGroup → docs.
- * Catedrado subjects collapse all professors under the "__catedra__" key.
+ * Coordinated subjects collapse all professors under the "__catedra__" key.
  *
  * @param {ExamItem[]} items
  * @param {Map<string, SubjectMetadata>} subjectMetadata
- * @returns {Map<string, Map<string, { isCatedrado: boolean, professors: Map }>>}
+ * @returns {Map<string, Map<string, { isCoordinated: boolean, professors: Map }>>}
  */
 export function groupedIndex(items, subjectMetadata) {
   const root = new Map();
@@ -94,13 +94,13 @@ export function groupedIndex(items, subjectMetadata) {
     if (!schoolMap.has(item.subject)) {
       const metadata = subjectMetadata.get(subjectKey(item.school, item.subject));
       schoolMap.set(item.subject, {
-        isCatedrado: metadata ? metadata.EsCatedrado !== false : true,
+        isCoordinated: metadata ? metadata.isCoordinated !== false : true,
         professors: new Map()
       });
     }
 
     const subjectEntry = schoolMap.get(item.subject);
-    const professorKey = subjectEntry.isCatedrado ? "__catedra__" : item.professor;
+    const professorKey = subjectEntry.isCoordinated ? "__catedra__" : item.professor;
 
     if (!subjectEntry.professors.has(professorKey)) {
       subjectEntry.professors.set(professorKey, new Map());

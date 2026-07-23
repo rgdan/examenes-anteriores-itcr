@@ -21,7 +21,7 @@
  * @property {string} path - Public URL to the PDF
  * @property {string} school - School folder slug
  * @property {string} subject - Subject folder slug
- * @property {string|null} professor - Professor folder slug, or null for catedrado subjects
+ * @property {string|null} professor - Professor folder slug, or null for coordinated subjects
  * @property {string} year - Four-digit year
  * @property {SemesterCode} semester
  * @property {string} parcial - Parcial code (e.g. P1, RP, S)
@@ -44,7 +44,7 @@
  * @property {string} properSpelling - Display name for the subject
  * @property {string} courseCode - Official course code (e.g. MA1102)
  * @property {number} creditAmount
- * @property {boolean} EsCatedrado - When true, exams live directly under the subject folder
+ * @property {boolean} isCoordinated - When true, exams live directly under the subject folder
  */
 
 /**
@@ -289,7 +289,7 @@ function defaultSubjectMetadata(subject) {
     properSpelling: titleFromSlug(subject),
     courseCode: "",
     creditAmount: 0,
-    EsCatedrado: true
+    isCoordinated: true
   };
 }
 
@@ -335,7 +335,7 @@ function validateSubjectMetadataFile(data, relativePath) {
     properSpelling: assertNonEmptyString(data.properSpelling, "properSpelling", relativePath),
     courseCode: assertString(data.courseCode, "courseCode", relativePath).trim(),
     creditAmount,
-    EsCatedrado: assertBoolean(data.EsCatedrado, "EsCatedrado", relativePath)
+    isCoordinated: assertBoolean(data.isCoordinated, "isCoordinated", relativePath)
   };
 }
 
@@ -448,10 +448,10 @@ function walkDirectory(currentDir, onFile) {
  * Validates a PDF under exams/ and builds an ExamItem, or returns null for non-PDFs.
  *
  * Path rules:
- * - 3 segments: <school>/<subject>/<file>.pdf (catedrado subjects)
- * - 4 segments: <school>/<subject>/<professor>/<file>.pdf (non-catedrado)
+ * - 3 segments: <school>/<subject>/<file>.pdf (coordinated subjects)
+ * - 4 segments: <school>/<subject>/<professor>/<file>.pdf (non-coordinated)
  *
- * Enforces slug patterns and EsCatedrado consistency with folder depth.
+ * Enforces slug patterns and isCoordinated consistency with folder depth.
  *
  * @param {string} absoluteFilePath
  * @returns {ExamItem|null}
@@ -497,14 +497,14 @@ function validateAndBuildItem(absoluteFilePath) {
       throw new Error(`Invalid professor folder '${professor}' in ${sourceRelativePath}. Use lowercase snake_case only.`);
     }
 
-    if (subjectMetadata.EsCatedrado) {
+    if (subjectMetadata.isCoordinated) {
       throw new Error(
-        `Invalid professor subfolder in ${sourceRelativePath}. Subject '${school}/${subject}' is marked as EsCatedrado=true.`
+        `Invalid professor subfolder in ${sourceRelativePath}. Subject '${school}/${subject}' is marked as isCoordinated=true.`
       );
     }
-  } else if (!subjectMetadata.EsCatedrado) {
+  } else if (!subjectMetadata.isCoordinated) {
     throw new Error(
-      `Invalid file path for ${sourceRelativePath}. Subject '${school}/${subject}' is marked as EsCatedrado=false and must store PDFs under <school>/<subject>/<professor>/ in exams/.`
+      `Invalid file path for ${sourceRelativePath}. Subject '${school}/${subject}' is marked as isCoordinated=false and must store PDFs under <school>/<subject>/<professor>/ in exams/.`
     );
   }
 

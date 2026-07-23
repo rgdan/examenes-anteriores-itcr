@@ -198,7 +198,7 @@ export function renderSchoolContent() {
 
     const subjectBody = subjectNode.querySelector(".subject-body");
 
-    if (subjectEntry.isCatedrado) {
+    if (subjectEntry.isCoordinated) {
       const catedraYears = subjectEntry.professors.get("__catedra__") || new Map();
       renderYearBlocks(catedraYears, subjectBody, semesterTemplate, parcialTemplate, examTemplate);
     } else {

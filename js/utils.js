@@ -56,10 +56,10 @@ export function subjectCourseCode(school, subject) {
   return metadata.courseCode ? metadata.courseCode : "";
 }
 
-/** Returns whether a subject is taught as catedrado (defaults to true). */
-export function subjectIsCatedrado(school, subject) {
+/** Returns whether a subject is coordinated (defaults to true). */
+export function subjectIsCoordinated(school, subject) {
   const metadata = appState.subjectMetadata.get(subjectKey(school, subject));
-  return metadata ? metadata.EsCatedrado !== false : true;
+  return metadata ? metadata.isCoordinated !== false : true;
 }
 
 /** Returns the display name for a professor slug. */
