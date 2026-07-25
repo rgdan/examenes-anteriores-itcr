@@ -344,6 +344,18 @@ h1 {
   font-weight: 600;
 }
 
+.subject-defunct-notice {
+  margin: 0;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-left: 4px solid #ef4444;
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  color: #991b1b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 .subject-title::-webkit-details-marker,
 .professor-title::-webkit-details-marker,
 .semester-title::-webkit-details-marker,

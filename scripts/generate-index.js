@@ -45,6 +45,7 @@
  * @property {string} courseCode - Official course code (e.g. MA1102)
  * @property {number} creditAmount
  * @property {boolean} isCoordinated - When true, exams live directly under the subject folder
+ * @property {boolean} isDefunct - When true, indicates course is no longer offered
  */
 
 /**
@@ -289,7 +290,8 @@ function defaultSubjectMetadata(subject) {
     properSpelling: titleFromSlug(subject),
     courseCode: "",
     creditAmount: 0,
-    isCoordinated: true
+    isCoordinated: true,
+    isDefunct: false
   };
 }
 
@@ -335,7 +337,8 @@ function validateSubjectMetadataFile(data, relativePath) {
     properSpelling: assertNonEmptyString(data.properSpelling, "properSpelling", relativePath),
     courseCode: assertString(data.courseCode, "courseCode", relativePath).trim(),
     creditAmount,
-    isCoordinated: assertBoolean(data.isCoordinated, "isCoordinated", relativePath)
+    isCoordinated: assertBoolean(data.isCoordinated, "isCoordinated", relativePath),
+    isDefunct: assertBoolean(data.isDefunct, "isDefunct", relativePath)
   };
 }
 

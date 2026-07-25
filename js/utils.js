@@ -62,6 +62,12 @@ export function subjectIsCoordinated(school, subject) {
   return metadata ? metadata.isCoordinated !== false : true;
 }
 
+/** Returns whether a subject is defunct (no longer offered). */
+export function subjectIsDefunct(school, subject) {
+  const metadata = appState.subjectMetadata.get(subjectKey(school, subject));
+  return metadata ? Boolean(metadata.isDefunct) : false;
+}
+
 /** Returns the display name for a professor slug. */
 export function professorLabel(code) {
   return normalizeText(code);

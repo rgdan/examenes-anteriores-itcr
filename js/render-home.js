@@ -1,6 +1,6 @@
 import { STRINGS } from "./constants.js";
 import { appState } from "./state.js";
-import { schoolLabel, subjectLabel, subjectCourseCode, foldText } from "./utils.js";
+import { schoolLabel, subjectLabel, subjectCourseCode, subjectIsDefunct, foldText } from "./utils.js";
 import { navigateTo } from "./router.js";
 
 /**
@@ -28,6 +28,7 @@ export function buildHomeSearchIndex() {
         subject,
         title: subjectName,
         subtitle: code ? `${schoolName} | ${code}` : schoolName,
+        isDefunct: subjectIsDefunct(school, subject),
         searchText: `${subjectName} ${subject} ${schoolName} ${school} ${code}`
       });
     }

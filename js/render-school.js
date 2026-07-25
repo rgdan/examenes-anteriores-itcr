@@ -4,6 +4,7 @@ import {
   schoolLabel,
   subjectLabel,
   subjectCourseCode,
+  subjectIsDefunct,
   professorLabel,
   semesterSort,
   semesterLabel
@@ -197,6 +198,13 @@ export function renderSchoolContent() {
     }
 
     const subjectBody = subjectNode.querySelector(".subject-body");
+
+    if (subjectIsDefunct(appState.currentSchool, subject)) {
+      const defunctNotice = document.createElement("div");
+      defunctNotice.className = "subject-defunct-notice";
+      defunctNotice.textContent = "Este curso ya no es ofertado en el TEC";
+      subjectBody.appendChild(defunctNotice);
+    }
 
     if (subjectEntry.isCoordinated) {
       const catedraYears = subjectEntry.professors.get("__catedra__") || new Map();
