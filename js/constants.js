@@ -11,7 +11,7 @@
  */
 
 /**
- * @typedef {"IS" | "IIS"} SemesterCode
+ * @typedef {"IS" | "IIS" | "V"} SemesterCode
  */
 
 /**
@@ -119,10 +119,10 @@ export const STRINGS = {
 export const HOME_TAB_KEY = "__home__";
 
 /** Numeric sort order for semester codes. */
-export const SEMESTER_ORDER = { IS: 1, IIS: 2 };
+export const SEMESTER_ORDER = { IS: 1, IIS: 2, V: 3 };
 
 /** Short display labels for semester codes. */
-export const SEMESTER_LABELS = { IS: "I", IIS: "II" };
+export const SEMESTER_LABELS = { IS: "I", IIS: "II", V: "Verano" };
 
 /** Display labels for known parcial codes. */
 export const PARCIAL_LABELS = {

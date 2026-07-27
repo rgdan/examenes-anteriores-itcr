@@ -208,7 +208,29 @@ export function renderSchoolContent() {
 
     if (subjectEntry.isCoordinated) {
       const catedraYears = subjectEntry.professors.get("__catedra__") || new Map();
-      renderYearBlocks(catedraYears, subjectBody, semesterTemplate, parcialTemplate, examTemplate);
+      if (catedraYears.size) {
+        renderYearBlocks(catedraYears, subjectBody, semesterTemplate, parcialTemplate, examTemplate);
+      }
+
+      // Verano exams for coordinated subjects are grouped by professor — render them as professor blocks.
+      const veranoProfessors = [...subjectEntry.professors.entries()].filter(
+        ([key]) => key !== "__catedra__"
+      ).sort((a, b) => {
+        return professorLabel(a[0]).localeCompare(professorLabel(b[0]), "es", { sensitivity: "base" });
+      });
+
+      for (const [professor, years] of veranoProfessors) {
+        const professorNode = professorTemplate.content.firstElementChild.cloneNode(true);
+        if (subjectToOpen && subject === subjectToOpen) {
+          professorNode.open = true;
+        }
+
+        const label = professor === "__verano_unknown__" ? "Verano (profesor desconocido)" : professorLabel(professor);
+        professorNode.querySelector(".professor-title").textContent = label;
+        const professorBody = professorNode.querySelector(".professor-body");
+        renderYearBlocks(years, professorBody, semesterTemplate, parcialTemplate, examTemplate);
+        subjectBody.appendChild(professorNode);
+      }
     } else {
       const sortedProfessors = [...subjectEntry.professors.entries()].sort((a, b) => {
         return professorLabel(a[0]).localeCompare(professorLabel(b[0]), "es", { sensitivity: "base" });

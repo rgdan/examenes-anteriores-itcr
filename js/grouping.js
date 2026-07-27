@@ -100,7 +100,14 @@ export function groupedIndex(items, subjectMetadata) {
     }
 
     const subjectEntry = schoolMap.get(item.subject);
-    const professorKey = subjectEntry.isCoordinated ? "__catedra__" : item.professor;
+    let professorKey;
+    if (subjectEntry.isCoordinated && item.semester === "V") {
+      // Verano exams for coordinated subjects are not coordinated — each professor may have their own exams.
+      // Group by professor slug, or use a fallback key when no professor folder is present.
+      professorKey = item.professor || "__verano_unknown__";
+    } else {
+      professorKey = subjectEntry.isCoordinated ? "__catedra__" : item.professor;
+    }
 
     if (!subjectEntry.professors.has(professorKey)) {
       subjectEntry.professors.set(professorKey, new Map());

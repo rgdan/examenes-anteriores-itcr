@@ -13,7 +13,7 @@
  */
 
 /**
- * @typedef {"IS" | "IIS"} SemesterCode
+ * @typedef {"IS" | "IIS" | "V"} SemesterCode
  */
 
 /**
@@ -92,14 +92,16 @@ const SUBJECT_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 const SCHOOL_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
 /** Lowercase snake_case pattern for professor folder names. */
 const PROFESSOR_PATTERN = /^[a-z0-9]+(?:_[a-z0-9]+)*$/;
-/** Matches PX_IS_YYYY_E, RP_IS_YYYY_E, etc.; optional trailing _E marks extraordinario, and optional _V<num> marks variation. */
-const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)_(IS|IIS)_([0-9]{4})_([ES])(?:_(E))?(?:_(V[0-9]+))?$/i;
-/** Matches S_IS_YYYY_E suficiencia exam filenames; optional _V<num> variation. */
-const SUFICIENCIA_CODE_PATTERN = /^S_(IS|IIS)_([0-9]{4})_([ES])(?:_(V[0-9]+))?$/i;
+/** Matches PX_IS_YYYY_E, RP_IS_YYYY_E, PX_V_YYYY_E, etc.; optional trailing _E marks extraordinario, and optional _V<num> marks variation. */
+const REGULAR_CODE_PATTERN = /^(P([0-9]+)|RP)_(IS|IIS|V)_([0-9]{4})_([ES])(?:_(E))?(?:_(V[0-9]+))?$/i;
+/** Matches S_IS_YYYY_E or S_V_YYYY_E suficiencia exam filenames; optional _V<num> variation. */
+const SUFICIENCIA_CODE_PATTERN = /^S_(IS|IIS|V)_([0-9]{4})_([ES])(?:_(V[0-9]+))?$/i;
 /** Metadata filename expected in school and subject folders. */
 const METADATA_FILE_NAME = "metadata.json";
 /** Numeric sort order for semester codes. */
-const SEMESTER_ORDER = { IS: 1, IIS: 2 };
+const SEMESTER_ORDER = { IS: 1, IIS: 2, V: 3 };
+/** Sentinel folder name that marks Verano exam paths. */
+const VERANO_FOLDER = "verano";
 /** Numeric sort order for exam variants. */
 const VARIANT_ORDER = { regular: 0, extraordinario: 1, suficiencia: 2 };
 
@@ -453,8 +455,11 @@ function walkDirectory(currentDir, onFile) {
  * Path rules:
  * - 3 segments: <school>/<subject>/<file>.pdf (coordinated subjects)
  * - 4 segments: <school>/<subject>/<professor>/<file>.pdf (non-coordinated)
+ * - 4 segments: <school>/<subject>/verano/<file>.pdf (Verano, no professor)
+ * - 5 segments: <school>/<subject>/verano/<professor>/<file>.pdf (Verano, with professor)
  *
  * Enforces slug patterns and isCoordinated consistency with folder depth.
+ * Verano paths bypass the isCoordinated check — any subject may have Verano exams.
  *
  * @param {string} absoluteFilePath
  * @returns {ExamItem|null}
@@ -471,18 +476,39 @@ function validateAndBuildItem(absoluteFilePath) {
   let subject;
   let professor = null;
   let fileName;
+  let isVerano = false;
 
   if (segments.length === 3) {
+    // <school>/<subject>/<file>.pdf — coordinated
     [school, subject, fileName] = segments;
+  } else if (segments.length === 4 && segments[2] === VERANO_FOLDER) {
+    // <school>/<subject>/verano/<file>.pdf — Verano without professor
+    [school, subject, , fileName] = segments;
+    isVerano = true;
   } else if (segments.length === 4) {
+    // <school>/<subject>/<professor>/<file>.pdf — non-coordinated
     [school, subject, professor, fileName] = segments;
+  } else if (segments.length === 5 && segments[2] === VERANO_FOLDER) {
+    // <school>/<subject>/verano/<professor>/<file>.pdf — Verano with professor
+    [school, subject, , professor, fileName] = segments;
+    isVerano = true;
   } else {
     throw new Error(
-      `Invalid file path depth for ${sourceRelativePath}. Expected <school>/<subject>/<file>.pdf or <school>/<subject>/<professor>/<file>.pdf under exams/.`
+      `Invalid file path depth for ${sourceRelativePath}. Expected:
+  <school>/<subject>/<file>.pdf
+  <school>/<subject>/<professor>/<file>.pdf
+  <school>/<subject>/verano/<file>.pdf
+  <school>/<subject>/verano/<professor>/<file>.pdf`
     );
   }
 
-  const examRelativePath = [school, subject, ...(professor ? [professor] : []), fileName].join("/");
+  const examRelativePath = [
+    school,
+    subject,
+    ...(isVerano ? [VERANO_FOLDER] : []),
+    ...(professor ? [professor] : []),
+    fileName
+  ].join("/");
   const examPublicPath = `${EXAMS_BASE_URL}/${examRelativePath}`;
 
   if (!SCHOOL_PATTERN.test(school)) {
@@ -495,7 +521,12 @@ function validateAndBuildItem(absoluteFilePath) {
 
   const subjectMetadata = loadSubjectMetadata(school, subject);
 
-  if (professor) {
+  if (isVerano) {
+    // Verano exams bypass the isCoordinated check — professors choose their own material.
+    if (professor && !PROFESSOR_PATTERN.test(professor)) {
+      throw new Error(`Invalid professor folder '${professor}' in ${sourceRelativePath}. Use lowercase snake_case only.`);
+    }
+  } else if (professor) {
     if (!PROFESSOR_PATTERN.test(professor)) {
       throw new Error(`Invalid professor folder '${professor}' in ${sourceRelativePath}. Use lowercase snake_case only.`);
     }
@@ -515,6 +546,18 @@ function validateAndBuildItem(absoluteFilePath) {
   if (!parsedCode) {
     throw new Error(
       `Invalid filename '${fileName}' in ${sourceRelativePath}. Use PX_XS_XXXX_E, RP_XS_XXXX_E, or S_XS_XXXX_E with underscores only. Optional final _E is only for extraordinario.`
+    );
+  }
+
+  if (isVerano && parsedCode.semester !== "V") {
+    throw new Error(
+      `Semester code mismatch in ${sourceRelativePath}. Files inside a 'verano/' folder must use semester code V (got '${parsedCode.semester}').`
+    );
+  }
+
+  if (!isVerano && parsedCode.semester === "V") {
+    throw new Error(
+      `Semester code mismatch in ${sourceRelativePath}. Files with semester code V must be placed inside a 'verano/' subfolder.`
     );
   }
 

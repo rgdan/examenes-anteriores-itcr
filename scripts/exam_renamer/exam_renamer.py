@@ -256,11 +256,15 @@ class ExamManagerApp:
         rb_is = ttk.Radiobutton(
             semestre_frame, text="IS", variable=self.var_semestre, value="IS", style="Toolbutton"
         )
-        rb_is.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 5))
+        rb_is.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 2))
         rb_iis = ttk.Radiobutton(
             semestre_frame, text="IIS", variable=self.var_semestre, value="IIS", style="Toolbutton"
         )
-        rb_iis.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(5, 0))
+        rb_iis.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
+        rb_v = ttk.Radiobutton(
+            semestre_frame, text="V (Verano)", variable=self.var_semestre, value="V", style="Toolbutton"
+        )
+        rb_v.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(2, 0))
 
         ttk.Label(control_frame, text="Año:", font=("Arial", 10, "bold")).pack(
             anchor=tk.W, pady=2
