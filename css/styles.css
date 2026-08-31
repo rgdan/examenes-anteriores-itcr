@@ -153,7 +153,6 @@ h1 {
   margin: 0;
   background: #eef4fb;
   border: 1px solid #c9d8ea;
-  border-left: 4px solid #0b5ea8;
   border-radius: 8px;
   padding: 0.75rem 0.9rem;
   color: #1f3d5a;
@@ -348,7 +347,6 @@ h1 {
   margin: 0;
   background: #fef2f2;
   border: 1px solid #fecaca;
-  border-left: 4px solid #ef4444;
   border-radius: 8px;
   padding: 0.65rem 0.85rem;
   color: #991b1b;
