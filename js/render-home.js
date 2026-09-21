@@ -29,7 +29,7 @@ export function buildHomeSearchIndex() {
         title: subjectName,
         subtitle: code ? `${schoolName} | ${code}` : schoolName,
         isDefunct: subjectIsDefunct(school, subject),
-        searchText: `${subjectName} ${subject} ${schoolName} ${school} ${code}`
+        searchText: foldText(`${subjectName} ${subject} ${schoolName} ${school} ${code}`)
       });
     }
   }
@@ -43,8 +43,9 @@ export function buildHomeSearchIndex() {
  *
  * @param {HTMLElement} resultList
  * @param {string} query
+ * @param {HomeSearchRow[]} index - Pre-built search index from buildHomeSearchIndex()
  */
-export function renderHomeSearchResults(resultList, query) {
+export function renderHomeSearchResults(resultList, query, index) {
   resultList.innerHTML = "";
   const trimmed = query.trim();
 
@@ -56,10 +57,9 @@ export function renderHomeSearchResults(resultList, query) {
     return;
   }
 
-  const index = buildHomeSearchIndex();
   const folded = foldText(trimmed);
   const matches = index
-    .filter((row) => foldText(row.searchText).includes(folded))
+    .filter((row) => row.searchText.includes(folded))
     .sort((a, b) => a.title.localeCompare(b.title, "es", { sensitivity: "base" }))
     .slice(0, 25);
 
@@ -147,8 +147,9 @@ export function renderHomeContent(container) {
   const resultList = document.createElement("div");
   resultList.className = "home-search-results";
 
+  const searchIndex = buildHomeSearchIndex();
   searchInput.addEventListener("input", (event) => {
-    renderHomeSearchResults(resultList, event.target.value);
+    renderHomeSearchResults(resultList, event.target.value, searchIndex);
   });
 
   searchCard.appendChild(searchTitle);
@@ -156,7 +157,7 @@ export function renderHomeContent(container) {
   searchCard.appendChild(resultList);
   wrapper.appendChild(searchCard);
 
-  renderHomeSearchResults(resultList, "");
+  renderHomeSearchResults(resultList, "", searchIndex);
 
   const stats = appState.stats || { schools: 0, subjects: 0, exams: 0 };
   const statsCard = document.createElement("article");
