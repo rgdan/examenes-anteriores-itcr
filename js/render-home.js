@@ -159,7 +159,7 @@ export function renderHomeContent(container) {
 
   renderHomeSearchResults(resultList, "", searchIndex);
 
-  const stats = appState.stats || { schools: 0, subjects: 0, exams: 0 };
+  const stats = appState.stats;
   const statsCard = document.createElement("article");
   statsCard.className = "home-card home-stats";
   statsCard.innerHTML = `
