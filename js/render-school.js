@@ -139,11 +139,6 @@ export function renderSchoolContent() {
     return;
   }
 
-  if (!appState.currentSchool) {
-    container.innerHTML = `<p class="state-message">${STRINGS.empty}</p>`;
-    return;
-  }
-
   const subjects = appState.structure.get(appState.currentSchool);
   const currentSchoolMetadata = appState.schoolMetadata.get(appState.currentSchool);
 
