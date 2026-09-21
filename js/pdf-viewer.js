@@ -1,15 +1,15 @@
 import { subjectLabel, professorLabel, parcialLabel } from "./utils.js";
 
+/** True when the user is on a mobile or tablet device. Evaluated once at module load. */
+const IS_MOBILE_DEVICE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent));
+
 /**
- * Detects if the user is browsing from a mobile or tablet device.
+ * Returns true when the user is browsing from a mobile or tablet device.
  *
  * @returns {boolean}
  */
 export function isMobileDevice() {
-  return (
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-    (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent))
-  );
+  return IS_MOBILE_DEVICE;
 }
 
 /**
