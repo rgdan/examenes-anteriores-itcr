@@ -53,7 +53,7 @@ export function subjectCourseCode(school, subject) {
   if (!metadata) {
     return "";
   }
-  return metadata.courseCode ? metadata.courseCode : "";
+  return metadata.courseCode ?? "";
 }
 
 /** Returns whether a subject is coordinated (defaults to true). */
