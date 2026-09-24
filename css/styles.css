@@ -42,6 +42,7 @@ html::-webkit-scrollbar {
   color: #ffffff;
   border-top: 10px solid #ef3340;
   border-bottom: 0;
+  position: relative;
 }
 
 .hero-inner {
@@ -293,11 +294,199 @@ h1 {
   color: var(--ink);
 }
 
-@media (min-width: 768px) {
-  .tabs-utility {
-    height: 4px;
+/* ── Hamburger button (visible only on mobile) ───────────────── */
+.hamburger-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.4rem;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background 0.2s;
+  z-index: 10;
+}
+
+.hamburger-btn:hover,
+.hamburger-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+}
+
+.hamburger-bar {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+  transform-origin: center;
+}
+
+/* Animated X when open */
+.hamburger-btn[aria-expanded="true"] .hamburger-bar:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.hamburger-btn[aria-expanded="true"] .hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger-btn[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* ── Mobile navigation drawer ─────────────────────────────────── */
+.mobile-nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 34, 63, 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.mobile-nav-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-height: 80vh;
+  background: var(--brand);
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-100%);
+  pointer-events: none;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+  border-bottom: 3px solid #001936;
+}
+
+.mobile-nav-drawer.open {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.1rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.mobile-nav-title {
+  color: #ffffff;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mobile-nav-close {
+  appearance: none;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-radius: 6px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mobile-nav-close:hover,
+.mobile-nav-close:focus-visible {
+  background: rgba(255, 255, 255, 0.22);
+  outline: none;
+}
+
+.mobile-nav-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.6rem 0;
+  scrollbar-width: none;
+}
+
+.mobile-nav-list::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-nav-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  font: inherit;
+  font-size: 0.97rem;
+  font-weight: 600;
+  padding: 0.75rem 1.3rem;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.mobile-nav-item:hover,
+.mobile-nav-item:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  outline: none;
+}
+
+.mobile-nav-item.active {
+  color: #ffffff;
+  border-left-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Responsive breakpoints ───────────────────────────────────── */
+@media (max-width: 899px) {
+  .tabs-shell {
+    display: none;
   }
 
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .mobile-nav-overlay,
+  .mobile-nav-drawer {
+    display: flex;
+  }
+
+  .mobile-nav-overlay {
+    display: block;
+  }
+}
+
+@media (min-width: 900px) {
   .school-tabs {
     padding: 0.85rem 1.5rem;
   }

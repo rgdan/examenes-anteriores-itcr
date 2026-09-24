@@ -94,6 +94,7 @@ export function renderYearBlocks(years, parentNode, semesterTemplate, parcialTem
 
 /** Rebuilds school tab buttons in #school-tabs, including the home tab. */
 export function renderSchoolTabs() {
+  /* ── Desktop tabs ─────────────────────────────────────── */
   const tabsContainer = document.getElementById("school-tabs");
   tabsContainer.innerHTML = "";
   tabsContainer.hidden = false;
@@ -127,6 +128,97 @@ export function renderSchoolTabs() {
     });
     tabsContainer.appendChild(tab);
   }
+
+  /* ── Mobile drawer ────────────────────────────────────── */
+  const mobileList = document.getElementById("mobile-nav-list");
+  if (mobileList) {
+    mobileList.innerHTML = "";
+
+    const mobileHome = document.createElement("button");
+    mobileHome.type = "button";
+    mobileHome.className = `mobile-nav-item${appState.currentSchool === HOME_TAB_KEY ? " active" : ""}`;
+    mobileHome.textContent = STRINGS.homeTab;
+    mobileHome.addEventListener("click", () => {
+      closeMobileNav();
+      if (appState.currentSchool !== HOME_TAB_KEY) {
+        navigateTo(HOME_TAB_KEY);
+      }
+    });
+    mobileList.appendChild(mobileHome);
+
+    for (const school of appState.schools) {
+      const mobileTab = document.createElement("button");
+      mobileTab.type = "button";
+      mobileTab.className = `mobile-nav-item${school === appState.currentSchool ? " active" : ""}`;
+      mobileTab.textContent = schoolLabel(school);
+      mobileTab.addEventListener("click", () => {
+        closeMobileNav();
+        if (appState.currentSchool !== school) {
+          navigateTo(school);
+        }
+      });
+      mobileList.appendChild(mobileTab);
+    }
+  }
+
+  /* Wire up hamburger toggle (once) */
+  _setupMobileNav();
+}
+
+/** Whether the mobile nav event listeners have been attached. */
+let _mobileNavSetup = false;
+
+/** Opens the mobile nav drawer. */
+export function openMobileNav() {
+  const btn = document.getElementById("hamburger-btn");
+  const overlay = document.getElementById("mobile-nav-overlay");
+  const drawer = document.getElementById("mobile-nav-drawer");
+  if (!btn || !overlay || !drawer) return;
+
+  btn.setAttribute("aria-expanded", "true");
+  overlay.classList.add("open");
+  drawer.classList.add("open");
+  overlay.setAttribute("aria-hidden", "false");
+  drawer.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+}
+
+/** Closes the mobile nav drawer. */
+export function closeMobileNav() {
+  const btn = document.getElementById("hamburger-btn");
+  const overlay = document.getElementById("mobile-nav-overlay");
+  const drawer = document.getElementById("mobile-nav-drawer");
+  if (!btn || !overlay || !drawer) return;
+
+  btn.setAttribute("aria-expanded", "false");
+  overlay.classList.remove("open");
+  drawer.classList.remove("open");
+  overlay.setAttribute("aria-hidden", "true");
+  drawer.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+}
+
+/** Attaches hamburger / overlay / close-button listeners (idempotent). */
+function _setupMobileNav() {
+  if (_mobileNavSetup) return;
+  _mobileNavSetup = true;
+
+  const btn = document.getElementById("hamburger-btn");
+  const overlay = document.getElementById("mobile-nav-overlay");
+  const closeBtn = document.getElementById("mobile-nav-close");
+
+  btn?.addEventListener("click", () => {
+    const isOpen = btn.getAttribute("aria-expanded") === "true";
+    isOpen ? closeMobileNav() : openMobileNav();
+  });
+
+  overlay?.addEventListener("click", closeMobileNav);
+  closeBtn?.addEventListener("click", closeMobileNav);
+
+  /* Close on Escape key */
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMobileNav();
+  });
 }
 
 /** Renders home or school exam tree into #content based on currentSchool. */
