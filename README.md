@@ -1,9 +1,5 @@
 ![Exámenes Anteriores ITCR](docs/tittle.jpg)
 
-> [!WARNING]
-> **Aviso de Discreción y Privacidad**  
-> Respete la discreción de los profesores; evite publicar material que no deba ser público.
-
 Repositorio público para acceder y navegar exámenes anteriores en PDF. La página web estática se genera a partir de los archivos y metadatos alojados en el repositorio de archivos separado:
 
 **Repositorio de Exámenes/Archivos:** [examenes-anteriores-itcr-archivos](https://github.com/rgdan/examenes-anteriores-itcr-archivos)
