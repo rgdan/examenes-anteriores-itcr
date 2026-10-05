@@ -1,8 +1,6 @@
 ![Exámenes Anteriores ITCR](docs/tittle.jpg)
 
-Repositorio público para acceder y navegar exámenes anteriores en PDF. La página web estática se genera a partir de los archivos y metadatos alojados en el repositorio de archivos separado:
-
-**Repositorio de Exámenes/Archivos:** [examenes-anteriores-itcr-archivos](https://github.com/rgdan/examenes-anteriores-itcr-archivos)
+Repositorio público para acceder y navegar exámenes anteriores en PDF. La página web estática se genera a partir de los archivos y metadatos alojados en el repositorio de archivos separado.
 
 ---
 
@@ -19,6 +17,13 @@ En la Wiki encontrará:
 * **[Guía de Contribución](https://github.com/rgdan/examenes-anteriores-itcr/wiki/Cómo-contribuir):** Pasos para hacer Fork, clonar localmente, subir cambios y abrir un Pull Request en el repositorio de archivos.
 
 * **[Nomenclatura y Convenciones](https://github.com/rgdan/examenes-anteriores-itcr/wiki/Nomenclatura-y-Convenciones):** Reglas para nombrar los archivos PDF y estructurar los metadatos.
+
+---
+
+## Repositorios del Proyecto
+
+* **Repositorio de Archivos PDF:** [examenes-anteriores-itcr-archivos](https://github.com/rgdan/examenes-anteriores-itcr-archivos)
+* **Repositorio de herramienta de organización de Archivos PDF:** [examenes-anteriores-itcr-organizador](https://github.com/rgdan/examenes-anteriores-itcr-organizador)
 
 ---
 
