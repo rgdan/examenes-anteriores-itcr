@@ -29,4 +29,4 @@ En la Wiki encontrará:
 
 ## Licencia
 
-Este proyecto se encuentra bajo la licencia (MIT LICENSE) - mira el archivo [LICENSE](https://github.com/rgdan/examenes-anteriores-itcr/blob/main/LICENSE) para más información.
+Este proyecto se encuentra bajo la licencia (MIT LICENSE) - mire el archivo [LICENSE](https://github.com/rgdan/examenes-anteriores-itcr/blob/main/LICENSE) para más información.
