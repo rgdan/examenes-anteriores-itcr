@@ -75,7 +75,12 @@ export function handleHashChange() {
   appState.pendingOpenSubject = subject;
   renderSchoolTabs();
   renderSchoolContent();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (!document.querySelector(".subject-card[open]")) {
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"
+    });
+  }
 }
 
 /** Registers the hashchange listener for back/forward navigation support. */

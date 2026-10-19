@@ -95,7 +95,6 @@ export function renderHomeSearchResults(resultList, query, index) {
     action.textContent = STRINGS.homeOpen;
     action.addEventListener("click", () => {
       navigateTo(item.school, item.subject || "");
-      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     row.appendChild(body);

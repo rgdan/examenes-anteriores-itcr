@@ -349,5 +349,9 @@ export function renderSchoolContent() {
 
   if (openedFromSearch) {
     appState.pendingOpenSubject = "";
+    container.querySelector(".subject-card[open]").scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      block: "start"
+    });
   }
 }
